@@ -1,0 +1,11 @@
+{
+    "name": "simple-as-fuck/php-validator",
+    "require": {
+        "php": "^7.4|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SimpleAsFuck\\Validator\\": "src/"
+        }
+    }
+}
