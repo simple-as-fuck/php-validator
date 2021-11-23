@@ -51,4 +51,12 @@ abstract class Comparison extends ReadableRule
     {
         return $this->compared;
     }
+
+    /**
+     * @return TCompared
+     */
+    protected function comparedTo()
+    {
+        return $this->comparedTo;
+    }
 }
