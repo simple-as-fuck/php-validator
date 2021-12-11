@@ -11,19 +11,26 @@ use SimpleAsFuck\Validator\Model\ValueMust;
  * @template TCompared
  * @extends Comparison<TValue, TCompared>
  */
-final class Min extends Comparison
+class Min extends Comparison
 {
-    /**
-     * @param TCompared $maxValue
-     * @return Max<TValue, TCompared>
-     */
-    public function max($maxValue): Max
-    {
-        if ($this->comparedTo() >= $maxValue) {
-            throw new \LogicException('Max value rule parameter must by greater than min value');
-        }
+    /** @var ToString<TCompared> */
+    private ToString $toString;
 
-        return new Max($this, $this->valueName(), $this->compared(), $maxValue);
+    /**
+     * @param ToString<TCompared> $toString
+     */
+    public function __construct(Rule $rule, string $valueName, Compared $compared, ToString $toString, $comparedTo)
+    {
+        parent::__construct($rule, $valueName, $compared, $comparedTo);
+        $this->toString = $toString;
+    }
+
+    /**
+     * @return ToString<TCompared>
+     */
+    final protected function toString(): ToString
+    {
+        return $this->toString;
     }
 
     /**
@@ -33,7 +40,7 @@ final class Min extends Comparison
     protected function compare($compared, $comparedTo): void
     {
         if ($compared < $comparedTo) {
-            throw new ValueMust('be a minimum: '.$comparedTo);
+            throw new ValueMust('be a minimum: '.$this->toString->convert($comparedTo));
         }
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\String;
 
 use SimpleAsFuck\Validator\Model\ValueMust;
+use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
@@ -28,7 +29,8 @@ final class NotEmpty extends ReadableRule
      */
     public function max(int $max): Max
     {
-        return new Max($this, $this->valueName().' string length', new StringLength(), $max);
+        /** @phpstan-ignore-next-line */
+        return new Max($this, $this->valueName().' string length', new StringLength(), new CastString(), $max);
     }
 
     /**

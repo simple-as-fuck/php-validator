@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\String;
 
 use SimpleAsFuck\Validator\Model\ValueMust;
+use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\ComparedValue;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\Min;
+use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 
@@ -25,11 +27,11 @@ final class ParseInt extends ReadableRule
     }
 
     /**
-     * @return Min<int, int>
+     * @return MinWithMax<int, int>
      */
-    public function min(int $min): Min
+    public function min(int $min): MinWithMax
     {
-        return new Min($this, $this->valueName(), new ComparedValue(), $min);
+        return new MinWithMax($this, $this->valueName(), new ComparedValue(), new CastString(), $min);
     }
 
     /**
@@ -37,7 +39,7 @@ final class ParseInt extends ReadableRule
      */
     public function max(int $max): Max
     {
-        return new Max($this, $this->valueName(), new ComparedValue(), $max);
+        return new Max($this, $this->valueName(), new ComparedValue(), new CastString(), $max);
     }
 
     /**

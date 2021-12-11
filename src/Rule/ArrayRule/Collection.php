@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\ArrayRule;
 
+use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\Min;
+use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\General\Same;
@@ -42,11 +44,12 @@ final class Collection extends ReadableRule
 
     /**
      * @param positive-int $min
-     * @return Min<array<TOut>, int>
+     * @return MinWithMax<array<TOut>, int>
      */
-    public function min(int $min): Min
+    public function min(int $min): MinWithMax
     {
-        return new Min($this, $this->valueName().' array size', new ArraySize(), $min);
+        /** @phpstan-ignore-next-line */
+        return new MinWithMax($this, $this->valueName().' array size', new ArraySize(), new CastString(), $min);
     }
 
     /**
@@ -55,7 +58,8 @@ final class Collection extends ReadableRule
      */
     public function max(int $max): ArrayMax
     {
-        return new ArrayMax($this, $this->valueName().' array size', new ArraySize(), $max);
+        /** @phpstan-ignore-next-line */
+        return new ArrayMax($this, $this->valueName().' array size', new ArraySize(), new CastString(), $max);
     }
 
     /**

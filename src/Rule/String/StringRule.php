@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\String;
 
 use SimpleAsFuck\Validator\Model\ValueMust;
+use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
+use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\ComparedValue;
 use SimpleAsFuck\Validator\Rule\General\InRule;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\Min;
+use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Same;
 
@@ -29,12 +32,12 @@ final class StringRule extends ReadableRule
 
     /**
      * @param positive-int $min
-     * @return Min<string, int>
+     * @return MinWithMax<string, int>
      */
-    public function min(int $min): Min
+    public function min(int $min): MinWithMax
     {
         /** @phpstan-ignore-next-line */
-        return new Min($this, $this->valueName().' string length', new StringLength(), $min);
+        return new MinWithMax($this, $this->valueName().' string length', new StringLength(), new CastString(), $min);
     }
 
     /**
@@ -44,7 +47,7 @@ final class StringRule extends ReadableRule
     public function max(int $max): Max
     {
         /** @phpstan-ignore-next-line */
-        return new Max($this, $this->valueName().' string length', new StringLength(), $max);
+        return new Max($this, $this->valueName().' string length', new StringLength(), new CastString(), $max);
     }
 
     public function parseInt(): ParseInt
@@ -55,6 +58,27 @@ final class StringRule extends ReadableRule
     public function parseFloat(): ParseFloat
     {
         return new ParseFloat($this, $this->valueName().': "'.$this->validateChain().'"');
+    }
+
+    /**
+     * @template TDateTime of \DateTimeInterface
+     * @param non-empty-string $format
+     * @param class-string<TDateTime> $dateTimeClass
+     * @return ParseDateTime<TDateTime>
+     */
+    public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class): ParseDateTime
+    {
+        return new ParseDateTime($this, $this->valueName().': "'.$this->validateChain().'"', $format, $dateTimeClass);
+    }
+
+    /**
+     * @template TDateTime of \DateTimeInterface
+     * @param class-string<TDateTime> $dateTimeClass
+     * @return ParseDateTime<TDateTime>
+     */
+    public function parseIsoDateTime(string $dateTimeClass = \DateTimeImmutable::class): ParseDateTime
+    {
+        return $this->parseDateTime(\DateTimeInterface::ISO8601, $dateTimeClass);
     }
 
     public function notEmpty(): NotEmpty
