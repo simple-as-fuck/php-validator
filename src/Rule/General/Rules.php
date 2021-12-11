@@ -16,7 +16,7 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
 
 final class Rules
 {
-    private Exception $exceptionFactory;
+    private ?Exception $exceptionFactory;
     private string $valueName;
     /** @var Validated<mixed> */
     private $validated;
@@ -24,7 +24,7 @@ final class Rules
     /**
      * @param Validated<mixed> $value
      */
-    public function __construct(Exception $exceptionFactory, string $valueName, Validated $value)
+    public function __construct(?Exception $exceptionFactory, string $valueName, Validated $value)
     {
         $this->exceptionFactory = $exceptionFactory;
         $this->valueName = $valueName;

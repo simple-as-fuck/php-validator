@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
  */
 abstract class Rule
 {
-    private Exception $exceptionFactory;
+    private ?Exception $exceptionFactory;
     /** @var RuleChain<TIn> */
     private RuleChain $ruleChain;
     /** @var Validated<mixed> */
@@ -28,7 +28,7 @@ abstract class Rule
      * @param RuleChain<TIn> $ruleChain
      * @param Validated<mixed> $validated
      */
-    public function __construct(Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName)
     {
         $this->exceptionFactory = $exceptionFactory;
         $this->ruleChain = $ruleChain;
@@ -53,7 +53,7 @@ abstract class Rule
      */
     abstract protected function validate($value);
 
-    final protected function exceptionFactory(): Exception
+    final protected function exceptionFactory(): ?Exception
     {
         return $this->exceptionFactory;
     }
@@ -107,6 +107,9 @@ abstract class Rule
         try {
             return $rule->validate($value);
         } catch (ValueMust $exception) {
+            if (! $this->exceptionFactory) {
+                throw $exception;
+            }
             throw $this->exceptionFactory->create($rule->valueName.' must '.$exception->getMessage());
         }
     }

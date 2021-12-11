@@ -23,7 +23,7 @@ class Key extends Rule
      * @param Validated<mixed> $validated
      * @param int|string $key
      */
-    public function __construct(Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, $key)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, $key)
     {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
         $this->key = $key;

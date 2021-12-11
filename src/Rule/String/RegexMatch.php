@@ -22,7 +22,7 @@ final class RegexMatch extends ReadableRule
      * @param RuleChain<array<string>> $ruleChain
      * @param Validated<mixed> $validated
      */
-    public function __construct(Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $key)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $key)
     {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\General;
 
+use SimpleAsFuck\Validator\Model\ValueMust;
+
 /**
  * @template TIn
  * @template TOut
@@ -26,6 +28,9 @@ abstract class ReadableRule extends Rule
     {
         $value = $this->validateChain();
         if ($value === null) {
+            if (! $this->exceptionFactory()) {
+                throw new ValueMust('be not null');
+            }
             throw $this->exceptionFactory()->create($this->valueName().' must be not null');
         }
 
