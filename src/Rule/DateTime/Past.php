@@ -14,10 +14,15 @@ use SimpleAsFuck\Validator\Rule\General\Min;
 final class Past extends Max
 {
     /**
+     * @param TDateTime $min
      * @return Min<TDateTime, TDateTime>
      */
-    public function min(): Min
+    public function min(\DateTimeInterface $min): Min
     {
-        return new Min($this, $this->valueName(), $this->compared(), $this->toString(), $this->comparedTo());
+        if ($this->comparedTo() <= $min) {
+            throw new \LogicException('Min value rule parameter must be in past');
+        }
+
+        return new Min($this, $this->valueName(), $this->compared(), $this->toString(), $min);
     }
 }
