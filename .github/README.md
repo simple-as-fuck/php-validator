@@ -8,6 +8,13 @@ Validator for php variables with intuitive rule chain, put inside mixed and you 
 composer require simple-as-fuck/php-validator
 ```
 
+## Support
+
+If any PHP platform requirements in [composer.json](../composer.json) ends with security support,
+consider package version as unsupported except last version.
+
+[PHP supported versions](https://www.php.net/supported-versions.php).
+
 ## Usage
 
 ```php
