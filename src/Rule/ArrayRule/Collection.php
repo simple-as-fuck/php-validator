@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\ArrayRule;
 
 use SimpleAsFuck\Validator\Rule\General\CastString;
-use SimpleAsFuck\Validator\Rule\General\Min;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
