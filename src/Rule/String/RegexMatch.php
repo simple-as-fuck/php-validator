@@ -8,25 +8,20 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\ArrayRule\Key;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\ForwardRule;
 
 /**
- * @extends ReadableRule<array<string>, string>
+ * @extends ForwardRule<array<string>, string>
  */
-final class RegexMatch extends ReadableRule
+final class RegexMatch extends ForwardRule
 {
-    /** @var Key<string> */
-    private Key $keyRule;
-
     /**
      * @param RuleChain<array<string>> $ruleChain
      * @param Validated<mixed> $validated
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $key)
     {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
-
-        $this->keyRule = new Key($exceptionFactory, $ruleChain, $validated, $valueName, $key);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, new Key($exceptionFactory, $ruleChain, $validated, $valueName, $key));
     }
 
     public function parseInt(): ParseInt
@@ -37,10 +32,5 @@ final class RegexMatch extends ReadableRule
     public function parseFloat(): ParseFloat
     {
         return new ParseFloat($this, $this->valueName());
-    }
-
-    protected function validate($value)
-    {
-        return $this->keyRule->validate($value);
     }
 }
