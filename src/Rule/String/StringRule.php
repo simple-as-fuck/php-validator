@@ -13,6 +13,7 @@ use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Same;
+use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 
 /**
  * @extends ReadableRule<mixed, string>
@@ -78,6 +79,46 @@ final class StringRule extends ReadableRule
     public function parseIsoDateTime(string $dateTimeClass = \DateTimeImmutable::class): ParseDateTime
     {
         return $this->parseDateTime(\DateTimeInterface::ISO8601, $dateTimeClass);
+    }
+
+    /**
+     * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
+     * @param array<int<0,7>> $forbiddenComponents array of PHP_URL_ constants
+     * @return ParseUrl<string>
+     */
+    public function parseUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
+    {
+        return new ParseUrl($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"', $requiredComponents, $forbiddenComponents);
+    }
+
+    /**
+     * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
+     * @param array<int<2,7>> $forbiddenComponents array of PHP_URL_ constants
+     * @return ParseUrl<non-empty-string>
+     */
+    public function parseHttpUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
+    {
+        $requiredComponents[] = PHP_URL_SCHEME;
+        $requiredComponents[] = PHP_URL_HOST;
+        $urlRule = $this->parseUrl($requiredComponents, $forbiddenComponents);
+        $urlRule->scheme()->in(['http', 'https'])->notNull();
+        /** @phpstan-ignore-next-line */
+        return $urlRule;
+    }
+
+    /**
+     * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
+     * @param array<int<2,7>> $forbiddenComponents array of PHP_URL_ constants
+     * @return ParseUrl<non-empty-string>
+     */
+    public function parseHttpsUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
+    {
+        $requiredComponents[] = PHP_URL_SCHEME;
+        $requiredComponents[] = PHP_URL_HOST;
+        $urlRule = $this->parseUrl($requiredComponents, $forbiddenComponents);
+        $urlRule->scheme()->in(['https'])->notNull();
+        /** @phpstan-ignore-next-line */
+        return $urlRule;
     }
 
     public function notEmpty(): NotEmpty
