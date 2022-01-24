@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\String;
 
+use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
+use SimpleAsFuck\Validator\Model\RuleChain;
+use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
 use SimpleAsFuck\Validator\Rule\General\CastString;
@@ -20,6 +23,15 @@ use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
  */
 final class StringRule extends ReadableRule
 {
+    /**
+     * @param mixed $value
+     * @return StringRule
+     */
+    public static function make($value, string $valueName = 'variable'): StringRule
+    {
+        return new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName);
+    }
+
     /**
      * @param positive-int $size
      * @return Same<string, int>

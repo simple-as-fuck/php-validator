@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\Url;
 
 use SimpleAsFuck\Validator\Factory\Exception;
+use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
@@ -36,6 +37,19 @@ final class ParseUrl extends ReadableRule
     private array $forbiddenComponents;
     /** @var array<literal-string&non-empty-string, int|string> */
     private array $urlComponents;
+
+    /**
+     * @template MakeTString of string
+     * @param MakeTString $value
+     * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
+     * @param array<int<0,7>> $forbiddenComponents array of PHP_URL_ constants
+     * @return ParseUrl<MakeTString>
+     */
+    public static function make(string $value, array $requiredComponents = [], array $forbiddenComponents = [], string $valueName = 'variable'): ParseUrl
+    {
+        /** @phpstan-ignore-next-line */
+        return new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, $requiredComponents, $forbiddenComponents);
+    }
 
     /**
      * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
