@@ -82,14 +82,14 @@ abstract class Rule
     /**
      * @return TOut|null
      */
-    final protected function validateChain()
+    final protected function validateChain(bool $failAsNull = false)
     {
         $value = $this->validated->value();
 
         foreach ($this->ruleChain->rules() as $rule) {
-            $value = $this->validateRule($rule, $value);
+            $value = $this->validateRule($rule, $value, $failAsNull);
         }
-        return $this->validateRule($this, $value);
+        return $this->validateRule($this, $value, $failAsNull);
     }
 
     /**
@@ -98,7 +98,7 @@ abstract class Rule
      * @param mixed $value
      * @return TRuleOut|null
      */
-    private function validateRule(Rule $rule, &$value)
+    private function validateRule(Rule $rule, &$value, bool $failAsNull)
     {
         if ($value === null) {
             return null;
@@ -107,6 +107,10 @@ abstract class Rule
         try {
             return $rule->validate($value);
         } catch (ValueMust $exception) {
+            if ($failAsNull) {
+                return null;
+            }
+
             if (! $this->exceptionFactory) {
                 throw $exception;
             }

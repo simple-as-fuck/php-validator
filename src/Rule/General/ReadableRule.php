@@ -16,9 +16,9 @@ abstract class ReadableRule extends Rule
     /**
      * @return TOut|null
      */
-    public function nullable()
+    public function nullable(bool $failAsNull = false)
     {
-        return $this->validateChain();
+        return $this->validateChain($failAsNull);
     }
 
     /**
