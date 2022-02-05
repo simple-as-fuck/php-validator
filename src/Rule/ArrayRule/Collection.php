@@ -64,9 +64,9 @@ final class Collection extends ReadableRule
     /**
      * @return array<TOut>
      */
-    public function notNull(): array
+    public function notNull(bool $failAsEmpty = false): array
     {
-        return $this->validateChain() ?? [];
+        return $this->validateChain($failAsEmpty) ?? [];
     }
 
     /**

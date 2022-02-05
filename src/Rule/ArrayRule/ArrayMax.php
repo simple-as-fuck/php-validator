@@ -15,8 +15,8 @@ final class ArrayMax extends Max
     /**
      * @return array<TValue>
      */
-    public function notNull(): array
+    public function notNull(bool $failAsEmpty = false): array
     {
-        return $this->validateChain() ?? [];
+        return $this->validateChain($failAsEmpty) ?? [];
     }
 }
