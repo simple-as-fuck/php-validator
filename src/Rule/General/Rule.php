@@ -21,7 +21,7 @@ abstract class Rule
     /** @var RuleChain<TIn> */
     private RuleChain $ruleChain;
     /** @var Validated<mixed> */
-    private $validated;
+    private Validated $validated;
     private string $valueName;
 
     /**
