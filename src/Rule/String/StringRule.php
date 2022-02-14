@@ -39,7 +39,7 @@ final class StringRule extends ReadableRule
     public function size(int $size): Same
     {
         /** @phpstan-ignore-next-line */
-        return new Same($this, $this->valueName().' string length', new StringLength(), $size);
+        return new Same($this, $this->valueName(), new StringLength(), $size, 'string length');
     }
 
     /**

@@ -38,7 +38,8 @@ final class Collection extends ReadableRule
      */
     public function size(int $size): Same
     {
-        return new Same($this, $this->valueName().' array size', new ArraySize(), $size);
+        /** @phpstan-ignore-next-line */
+        return new Same($this, $this->valueName(), new ArraySize(), $size, 'array size');
     }
 
     /**
