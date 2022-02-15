@@ -49,7 +49,7 @@ final class StringRule extends ReadableRule
     public function min(int $min): MinWithMax
     {
         /** @phpstan-ignore-next-line */
-        return new MinWithMax($this, $this->valueName().' string length', new StringLength(), new CastString(), $min);
+        return new MinWithMax($this, $this->valueName(), new StringLength(), new CastString(), $min, 'string length');
     }
 
     /**
@@ -59,7 +59,7 @@ final class StringRule extends ReadableRule
     public function max(int $max): Max
     {
         /** @phpstan-ignore-next-line */
-        return new Max($this, $this->valueName().' string length', new StringLength(), new CastString(), $max);
+        return new Max($this, $this->valueName(), new StringLength(), new CastString(), $max, 'string length');
     }
 
     public function parseInt(): ParseInt

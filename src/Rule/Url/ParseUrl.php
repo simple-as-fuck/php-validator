@@ -72,7 +72,7 @@ final class ParseUrl extends ReadableRule
     public function max(int $max): Max
     {
         /** @phpstan-ignore-next-line */
-        return new Max($this, $this->valueName().' url length', new StringLength(), new CastString(), $max);
+        return new Max($this, $this->valueName(), new StringLength(), new CastString(), $max, 'url length');
     }
 
     public function scheme(): Scheme

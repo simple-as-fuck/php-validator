@@ -15,14 +15,20 @@ class Min extends Comparison
 {
     /** @var ToString<TCompared> */
     private ToString $toString;
+    /** @var non-empty-string */
+    private string $comparedName;
 
     /**
+     * @param Rule<TValue, TValue> $rule
+     * @param Compared<TValue, TCompared> $compared
      * @param ToString<TCompared> $toString
+     * @param non-empty-string $comparedName
      */
-    public function __construct(Rule $rule, string $valueName, Compared $compared, ToString $toString, $comparedTo)
+    public function __construct(Rule $rule, string $valueName, Compared $compared, ToString $toString, $comparedTo, string $comparedName = 'value')
     {
         parent::__construct($rule, $valueName, $compared, $comparedTo);
         $this->toString = $toString;
+        $this->comparedName = $comparedName;
     }
 
     /**
@@ -40,7 +46,7 @@ class Min extends Comparison
     protected function compare($compared, $comparedTo): void
     {
         if ($compared < $comparedTo) {
-            throw new ValueMust('be a minimum: '.$this->toString->convert($comparedTo));
+            throw new ValueMust('have minimum '.$this->comparedName.': '.$this->toString->convert($comparedTo));
         }
     }
 }

@@ -30,7 +30,7 @@ final class NotEmpty extends ReadableRule
     public function max(int $max): Max
     {
         /** @phpstan-ignore-next-line */
-        return new Max($this, $this->valueName().' string length', new StringLength(), new CastString(), $max);
+        return new Max($this, $this->valueName(), new StringLength(), new CastString(), $max, 'string length');
     }
 
     /**

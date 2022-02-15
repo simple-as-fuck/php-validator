@@ -49,7 +49,7 @@ final class Collection extends ReadableRule
     public function min(int $min): MinWithMax
     {
         /** @phpstan-ignore-next-line */
-        return new MinWithMax($this, $this->valueName().' array size', new ArraySize(), new CastString(), $min);
+        return new MinWithMax($this, $this->valueName(), new ArraySize(), new CastString(), $min, 'array size');
     }
 
     /**
@@ -59,7 +59,7 @@ final class Collection extends ReadableRule
     public function max(int $max): ArrayMax
     {
         /** @phpstan-ignore-next-line */
-        return new ArrayMax($this, $this->valueName().' array size', new ArraySize(), new CastString(), $max);
+        return new ArrayMax($this, $this->valueName(), new ArraySize(), new CastString(), $max, 'array size');
     }
 
     /**
