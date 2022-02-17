@@ -132,15 +132,12 @@ final class ParseUrl extends ReadableRule
         return new Component($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url path', 'path');
     }
 
-    /**
-     * @return Component<string>
-     */
-    public function query(): Component
+    public function query(): Query
     {
         $this->validateChain();
 
         /** @phpstan-ignore-next-line */
-        return new Component($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url query', 'query');
+        return new Query($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url query', 'query');
     }
 
     /**

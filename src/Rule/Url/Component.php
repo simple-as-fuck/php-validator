@@ -14,7 +14,7 @@ use SimpleAsFuck\Validator\Rule\General\ForwardRule;
  * @template TComponent
  * @extends ForwardRule<array<TComponent>, TComponent>
  */
-final class Component extends ForwardRule
+class Component extends ForwardRule
 {
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $componentName)
     {
