@@ -25,7 +25,7 @@ final class NotEmpty extends ReadableRule
 
     /**
      * @param positive-int $max
-     * @return Max<string, int>
+     * @return Max<non-empty-string, int>
      */
     public function max(int $max): Max
     {
