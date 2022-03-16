@@ -39,6 +39,7 @@ final class ParseDateTime extends ReadableRule
      */
     public function min(\DateTimeInterface $min): MinWithMax
     {
+        /** @phpstan-ignore-next-line */
         return new MinWithMax($this, $this->valueName(), new ComparedValue(), new ToIsoString(), $min);
     }
 
@@ -47,6 +48,7 @@ final class ParseDateTime extends ReadableRule
      */
     public function future(): MinWithMax
     {
+        /** @phpstan-ignore-next-line */
         return new MinWithMax($this, $this->valueName(), new ComparedValue(), new ToIsoString(), new \DateTimeImmutable());
     }
 
@@ -65,6 +67,7 @@ final class ParseDateTime extends ReadableRule
      */
     public function max(\DateTimeInterface $max): Max
     {
+        /** @phpstan-ignore-next-line */
         return new Max($this, $this->valueName(), new ComparedValue(), new ToIsoString(), $max);
     }
 

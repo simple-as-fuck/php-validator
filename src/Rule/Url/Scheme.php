@@ -33,6 +33,7 @@ final class Scheme extends ForwardRule
      */
     public function in(array $values): InRule
     {
+        /** @phpstan-ignore-next-line */
         return new InRule($this, $this->valueName(), new ComparedValue(), $values);
     }
 }

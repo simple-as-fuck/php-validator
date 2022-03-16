@@ -30,6 +30,7 @@ final class ParseFloat extends ReadableRule
      */
     public function min(float $min): MinWithMax
     {
+        /** @phpstan-ignore-next-line */
         return new MinWithMax($this, $this->valueName(), new ComparedValue(), new CastString(), $min);
     }
 
@@ -38,6 +39,7 @@ final class ParseFloat extends ReadableRule
      */
     public function max(float $max): Max
     {
+        /** @phpstan-ignore-next-line */
         return new Max($this, $this->valueName(), new ComparedValue(), new CastString(), $max);
     }
 

@@ -30,6 +30,7 @@ final class ParseInt extends ReadableRule
      */
     public function min(int $min): MinWithMax
     {
+        /** @phpstan-ignore-next-line */
         return new MinWithMax($this, $this->valueName(), new ComparedValue(), new CastString(), $min);
     }
 
@@ -38,6 +39,7 @@ final class ParseInt extends ReadableRule
      */
     public function max(int $max): Max
     {
+        /** @phpstan-ignore-next-line */
         return new Max($this, $this->valueName(), new ComparedValue(), new CastString(), $max);
     }
 

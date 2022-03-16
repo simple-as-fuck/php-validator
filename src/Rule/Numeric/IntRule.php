@@ -22,6 +22,7 @@ final class IntRule extends ReadableRule
      */
     public function min(int $min): MinWithMax
     {
+        /** @phpstan-ignore-next-line */
         return new MinWithMax($this, $this->valueName(), new ComparedValue(), new CastString(), $min);
     }
 
@@ -30,6 +31,7 @@ final class IntRule extends ReadableRule
      */
     public function max(int $max): Max
     {
+        /** @phpstan-ignore-next-line */
         return new Max($this, $this->valueName(), new ComparedValue(), new CastString(), $max);
     }
 
@@ -39,6 +41,7 @@ final class IntRule extends ReadableRule
      */
     public function in(array $values): InRule
     {
+        /** @phpstan-ignore-next-line */
         return new InRule($this, $this->valueName(), new ComparedValue(), $values);
     }
 
