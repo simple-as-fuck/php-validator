@@ -63,8 +63,9 @@ final class Property extends Rule
      */
     protected function validate($value)
     {
-        if (property_exists($value, $this->propertyName)) {
-            return $value->{$this->propertyName};
+        $properties = \get_object_vars($value);
+        if (\array_key_exists($this->propertyName, $properties)) {
+            return $properties[$this->propertyName];
         }
 
         return null;

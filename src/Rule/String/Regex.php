@@ -44,8 +44,12 @@ final class Regex extends ReadableRule
      */
     protected function validate($value): string
     {
-        if (! preg_match($this->pattern, $value, $this->matches, $this->flags)) {
+        $result = preg_match($this->pattern, $value, $this->matches, $this->flags);
+        if ($result === 0) {
             throw new ValueMust('match regex: "'.$this->pattern.'"');
+        }
+        if ($result === false) {
+            throw new \RuntimeException('Regex failed with pater: "'.$this->pattern.'"');
         }
 
         return $value;

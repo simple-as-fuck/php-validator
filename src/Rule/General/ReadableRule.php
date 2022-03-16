@@ -28,7 +28,7 @@ abstract class ReadableRule extends Rule
     {
         $value = $this->validateChain();
         if ($value === null) {
-            if (! $this->exceptionFactory()) {
+            if ($this->exceptionFactory() === null) {
                 throw new ValueMust('be not null');
             }
             throw $this->exceptionFactory()->create($this->valueName().' must be not null');

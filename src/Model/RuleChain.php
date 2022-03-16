@@ -21,7 +21,7 @@ final class RuleChain
     public function __construct(array $rules = [], Rule $lastRule = null)
     {
         $this->rules = $rules;
-        if ($lastRule) {
+        if ($lastRule !== null) {
             $this->rules[] = $lastRule;
         }
     }

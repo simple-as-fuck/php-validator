@@ -111,7 +111,7 @@ abstract class Rule
                 return null;
             }
 
-            if (! $this->exceptionFactory) {
+            if ($this->exceptionFactory === null) {
                 throw $exception;
             }
             throw $this->exceptionFactory->create($rule->valueName.' must '.$exception->getMessage());
