@@ -133,6 +133,22 @@ final class StringRule extends ReadableRule
         return $urlRule;
     }
 
+    /**
+     * @param bool $private if false private and reserved ip address will fail
+     */
+    public function parseIpv4(bool $private = false): ParseIp
+    {
+        return new ParseIp($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), true, $private);
+    }
+
+    /**
+     * @param bool $private if false private and reserved ip address will fail
+     */
+    public function parseIpv6(bool $private = false): ParseIp
+    {
+        return new ParseIp($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), false, $private);
+    }
+
     public function notEmpty(): NotEmpty
     {
         return new NotEmpty($this, $this->valueName());
