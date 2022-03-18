@@ -34,7 +34,7 @@ final class StringRule extends ReadableRule
 
     /**
      * @param positive-int $size
-     * @return Same<string, int>
+     * @return Same<non-empty-string, int>
      */
     public function size(int $size): Same
     {
@@ -44,7 +44,7 @@ final class StringRule extends ReadableRule
 
     /**
      * @param positive-int $min
-     * @return MinWithMax<string, int>
+     * @return MinWithMax<non-empty-string, int>
      */
     public function min(int $min): MinWithMax
     {

@@ -34,7 +34,7 @@ final class Collection extends ReadableRule
 
     /**
      * @param positive-int $size
-     * @return Same<array<TOut>, int>
+     * @return Same<non-empty-array<TOut>, int>
      */
     public function size(int $size): Same
     {
@@ -44,7 +44,7 @@ final class Collection extends ReadableRule
 
     /**
      * @param positive-int $min
-     * @return MinWithMax<array<TOut>, int>
+     * @return MinWithMax<non-empty-array<TOut>, int>
      */
     public function min(int $min): MinWithMax
     {
