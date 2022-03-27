@@ -25,7 +25,7 @@ final class ArrayRule extends Rule
      */
     public function of(callable $callable): Collection
     {
-        return new Collection($this, $callable);
+        return new Collection($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $callable);
     }
 
     /**
@@ -35,7 +35,7 @@ final class ArrayRule extends Rule
      */
     public function ofClass(UserClassRule $rule): Collection
     {
-        return new Collection($this, fn (TypedKey $key) => $key->object()->class($rule)->notNull());
+        return new Collection($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), fn (TypedKey $key) => $key->object()->class($rule)->notNull());
     }
 
     /**

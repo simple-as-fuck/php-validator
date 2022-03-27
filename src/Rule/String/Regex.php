@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\String;
 
+use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
-use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @extends ReadableRule<string, string>
@@ -21,11 +21,12 @@ final class Regex extends ReadableRule
     private array $matches;
 
     /**
-     * @param Rule<mixed, string> $rule
+     * @param RuleChain<string> $ruleChain
+     * @param Validated<mixed> $validated
      */
-    public function __construct(Rule $rule, string $valueName, string $pattern, int $flags = 0)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $pattern, int $flags = 0)
     {
-        parent::__construct($rule->exceptionFactory(), $rule->ruleChain(), $rule->validated(), $valueName);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
         $this->pattern = $pattern;
         $this->flags = $flags;
         $this->matches = [];

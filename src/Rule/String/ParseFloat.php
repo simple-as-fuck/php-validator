@@ -10,7 +10,6 @@ use SimpleAsFuck\Validator\Rule\General\ComparedValue;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
-use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @extends ReadableRule<string, float>
@@ -18,20 +17,23 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class ParseFloat extends ReadableRule
 {
     /**
-     * @param Rule<mixed, string> $rule
-     */
-    public function __construct(Rule $rule, string $valueName)
-    {
-        parent::__construct($rule->exceptionFactory(), $rule->ruleChain(), $rule->validated(), $valueName);
-    }
-
-    /**
      * @return MinWithMax<float, float>
      */
     public function min(float $min): MinWithMax
     {
-        /** @phpstan-ignore-next-line */
-        return new MinWithMax($this, $this->valueName(), new ComparedValue(), new CastString(), $min);
+        /** @var MinWithMax<float, float> $minRule */
+        $minRule = new MinWithMax(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            new ComparedValue(),
+            /** @phpstan-ignore-next-line */
+            new CastString(),
+            $min
+        );
+        return $minRule;
     }
 
     /**
@@ -39,8 +41,19 @@ final class ParseFloat extends ReadableRule
      */
     public function max(float $max): Max
     {
-        /** @phpstan-ignore-next-line */
-        return new Max($this, $this->valueName(), new ComparedValue(), new CastString(), $max);
+        /** @var Max<float, float> $maxRule */
+        $maxRule = new Max(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            new ComparedValue(),
+            /** @phpstan-ignore-next-line */
+            new CastString(),
+            $max
+        );
+        return $maxRule;
     }
 
     /**

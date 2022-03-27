@@ -38,8 +38,9 @@ final class StringRule extends ReadableRule
      */
     public function size(int $size): Same
     {
-        /** @phpstan-ignore-next-line */
-        return new Same($this, $this->valueName(), new StringLength(), $size, 'string length');
+        /** @var Same<non-empty-string, int> $sameRule */
+        $sameRule = new Same($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), new StringLength(), $size, 'string length');
+        return $sameRule;
     }
 
     /**
@@ -48,8 +49,19 @@ final class StringRule extends ReadableRule
      */
     public function min(int $min): MinWithMax
     {
-        /** @phpstan-ignore-next-line */
-        return new MinWithMax($this, $this->valueName(), new StringLength(), new CastString(), $min, 'string length');
+        /** @var MinWithMax<non-empty-string, int> $minRule */
+        $minRule = new MinWithMax(
+            $this->exceptionFactory(),
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            /** @phpstan-ignore-next-line */
+            new StringLength(),
+            new CastString(),
+            $min,
+            'string length'
+        );
+        return $minRule;
     }
 
     /**
@@ -58,18 +70,29 @@ final class StringRule extends ReadableRule
      */
     public function max(int $max): Max
     {
-        /** @phpstan-ignore-next-line */
-        return new Max($this, $this->valueName(), new StringLength(), new CastString(), $max, 'string length');
+        /** @var Max<string, int> $maxRule */
+        $maxRule = new Max(
+            $this->exceptionFactory(),
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            /** @phpstan-ignore-next-line */
+            new StringLength(),
+            new CastString(),
+            $max,
+            'string length'
+        );
+        return $maxRule;
     }
 
     public function parseInt(): ParseInt
     {
-        return new ParseInt($this, $this->valueName().': "'.$this->validateChain().'"');
+        return new ParseInt($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"');
     }
 
     public function parseFloat(): ParseFloat
     {
-        return new ParseFloat($this, $this->valueName().': "'.$this->validateChain().'"');
+        return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"');
     }
 
     /**
@@ -80,7 +103,7 @@ final class StringRule extends ReadableRule
      */
     public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class): ParseDateTime
     {
-        return new ParseDateTime($this, $this->valueName().': "'.$this->validateChain().'"', $format, $dateTimeClass);
+        return new ParseDateTime($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"', $format, $dateTimeClass);
     }
 
     /**
@@ -112,9 +135,9 @@ final class StringRule extends ReadableRule
     {
         $requiredComponents[] = PHP_URL_SCHEME;
         $requiredComponents[] = PHP_URL_HOST;
+        /** @var ParseUrl<non-empty-string> $urlRule */
         $urlRule = $this->parseUrl($requiredComponents, $forbiddenComponents);
         $urlRule->scheme()->in(['http', 'https'])->notNull();
-        /** @phpstan-ignore-next-line */
         return $urlRule;
     }
 
@@ -127,9 +150,9 @@ final class StringRule extends ReadableRule
     {
         $requiredComponents[] = PHP_URL_SCHEME;
         $requiredComponents[] = PHP_URL_HOST;
+        /** @var ParseUrl<non-empty-string> $urlRule */
         $urlRule = $this->parseUrl($requiredComponents, $forbiddenComponents);
         $urlRule->scheme()->in(['https'])->notNull();
-        /** @phpstan-ignore-next-line */
         return $urlRule;
     }
 
@@ -151,7 +174,7 @@ final class StringRule extends ReadableRule
 
     public function notEmpty(): NotEmpty
     {
-        return new NotEmpty($this, $this->valueName());
+        return new NotEmpty($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
     }
 
     /**
@@ -159,7 +182,7 @@ final class StringRule extends ReadableRule
      */
     public function regex(string $pattern, int $flags = 0): Regex
     {
-        return new Regex($this, $this->valueName().': "'.$this->validateChain().'"', $pattern, $flags);
+        return new Regex($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"', $pattern, $flags);
     }
 
     /**
@@ -168,8 +191,18 @@ final class StringRule extends ReadableRule
      */
     public function in(array $values): InRule
     {
-        /** @phpstan-ignore-next-line */
-        return new InRule($this, $this->valueName(), new ComparedValue(), $values);
+        /** @var InRule<string> $inRule */
+        $inRule = new InRule(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            /** @phpstan-ignore-next-line */
+            new ComparedValue(),
+            $values
+        );
+        return $inRule;
     }
 
     /**

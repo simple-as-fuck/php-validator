@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\Object;
 
+use SimpleAsFuck\Validator\Factory\Exception;
+use SimpleAsFuck\Validator\Model\RuleChain;
+use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\ArrayRule\ArrayRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\Numeric\BoolRule;
@@ -19,11 +22,12 @@ final class Property extends Rule
     private string $propertyName;
 
     /**
-     * @param Rule<mixed, object> $rule
+     * @param RuleChain<object> $ruleChain
+     * @param Validated<mixed> $validated
      */
-    public function __construct(Rule $rule, string $propertyName)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $propertyName)
     {
-        parent::__construct($rule->exceptionFactory(), $rule->ruleChain(), $rule->validated(), $rule->valueName().'->'.$propertyName);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName.'->'.$propertyName);
         $this->propertyName = $propertyName;
     }
 

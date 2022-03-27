@@ -43,7 +43,7 @@ abstract class Rule
      */
     final public function custom(UserDefinedRule $rule): CustomRule
     {
-        return new CustomRule($this, $rule);
+        return new CustomRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $rule);
     }
 
     /**

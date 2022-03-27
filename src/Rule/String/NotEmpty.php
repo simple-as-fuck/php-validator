@@ -8,7 +8,6 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
-use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @extends ReadableRule<string, non-empty-string>
@@ -16,21 +15,25 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class NotEmpty extends ReadableRule
 {
     /**
-     * @param Rule<mixed, string> $rule
-     */
-    public function __construct(Rule $rule, string $valueName)
-    {
-        parent::__construct($rule->exceptionFactory(), $rule->ruleChain(), $rule->validated(), $valueName);
-    }
-
-    /**
      * @param positive-int $max
      * @return Max<non-empty-string, int>
      */
     public function max(int $max): Max
     {
-        /** @phpstan-ignore-next-line */
-        return new Max($this, $this->valueName(), new StringLength(), new CastString(), $max, 'string length');
+        /** @var Max<non-empty-string, int> $maxRule */
+        $maxRule = new Max(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            /** @phpstan-ignore-next-line */
+            new StringLength(),
+            new CastString(),
+            $max,
+            'string length'
+        );
+        return $maxRule;
     }
 
     /**

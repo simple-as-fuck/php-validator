@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\General;
 
+use SimpleAsFuck\Validator\Factory\Exception;
+use SimpleAsFuck\Validator\Model\RuleChain;
+use SimpleAsFuck\Validator\Model\Validated;
+
 /**
  * @template TValue
  * @template TCompared
@@ -17,13 +21,14 @@ abstract class Comparison extends ReadableRule
     private $comparedTo;
 
     /**
-     * @param Rule<TValue, TValue> $rule
+     * @param RuleChain<TValue> $ruleChain
+     * @param Validated<mixed> $validated
      * @param Compared<TValue, TCompared> $compared
      * @param TCompared $comparedTo
      */
-    public function __construct(Rule $rule, string $valueName, Compared $compared, $comparedTo)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Compared $compared, $comparedTo)
     {
-        parent::__construct($rule->exceptionFactory(), $rule->ruleChain(), $rule->validated(), $valueName);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
         $this->compared = $compared;
         $this->comparedTo = $comparedTo;
     }

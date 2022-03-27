@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\ArrayRule;
 
+use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
+use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\String\StringRule;
 
@@ -17,11 +19,13 @@ final class StringTypedKey extends Rule
     private Key $keyRule;
 
     /**
+     * @param RuleChain<array<mixed>> $ruleChain
+     * @param Validated<mixed> $validated
      * @param Key<mixed> $keyRule
      */
-    public function __construct(RuleChain $ruleChain, Key $keyRule)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Key $keyRule)
     {
-        parent::__construct($keyRule->exceptionFactory(), $ruleChain, $keyRule->validated(), $keyRule->valueName());
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
         $this->keyRule = $keyRule;
     }
 

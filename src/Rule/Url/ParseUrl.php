@@ -47,8 +47,11 @@ final class ParseUrl extends ReadableRule
      */
     public static function make(string $value, array $requiredComponents = [], array $forbiddenComponents = [], string $valueName = 'variable'): ParseUrl
     {
-        /** @phpstan-ignore-next-line */
-        return new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, $requiredComponents, $forbiddenComponents);
+        /** @var Validated<mixed> $validated */
+        $validated = new Validated($value);
+        /** @var ParseUrl<MakeTString> $parseUrl */
+        $parseUrl = new ParseUrl(new UnexpectedValueException(), new RuleChain(), $validated, $valueName, $requiredComponents, $forbiddenComponents);
+        return $parseUrl;
     }
 
     /**
@@ -71,15 +74,28 @@ final class ParseUrl extends ReadableRule
      */
     public function max(int $max): Max
     {
-        /** @phpstan-ignore-next-line */
-        return new Max($this, $this->valueName(), new StringLength(), new CastString(), $max, 'url length');
+        /** @var Max<TString, int> $maxRule */
+        $maxRule = new Max(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            /** @phpstan-ignore-next-line */
+            new StringLength(),
+            new CastString(),
+            $max,
+            'url length'
+        );
+        return $maxRule;
     }
 
     public function scheme(): Scheme
     {
         $this->validateChain();
-        /** @phpstan-ignore-next-line */
-        return new Scheme($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url scheme', 'scheme');
+        /** @var Validated<mixed> $validated */
+        $validated = new Validated($this->urlComponents);
+        return new Scheme($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' url scheme', 'scheme');
     }
 
     /**
@@ -88,8 +104,9 @@ final class ParseUrl extends ReadableRule
     public function host(): Component
     {
         $this->validateChain();
-        /** @phpstan-ignore-next-line */
-        return new Component($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url host', 'host');
+        /** @var Validated<mixed> $validated */
+        $validated = new Validated($this->urlComponents);
+        return new Component($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' url host', 'host');
     }
 
     /**
@@ -98,8 +115,9 @@ final class ParseUrl extends ReadableRule
     public function port(): Component
     {
         $this->validateChain();
-        /** @phpstan-ignore-next-line */
-        return new Component($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url port', 'port');
+        /** @var Validated<mixed> $validated */
+        $validated = new Validated($this->urlComponents);
+        return new Component($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' url port', 'port');
     }
 
     /**
@@ -108,8 +126,9 @@ final class ParseUrl extends ReadableRule
     public function user(): Component
     {
         $this->validateChain();
-        /** @phpstan-ignore-next-line */
-        return new Component($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url user', 'user');
+        /** @var Validated<mixed> $validated */
+        $validated = new Validated($this->urlComponents);
+        return new Component($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' url user', 'user');
     }
 
     /**
@@ -118,8 +137,9 @@ final class ParseUrl extends ReadableRule
     public function pass(): Component
     {
         $this->validateChain();
-        /** @phpstan-ignore-next-line */
-        return new Component($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url pass', 'pass');
+        /** @var Validated<mixed> $validated */
+        $validated = new Validated($this->urlComponents);
+        return new Component($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' url pass', 'pass');
     }
 
     /**
@@ -128,16 +148,17 @@ final class ParseUrl extends ReadableRule
     public function path(): Component
     {
         $this->validateChain();
-        /** @phpstan-ignore-next-line */
-        return new Component($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url path', 'path');
+        /** @var Validated<mixed> $validated */
+        $validated = new Validated($this->urlComponents);
+        return new Component($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' url path', 'path');
     }
 
     public function query(): Query
     {
         $this->validateChain();
-
-        /** @phpstan-ignore-next-line */
-        return new Query($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url query', 'query');
+        /** @var Validated<mixed> $validated */
+        $validated = new Validated($this->urlComponents);
+        return new Query($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' url query', 'query');
     }
 
     /**
@@ -146,8 +167,9 @@ final class ParseUrl extends ReadableRule
     public function fragment(): Component
     {
         $this->validateChain();
-        /** @phpstan-ignore-next-line */
-        return new Component($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url fragment', 'fragment');
+        /** @var Validated<mixed> $validated */
+        $validated = new Validated($this->urlComponents);
+        return new Component($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' url fragment', 'fragment');
     }
 
     /**

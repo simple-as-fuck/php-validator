@@ -23,8 +23,21 @@ final class Scheme extends ForwardRule
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $componentName)
     {
-        /** @phpstan-ignore-next-line */
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, new Key($exceptionFactory, $ruleChain, $validated, $valueName, $componentName));
+        parent::__construct(
+            $exceptionFactory,
+            $ruleChain,
+            $validated,
+            $valueName,
+            /** @phpstan-ignore-next-line */
+            new Key(
+                $exceptionFactory,
+                /** @phpstan-ignore-next-line */
+                $ruleChain,
+                $validated,
+                $valueName,
+                $componentName
+            )
+        );
     }
 
     /**
@@ -33,7 +46,17 @@ final class Scheme extends ForwardRule
      */
     public function in(array $values): InRule
     {
-        /** @phpstan-ignore-next-line */
-        return new InRule($this, $this->valueName(), new ComparedValue(), $values);
+        /** @var InRule<non-empty-string> $inRule */
+        $inRule = new InRule(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            /** @phpstan-ignore-next-line */
+            new ComparedValue(),
+            $values
+        );
+        return $inRule;
     }
 }

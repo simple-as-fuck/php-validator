@@ -31,8 +31,22 @@ final class Query extends Component
     {
         $this->validateChain();
         $ruleChain = new RuleChain();
-        /** @phpstan-ignore-next-line */
-        return new StringTypedKey($ruleChain, new Key($this->exceptionFactory(), $ruleChain, new Validated($this->parsedParams), $this->valueName().' parameter '.$key, $key));
+        /** @var Validated<mixed> $validatedParams */
+        $validatedParams = new Validated($this->parsedParams);
+
+        return new StringTypedKey(
+            $this->exceptionFactory(),
+            $ruleChain,
+            $this->validated(),
+            $this->valueName(),
+            new Key(
+                $this->exceptionFactory(),
+                $ruleChain,
+                $validatedParams,
+                $this->valueName().' parameter '.$key,
+                $key
+            )
+        );
     }
 
     /**

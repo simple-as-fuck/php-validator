@@ -26,11 +26,11 @@ final class RegexMatch extends ForwardRule
 
     public function parseInt(): ParseInt
     {
-        return new ParseInt($this, $this->valueName());
+        return new ParseInt($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
     }
 
     public function parseFloat(): ParseFloat
     {
-        return new ParseFloat($this, $this->valueName());
+        return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
     }
 }

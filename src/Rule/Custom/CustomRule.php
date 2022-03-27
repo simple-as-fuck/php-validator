@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\Custom;
 
+use SimpleAsFuck\Validator\Factory\Exception;
+use SimpleAsFuck\Validator\Model\RuleChain;
+use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
-use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @template TIn
@@ -18,12 +20,13 @@ final class CustomRule extends ReadableRule
     private UserDefinedRule $userDefinedRule;
 
     /**
-     * @param Rule<mixed, TIn> $rule
+     * @param RuleChain<TIn> $ruleChain
+     * @param Validated<mixed> $validated
      * @param UserDefinedRule<TIn, TOut> $userDefinedRule
      */
-    public function __construct(Rule $rule, UserDefinedRule $userDefinedRule)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, UserDefinedRule $userDefinedRule)
     {
-        parent::__construct($rule->exceptionFactory(), $rule->ruleChain(), $rule->validated(), $rule->valueName());
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
         $this->userDefinedRule = $userDefinedRule;
     }
 

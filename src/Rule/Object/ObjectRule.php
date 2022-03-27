@@ -25,7 +25,7 @@ final class ObjectRule extends Rule
 
     public function property(string $name): Property
     {
-        return new Property($this, $name);
+        return new Property($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $name);
     }
 
     /**
@@ -35,7 +35,7 @@ final class ObjectRule extends Rule
      */
     public function nullable(string $name, callable $callable)
     {
-        return $this->validateChain() === null ? null : $callable(new Property($this, $name));
+        return $this->validateChain() === null ? null : $callable(new Property($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $name));
     }
 
     /**

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\DateTime;
 
+use SimpleAsFuck\Validator\Factory\Exception;
+use SimpleAsFuck\Validator\Model\RuleChain;
+use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\ComparedValue;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
-use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @template TDateTime of \DateTimeInterface
@@ -17,17 +19,20 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
  */
 final class ParseDateTime extends ReadableRule
 {
+    /** @var non-empty-string */
     private string $format;
     /** @var class-string<TDateTime>  */
     private string $dateTimeClass;
 
     /**
-     * @param Rule<mixed, string> $rule
+     * @param RuleChain<string> $ruleChain
+     * @param Validated<mixed> $validated
+     * @param non-empty-string $format
      * @param class-string<TDateTime> $dateTimeClass
      */
-    public function __construct(Rule $rule, string $valueName, string $format, string $dateTimeClass)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $format, string $dateTimeClass)
     {
-        parent::__construct($rule->exceptionFactory(), $rule->ruleChain(), $rule->validated(), $valueName);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
         $this->format = $format;
         $this->dateTimeClass = $dateTimeClass;
@@ -39,8 +44,19 @@ final class ParseDateTime extends ReadableRule
      */
     public function min(\DateTimeInterface $min): MinWithMax
     {
-        /** @phpstan-ignore-next-line */
-        return new MinWithMax($this, $this->valueName(), new ComparedValue(), new ToIsoString(), $min);
+        /** @var MinWithMax<TDateTime, TDateTime> $minRule */
+        $minRule = new MinWithMax(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            new ComparedValue(),
+            /** @phpstan-ignore-next-line */
+            new ToIsoString(),
+            $min
+        );
+        return $minRule;
     }
 
     /**
@@ -48,8 +64,19 @@ final class ParseDateTime extends ReadableRule
      */
     public function future(): MinWithMax
     {
-        /** @phpstan-ignore-next-line */
-        return new MinWithMax($this, $this->valueName(), new ComparedValue(), new ToIsoString(), new \DateTimeImmutable());
+        /** @var MinWithMax<TDateTime, TDateTime> $minRule */
+        $minRule = new MinWithMax(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            new ComparedValue(),
+            /** @phpstan-ignore-next-line */
+            new ToIsoString(),
+            new \DateTimeImmutable()
+        );
+        return $minRule;
     }
 
     /**
@@ -57,8 +84,18 @@ final class ParseDateTime extends ReadableRule
      */
     public function past(): Past
     {
-        /** @phpstan-ignore-next-line */
-        return new Past($this, $this->valueName(), new ComparedValue(), new ToIsoString(), new \DateTimeImmutable());
+        /** @var Past<TDateTime> $pastRule */
+        $pastRule = new Past(
+            $this->exceptionFactory(),
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            /** @phpstan-ignore-next-line */
+            new ComparedValue(),
+            new ToIsoString(),
+            new \DateTimeImmutable()
+        );
+        return $pastRule;
     }
 
     /**
@@ -67,8 +104,19 @@ final class ParseDateTime extends ReadableRule
      */
     public function max(\DateTimeInterface $max): Max
     {
-        /** @phpstan-ignore-next-line */
-        return new Max($this, $this->valueName(), new ComparedValue(), new ToIsoString(), $max);
+        /** @var Max<TDateTime, TDateTime> $maxRule */
+        $maxRule = new Max(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            new ComparedValue(),
+            /** @phpstan-ignore-next-line */
+            new ToIsoString(),
+            $max
+        );
+        return $maxRule;
     }
 
     /**
