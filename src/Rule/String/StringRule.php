@@ -16,6 +16,7 @@ use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Same;
+use SimpleAsFuck\Validator\Rule\Numeric\ParseNumeric;
 use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 
 /**
@@ -93,6 +94,22 @@ final class StringRule extends ReadableRule
     public function parseFloat(): ParseFloat
     {
         return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"');
+    }
+
+    public function parseNumeric(): ParseNumeric
+    {
+        return new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'');
+    }
+
+    /**
+     * @param positive-int $digits maximum digits before decimal separator, without minus sign
+     * @param int<0, max> $decimals maximum digits after decimal separator
+     * @return Max<numeric-string, int>
+     */
+    public function parseDecimal(int $digits, int $decimals): Max
+    {
+        $numericRule = new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'');
+        return $numericRule->maxDigit($digits)->maxDecimal($decimals);
     }
 
     /**
