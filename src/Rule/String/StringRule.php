@@ -88,12 +88,12 @@ final class StringRule extends ReadableRule
 
     public function parseInt(): ParseInt
     {
-        return new ParseInt($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"');
+        return new ParseInt($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'');
     }
 
     public function parseFloat(): ParseFloat
     {
-        return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"');
+        return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'');
     }
 
     public function parseNumeric(): ParseNumeric
@@ -120,7 +120,7 @@ final class StringRule extends ReadableRule
      */
     public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class): ParseDateTime
     {
-        return new ParseDateTime($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"', $format, $dateTimeClass);
+        return new ParseDateTime($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'', $format, $dateTimeClass);
     }
 
     /**
@@ -140,7 +140,7 @@ final class StringRule extends ReadableRule
      */
     public function parseUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
     {
-        return new ParseUrl($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"', $requiredComponents, $forbiddenComponents);
+        return new ParseUrl($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'', $requiredComponents, $forbiddenComponents);
     }
 
     /**
@@ -199,7 +199,7 @@ final class StringRule extends ReadableRule
      */
     public function regex(string $pattern, int $flags = 0): Regex
     {
-        return new Regex($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"', $pattern, $flags);
+        return new Regex($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'', $pattern, $flags);
     }
 
     /**
