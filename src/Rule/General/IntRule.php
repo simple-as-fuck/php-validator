@@ -69,4 +69,13 @@ abstract class IntRule extends ReadableRule
         );
         return $inRule;
     }
+
+    /**
+     * @return MinWithMax<positive-int, int>
+     */
+    final public function positive(): MinWithMax
+    {
+        /** @var MinWithMax<positive-int, int> */
+        return $this->min(1);
+    }
 }
