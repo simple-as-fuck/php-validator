@@ -43,7 +43,7 @@ final class NotEmpty extends ReadableRule
     protected function validate($value): string
     {
         if ($value === '') {
-            throw new ValueMust('not be empty string');
+            throw new ValueMust('be non empty string');
         }
 
         return $value;
