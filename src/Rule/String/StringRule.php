@@ -203,12 +203,13 @@ final class StringRule extends ReadableRule
     }
 
     /**
-     * @param non-empty-array<string> $values
-     * @return InRule<string>
+     * @template Tstring of string
+     * @param non-empty-array<Tstring> $values
+     * @return InRule<Tstring>
      */
     public function in(array $values): InRule
     {
-        /** @var InRule<string> $inRule */
+        /** @var InRule<Tstring> $inRule */
         $inRule = new InRule(
             $this->exceptionFactory(),
             /** @phpstan-ignore-next-line */

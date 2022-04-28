@@ -41,12 +41,13 @@ final class Scheme extends ForwardRule
     }
 
     /**
-     * @param non-empty-array<non-empty-string> $values
-     * @return InRule<non-empty-string>
+     * @template Tstring of non-empty-string
+     * @param non-empty-array<Tstring> $values
+     * @return InRule<Tstring>
      */
     public function in(array $values): InRule
     {
-        /** @var InRule<non-empty-string> $inRule */
+        /** @var InRule<Tstring> $inRule */
         $inRule = new InRule(
             $this->exceptionFactory(),
             /** @phpstan-ignore-next-line */

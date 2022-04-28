@@ -51,12 +51,13 @@ abstract class IntRule extends ReadableRule
     }
 
     /**
-     * @param non-empty-array<int> $values
-     * @return InRule<int>
+     * @template Tint of int
+     * @param non-empty-array<Tint> $values
+     * @return InRule<Tint>
      */
     final public function in(array $values): InRule
     {
-        /** @var InRule<int> $inRule */
+        /** @var InRule<Tint> $inRule */
         $inRule = new InRule(
             $this->exceptionFactory(),
             /** @phpstan-ignore-next-line */
