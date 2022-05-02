@@ -37,7 +37,7 @@ final class Regex extends ReadableRule
         $this->validateChain();
         /** @var Validated<mixed> $validated */
         $validated = new Validated($this->matches);
-        return new RegexMatch($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' regex: "'.$this->pattern.'" match: "'.$matchKey.'"', $matchKey);
+        return new RegexMatch($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' regex: \''.$this->pattern.'\' match: \''.$matchKey.'\'', $matchKey);
     }
 
     /**
@@ -47,10 +47,10 @@ final class Regex extends ReadableRule
     {
         $result = preg_match($this->pattern, $value, $this->matches, $this->flags);
         if ($result === 0) {
-            throw new ValueMust('match regex: "'.$this->pattern.'"');
+            throw new ValueMust('match regex: \''.$this->pattern.'\'');
         }
         if ($result === false) {
-            throw new \RuntimeException('Regex failed with pater: "'.$this->pattern.'"');
+            throw new \RuntimeException('Regex failed with pater: \''.$this->pattern.'\'');
         }
 
         return $value;
