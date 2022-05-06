@@ -10,7 +10,7 @@ use SimpleAsFuck\Validator\Model\ValueMust;
  * @template TValue
  * @extends Comparison<TValue, array<TValue>>
  */
-final class InRule extends Comparison
+class InRule extends Comparison
 {
     /**
      * @param TValue $compared

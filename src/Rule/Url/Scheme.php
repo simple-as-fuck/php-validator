@@ -48,15 +48,15 @@ final class Scheme extends ForwardRule
     public function in(array $values): InRule
     {
         /** @var InRule<Tstring> $inRule */
-        $inRule = new InRule(
+        $inRule = new \SimpleAsFuck\Validator\Rule\String\InRule(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
             /** @phpstan-ignore-next-line */
             new ComparedValue(),
-            $values
+            $values,
+            true
         );
         return $inRule;
     }
