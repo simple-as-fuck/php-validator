@@ -7,7 +7,6 @@ namespace SimpleAsFuck\Validator\Rule\String;
 use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
-use SimpleAsFuck\Validator\Rule\General\Compared;
 
 /**
  * @template Tstring of string
@@ -20,35 +19,36 @@ final class InRule extends \SimpleAsFuck\Validator\Rule\General\InRule
     /**
      * @param RuleChain<Tstring> $ruleChain
      * @param Validated<mixed> $validated
-     * @param Compared<Tstring, array<Tstring>> $compared
-     * @param non-empty-array<Tstring> $comparedTo
+     * @param non-empty-array<Tstring> $values
      */
     public function __construct(
         ?Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        Compared $compared,
-        $comparedTo,
+        array $values,
         bool $ignoreCharacterSize
     ) {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $compared, $comparedTo);
+        if ($ignoreCharacterSize) {
+            /** @var non-empty-array<Tstring> $values */
+            $values = array_map(fn (string $value): string => strtolower($value), $values);
+        }
+
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $values);
         $this->ignoreCharacterSize = $ignoreCharacterSize;
     }
 
     /**
-     * @param Tstring $compared
-     * @param array<Tstring> $comparedTo
+     * @param Tstring $value
+     * @return Tstring
      */
-    protected function compare($compared, $comparedTo): void
+    protected function validate($value): string
     {
         if ($this->ignoreCharacterSize) {
-            /** @var Tstring $compared */
-            $compared = strtolower($compared);
-            /** @var array<Tstring> $comparedTo */
-            $comparedTo = array_map(fn (string $value): string => strtolower($value), $comparedTo);
+            /** @var Tstring $value */
+            $value = strtolower($value);
         }
 
-        parent::compare($compared, $comparedTo);
+        return parent::validate($value);
     }
 }

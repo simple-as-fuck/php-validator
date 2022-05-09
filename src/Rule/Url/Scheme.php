@@ -8,7 +8,6 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\ArrayRule\Key;
-use SimpleAsFuck\Validator\Rule\General\ComparedValue;
 use SimpleAsFuck\Validator\Rule\General\ForwardRule;
 use SimpleAsFuck\Validator\Rule\General\InRule;
 
@@ -53,8 +52,6 @@ final class Scheme extends ForwardRule
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            /** @phpstan-ignore-next-line */
-            new ComparedValue(),
             $values,
             true
         );

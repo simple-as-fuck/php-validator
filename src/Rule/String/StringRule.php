@@ -10,7 +10,6 @@ use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
 use SimpleAsFuck\Validator\Rule\General\CastString;
-use SimpleAsFuck\Validator\Rule\General\ComparedValue;
 use SimpleAsFuck\Validator\Rule\General\InRule;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
@@ -212,12 +211,9 @@ final class StringRule extends ReadableRule
         /** @var InRule<Tstring> $inRule */
         $inRule = new InRule(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            /** @phpstan-ignore-next-line */
-            new ComparedValue(),
             $values
         );
         return $inRule;

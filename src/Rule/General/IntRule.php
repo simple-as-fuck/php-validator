@@ -60,12 +60,9 @@ abstract class IntRule extends ReadableRule
         /** @var InRule<Tint> $inRule */
         $inRule = new InRule(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            /** @phpstan-ignore-next-line */
-            new ComparedValue(),
             $values
         );
         return $inRule;
