@@ -29,6 +29,16 @@ final class ArrayOfString extends Rule
     }
 
     /**
+     * @template TOut
+     * @param callable(StringTypedKey): TOut $callable
+     * @return TOut|null
+     */
+    public function nullable(string $key, callable $callable)
+    {
+        return $this->validateChain() === null ? null : $callable($this->key($key));
+    }
+
+    /**
      * @template TMapped
      * @param callable(StringTypedKey): TMapped $callable
      * @return Collection<TMapped>

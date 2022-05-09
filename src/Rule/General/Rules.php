@@ -63,9 +63,7 @@ final class Rules
      */
     public function nullable(callable $callable)
     {
-        return $this->validated->value() === null ? null : $callable(
-            new ObjectRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName)
-        );
+        return $this->validated->value() === null ? null : $callable($this->object());
     }
 
     public function array(): ArrayRule
