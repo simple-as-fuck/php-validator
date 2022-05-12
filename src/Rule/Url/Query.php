@@ -37,8 +37,8 @@ final class Query extends Component
         return new StringTypedKey(
             $this->exceptionFactory(),
             $ruleChain,
-            $this->validated(),
-            $this->valueName(),
+            $validatedParams,
+            $this->valueName().' parameter '.$key,
             new Key(
                 $this->exceptionFactory(),
                 $ruleChain,
