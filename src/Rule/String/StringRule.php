@@ -25,6 +25,7 @@ final class StringRule extends ReadableRule
 {
     /**
      * @param mixed $value
+     * @param non-empty-string $valueName
      * @return StringRule
      */
     public static function make($value, string $valueName = 'variable'): StringRule

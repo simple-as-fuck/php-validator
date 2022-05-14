@@ -22,11 +22,13 @@ abstract class Rule
     private RuleChain $ruleChain;
     /** @var Validated<mixed> */
     private Validated $validated;
+    /** @var non-empty-string */
     private string $valueName;
 
     /**
      * @param RuleChain<TIn> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName)
     {
@@ -74,6 +76,9 @@ abstract class Rule
         return $this->validated;
     }
 
+    /**
+     * @return non-empty-string
+     */
     final protected function valueName(): string
     {
         return $this->valueName;

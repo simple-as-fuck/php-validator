@@ -11,6 +11,7 @@ final class Validator
 {
     /**
      * @param mixed|null $value
+     * @param non-empty-string $valueName
      */
     final public static function make($value, string $valueName = 'variable'): Rules
     {

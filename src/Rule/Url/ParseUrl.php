@@ -43,6 +43,7 @@ final class ParseUrl extends ReadableRule
      * @param MakeTString $value
      * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
      * @param array<int<0,7>> $forbiddenComponents array of PHP_URL_ constants
+     * @param non-empty-string $valueName
      * @return ParseUrl<MakeTString>
      */
     public static function make(string $value, array $requiredComponents = [], array $forbiddenComponents = [], string $valueName = 'variable'): ParseUrl

@@ -17,11 +17,13 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
 final class Rules
 {
     private ?Exception $exceptionFactory;
+    /** @var non-empty-string */
     private string $valueName;
     /** @var Validated<mixed> */
     private $validated;
 
     /**
+     * @param non-empty-string $valueName
      * @param Validated<mixed> $value
      */
     public function __construct(?Exception $exceptionFactory, string $valueName, Validated $value)
