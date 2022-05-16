@@ -8,9 +8,9 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
-use SimpleAsFuck\Validator\Rule\General\ComparedValue;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
+use SimpleAsFuck\Validator\Rule\General\NoConversion;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 
 /**
@@ -51,7 +51,7 @@ final class ParseDateTime extends ReadableRule
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            new ComparedValue(),
+            new NoConversion(),
             /** @phpstan-ignore-next-line */
             new ToIsoString(),
             $min
@@ -71,7 +71,7 @@ final class ParseDateTime extends ReadableRule
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            new ComparedValue(),
+            new NoConversion(),
             /** @phpstan-ignore-next-line */
             new ToIsoString(),
             new \DateTimeImmutable()
@@ -91,7 +91,7 @@ final class ParseDateTime extends ReadableRule
             $this->validated(),
             $this->valueName(),
             /** @phpstan-ignore-next-line */
-            new ComparedValue(),
+            new NoConversion(),
             new ToIsoString(),
             new \DateTimeImmutable()
         );
@@ -111,7 +111,7 @@ final class ParseDateTime extends ReadableRule
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            new ComparedValue(),
+            new NoConversion(),
             /** @phpstan-ignore-next-line */
             new ToIsoString(),
             $max

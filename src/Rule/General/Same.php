@@ -22,13 +22,13 @@ final class Same extends Comparison
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
-     * @param Compared<TValue, TCompared> $compared
+     * @param Conversion<TValue, TCompared> $conversion
      * @param TCompared $comparedTo
      * @param non-empty-string $comparedName
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Compared $compared, $comparedTo, string $comparedName = 'value')
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Conversion $conversion, $comparedTo, string $comparedName = 'value')
     {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $compared, $comparedTo);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $conversion, $comparedTo);
         $this->comparedName = $comparedName;
     }
 

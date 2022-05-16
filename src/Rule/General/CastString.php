@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\General;
 
 /**
- * @extends ToString<int|float|string|\Stringable>
+ * @extends Conversion<int|float|string|\Stringable, string>
  */
-final class CastString extends ToString
+final class CastString extends Conversion
 {
     /**
      * @param int|float|string|\Stringable $value

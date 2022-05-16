@@ -23,6 +23,6 @@ final class Past extends Max
             throw new \LogicException('Min value rule parameter must be in past');
         }
 
-        return new Min($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $this->compared(), $this->toString(), $min);
+        return new Min($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $this->conversion(), $this->toString(), $min);
     }
 }

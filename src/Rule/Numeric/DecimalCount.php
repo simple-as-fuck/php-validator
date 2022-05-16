@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\Numeric;
 
-use SimpleAsFuck\Validator\Rule\General\Compared;
+use SimpleAsFuck\Validator\Rule\General\Conversion;
 
 /**
- * @extends Compared<numeric-string, int<0, max>>
+ * @extends Conversion<numeric-string, int<0, max>>
  */
-final class DecimalCount extends Compared
+final class DecimalCount extends Conversion
 {
     /**
-     * @param numeric-string $comparedValue
+     * @param numeric-string $value
      * @return int<0, max>
      */
-    public function convert($comparedValue): int
+    public function convert($value): int
     {
-        $decimalSeparatorPos = strpos($comparedValue, '.');
+        $decimalSeparatorPos = strpos($value, '.');
         if ($decimalSeparatorPos === false) {
             return 0;
         }
 
         /** @var int<0, max> $digitCount */
-        $digitCount = strlen($comparedValue) - $decimalSeparatorPos - 1;
+        $digitCount = strlen($value) - $decimalSeparatorPos - 1;
         return $digitCount;
     }
 }

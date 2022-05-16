@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\String;
 
-use SimpleAsFuck\Validator\Rule\General\Compared;
+use SimpleAsFuck\Validator\Rule\General\Conversion;
 
 /**
- * @extends Compared<string, int>
+ * @extends Conversion<string, int<0, max>>
  */
-final class StringLength extends Compared
+final class StringLength extends Conversion
 {
     /**
-     * @param string $comparedValue
+     * @param string $value
+     * @return int<0, max>
      */
-    public function convert($comparedValue): int
+    public function convert($value): int
     {
-        return strlen($comparedValue);
+        return strlen($value);
     }
 }

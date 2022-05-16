@@ -40,7 +40,16 @@ final class StringRule extends ReadableRule
     public function size(int $size): Same
     {
         /** @var Same<non-empty-string, int> $sameRule */
-        $sameRule = new Same($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), new StringLength(), $size, 'string length');
+        $sameRule = new Same(
+            $this->exceptionFactory(),
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            /** @phpstan-ignore-next-line */
+            new StringLength(),
+            $size,
+            'string length'
+        );
         return $sameRule;
     }
 
@@ -130,7 +139,7 @@ final class StringRule extends ReadableRule
      */
     public function parseIsoDateTime(string $dateTimeClass = \DateTimeImmutable::class): ParseDateTime
     {
-        return $this->parseDateTime(\DateTimeInterface::ISO8601, $dateTimeClass);
+        return $this->parseDateTime(\DateTimeInterface::ATOM, $dateTimeClass);
     }
 
     /**

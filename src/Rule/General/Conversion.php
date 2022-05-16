@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\General;
 
 /**
- * @template TCompared
+ * @template TIn
  * @template TOut
  */
-abstract class Compared
+abstract class Conversion
 {
     /**
-     * @param TCompared $comparedValue
+     * @param TIn $value
      * @return TOut
      */
-    abstract public function convert($comparedValue);
+    abstract public function convert($value);
 }

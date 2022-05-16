@@ -22,7 +22,7 @@ abstract class FloatRule extends ReadableRule
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            new ComparedValue(),
+            new NoConversion(),
             /** @phpstan-ignore-next-line */
             new CastString(),
             $min
@@ -42,7 +42,7 @@ abstract class FloatRule extends ReadableRule
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            new ComparedValue(),
+            new NoConversion(),
             /** @phpstan-ignore-next-line */
             new CastString(),
             $max

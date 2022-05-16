@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\ArrayRule;
 
-use SimpleAsFuck\Validator\Rule\General\Compared;
+use SimpleAsFuck\Validator\Rule\General\Conversion;
 
 /**
- * @extends Compared<array, int>
+ * @extends Conversion<array, int>
  */
-final class ArraySize extends Compared
+final class ArraySize extends Conversion
 {
     /**
-     * @param array<mixed> $comparedValue
+     * @param array<mixed> $value
      */
-    public function convert($comparedValue): int
+    public function convert($value): int
     {
-        return count($comparedValue);
+        return count($value);
     }
 }

@@ -15,21 +15,21 @@ use SimpleAsFuck\Validator\Model\Validated;
  */
 abstract class Comparison extends ReadableRule
 {
-    /** @var Compared<TValue, TCompared> */
-    private Compared $compared;
+    /** @var Conversion<TValue, TCompared> */
+    private Conversion $conversion;
     /** @var TCompared */
     private $comparedTo;
 
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
-     * @param Compared<TValue, TCompared> $compared
+     * @param Conversion<TValue, TCompared> $conversion
      * @param TCompared $comparedTo
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Compared $compared, $comparedTo)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Conversion $conversion, $comparedTo)
     {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
-        $this->compared = $compared;
+        $this->conversion = $conversion;
         $this->comparedTo = $comparedTo;
     }
 
@@ -39,7 +39,7 @@ abstract class Comparison extends ReadableRule
      */
     final protected function validate($value)
     {
-        $this->compare($this->compared->convert($value), $this->comparedTo);
+        $this->compare($this->conversion->convert($value), $this->comparedTo);
         return $value;
     }
 
@@ -50,11 +50,11 @@ abstract class Comparison extends ReadableRule
     abstract protected function compare($compared, $comparedTo): void;
 
     /**
-     * @return Compared<TValue, TCompared>
+     * @return Conversion<TValue, TCompared>
      */
-    protected function compared(): Compared
+    protected function conversion(): Conversion
     {
-        return $this->compared;
+        return $this->conversion;
     }
 
     /**

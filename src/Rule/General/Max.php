@@ -16,30 +16,38 @@ use SimpleAsFuck\Validator\Model\ValueMust;
  */
 class Max extends Comparison
 {
-    /** @var ToString<TCompared> */
-    private ToString $toString;
-    /** @var non-empty-string */
+    /** @var Conversion<TCompared, string> */
+    private Conversion $toString;
+    /** @var string */
     private string $comparedName;
 
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
-     * @param Compared<TValue, TCompared> $compared
-     * @param ToString<TCompared> $toString
+     * @param Conversion<TValue, TCompared> $conversion
+     * @param Conversion<TCompared, string> $toString
      * @param TCompared $comparedTo
      * @param non-empty-string $comparedName
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Compared $compared, ToString $toString, $comparedTo, string $comparedName = 'value')
-    {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $compared, $comparedTo);
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        Conversion $conversion,
+        Conversion $toString,
+        $comparedTo,
+        string $comparedName = 'value'
+    ) {
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $conversion, $comparedTo);
         $this->toString = $toString;
         $this->comparedName = $comparedName;
     }
 
     /**
-     * @return ToString<TCompared>
+     * @return Conversion<TCompared, string>
      */
-    final protected function toString(): ToString
+    final protected function toString(): Conversion
     {
         return $this->toString;
     }

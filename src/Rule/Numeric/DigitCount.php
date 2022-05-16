@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\Numeric;
 
-use SimpleAsFuck\Validator\Rule\General\Compared;
+use SimpleAsFuck\Validator\Rule\General\Conversion;
 
 /**
- * @extends Compared<numeric-string, int<0, max>>
+ * @extends Conversion<numeric-string, int<0, max>>
  */
-final class DigitCount extends Compared
+final class DigitCount extends Conversion
 {
     /**
-     * @param numeric-string $comparedValue
+     * @param numeric-string $value
      * @return int<0, max>
      */
-    public function convert($comparedValue): int
+    public function convert($value): int
     {
-        $comparedValue = ltrim($comparedValue, '-');
-        $decimalSeparatorPos = strpos($comparedValue, '.');
+        $value = ltrim($value, '-');
+        $decimalSeparatorPos = strpos($value, '.');
         if ($decimalSeparatorPos === false) {
-            return strlen($comparedValue);
+            return strlen($value);
         }
 
         return $decimalSeparatorPos;
