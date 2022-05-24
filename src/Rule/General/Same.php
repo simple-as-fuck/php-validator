@@ -22,6 +22,7 @@ final class Same extends Comparison
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param Conversion<TValue, TCompared> $conversion
      * @param TCompared $comparedTo
      * @param non-empty-string $comparedName

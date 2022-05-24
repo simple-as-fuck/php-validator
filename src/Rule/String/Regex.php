@@ -11,7 +11,8 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 
 /**
- * @extends ReadableRule<string, string>
+ * @template Tstring of string
+ * @extends ReadableRule<Tstring, Tstring>
  */
 final class Regex extends ReadableRule
 {
@@ -21,8 +22,10 @@ final class Regex extends ReadableRule
     private array $matches;
 
     /**
-     * @param RuleChain<string> $ruleChain
+     * @param RuleChain<Tstring> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
+     * @param non-empty-string $pattern
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $pattern, int $flags = 0)
     {
@@ -41,7 +44,8 @@ final class Regex extends ReadableRule
     }
 
     /**
-     * @param string $value
+     * @param Tstring $value
+     * @return Tstring
      */
     protected function validate($value): string
     {

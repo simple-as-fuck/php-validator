@@ -22,6 +22,7 @@ final class CustomRule extends ReadableRule
     /**
      * @param RuleChain<TIn> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param UserDefinedRule<TIn, TOut> $userDefinedRule
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, UserDefinedRule $userDefinedRule)

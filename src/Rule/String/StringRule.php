@@ -204,7 +204,8 @@ final class StringRule extends ReadableRule
     }
 
     /**
-     * @param string $pattern cool example: '/(?P<matchKey>.*)/'
+     * @param non-empty-string $pattern cool example: '/(?P<matchKey>.*)/'
+     * @return Regex<string>
      */
     public function regex(string $pattern, int $flags = 0): Regex
     {

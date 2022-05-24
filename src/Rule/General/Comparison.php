@@ -23,6 +23,7 @@ abstract class Comparison extends ReadableRule
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param Conversion<TValue, TCompared> $conversion
      * @param TCompared $comparedTo
      */

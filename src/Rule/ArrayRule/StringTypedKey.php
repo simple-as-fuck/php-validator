@@ -21,6 +21,7 @@ final class StringTypedKey extends Rule
     /**
      * @param RuleChain<array<mixed>> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param Key<mixed> $keyRule
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Key $keyRule)

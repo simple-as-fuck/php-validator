@@ -24,8 +24,10 @@ class Min extends Comparison
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param Conversion<TValue, TCompared> $conversion
      * @param Conversion<TCompared, string> $toString
+     * @param TCompared $comparedTo
      * @param non-empty-string $comparedName
      */
     public function __construct(

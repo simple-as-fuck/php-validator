@@ -21,6 +21,7 @@ class Key extends Rule
     /**
      * @param RuleChain<array<TValue>> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param int|string $key
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, $key)

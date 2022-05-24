@@ -26,6 +26,7 @@ final class Collection extends ReadableRule
     /**
      * @param RuleChain<array<mixed>> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param callable(TypedKey): TOut $callable
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, callable $callable)

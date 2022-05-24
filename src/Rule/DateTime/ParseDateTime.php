@@ -27,6 +27,7 @@ final class ParseDateTime extends ReadableRule
     /**
      * @param RuleChain<string> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param non-empty-string $format
      * @param class-string<TDateTime> $dateTimeClass
      */
@@ -92,6 +93,7 @@ final class ParseDateTime extends ReadableRule
             $this->valueName(),
             /** @phpstan-ignore-next-line */
             new NoConversion(),
+            /** @phpstan-ignore-next-line */
             new ToIsoString(),
             new \DateTimeImmutable()
         );

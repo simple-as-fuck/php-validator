@@ -16,6 +16,11 @@ final class ArrayOfString extends Rule
 {
     private ArrayRule $arrayRule;
 
+    /**
+     * @param RuleChain<mixed> $ruleChain
+     * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
+     */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName)
     {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);

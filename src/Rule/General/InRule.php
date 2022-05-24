@@ -21,6 +21,7 @@ class InRule extends ReadableRule
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param non-empty-array<TValue> $values
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, array $values)
