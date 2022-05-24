@@ -64,6 +64,9 @@ if client logic and html is rendered on server is only wasting of its power.
 
 final class ExceptionFactory extends \SimpleAsFuck\Validator\Factory\Exception
 {
+    /**
+     * @param non-empty-string $message
+     */
     public function create(string $message): \Exception
     {
         return new \RuntimeException($message);
