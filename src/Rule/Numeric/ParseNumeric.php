@@ -60,7 +60,7 @@ final class ParseNumeric extends ReadableRule
      */
     protected function validate($value): string
     {
-        if (preg_match('/^-?(0|[1-9]\d+)(\.\d+)?$/', $value) !== 1) {
+        if (preg_match('/^-?(0|[1-9]\d*)(\.\d+)?$/', $value) !== 1) {
             throw new ValueMust('be parsable as number in decimal system');
         }
 
