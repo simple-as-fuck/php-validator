@@ -7,6 +7,7 @@ namespace SimpleAsFuck\Validator\Rule\ArrayRule;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\Custom\UserClassRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
+use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
 
 /**
  * @extends Rule<mixed, array<mixed>>
@@ -45,7 +46,31 @@ final class ArrayRule extends Rule
      */
     public function ofClass(UserClassRule $rule): Collection
     {
-        return new Collection($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), fn (TypedKey $key) => $key->object()->class($rule)->notNull());
+        return $this->of(static fn (TypedKey $key) => $key->object()->class($rule)->notNull());
+    }
+
+    /**
+     * @return Collection<int>
+     */
+    public function ofInt(): Collection
+    {
+        return $this->of(static fn (TypedKey $key): int => $key->int()->notNull());
+    }
+
+    /**
+     * @return Collection<string>
+     */
+    public function ofString(): Collection
+    {
+        return $this->of(static fn (TypedKey $key): string => $key->string()->notNull());
+    }
+
+    /**
+     * @return Collection<ObjectRule>
+     */
+    public function ofObject(): Collection
+    {
+        return $this->of(static fn (TypedKey $key): ObjectRule => $key->object());
     }
 
     /**
