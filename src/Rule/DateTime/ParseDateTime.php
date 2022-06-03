@@ -26,10 +26,11 @@ final class ParseDateTime extends ReadableRule
     private string $dateTimeClass;
 
     /**
+     * @template MakeTDateTime of \DateTimeInterface
      * @param non-empty-string $format
-     * @param class-string<TDateTime> $dateTimeClass
+     * @param class-string<MakeTDateTime> $dateTimeClass
      * @param non-empty-string $valueName
-     * @return ParseDateTime<TDateTime>
+     * @return ParseDateTime<MakeTDateTime>
      */
     public static function make(?string $value, string $format, string $dateTimeClass, string $valueName = 'variable'): ParseDateTime
     {
