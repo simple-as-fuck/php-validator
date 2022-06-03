@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\DateTime;
 
 use SimpleAsFuck\Validator\Factory\Exception;
+use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
@@ -23,6 +24,18 @@ final class ParseDateTime extends ReadableRule
     private string $format;
     /** @var class-string<TDateTime>  */
     private string $dateTimeClass;
+
+    /**
+     * @param non-empty-string $format
+     * @param class-string<TDateTime> $dateTimeClass
+     * @param non-empty-string $valueName
+     * @return ParseDateTime<TDateTime>
+     */
+    public static function make(?string $value, string $format, string $dateTimeClass, string $valueName = 'variable'): ParseDateTime
+    {
+        /** @var mixed $value */
+        return new ParseDateTime(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, $format, $dateTimeClass);
+    }
 
     /**
      * @param RuleChain<string> $ruleChain
