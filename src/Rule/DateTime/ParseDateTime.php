@@ -82,6 +82,9 @@ final class ParseDateTime extends ReadableRule
             throw new ValueMust('be date time in format: "'.$this->format.'"');
         }
 
-        return new $this->dateTimeClass($value);
+        return new $this->dateTimeClass(
+            $dateTime->format('Y-m-d H:i:s.u'),
+            $dateTime->getTimezone()
+        );
     }
 }
