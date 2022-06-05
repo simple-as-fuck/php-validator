@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
-use SimpleAsFuck\Validator\Rule\String\StringRule;
 
 /**
  * @covers \SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime
@@ -17,13 +16,13 @@ final class ParseDateTimeTest extends TestCase
     /**
      * @dataProvider dataProvider
      *
+     * @param non-empty-string $format
      * @param class-string<\DateTimeInterface> $dateTimeClass
      */
     public function test(\DateTimeInterface $expectedDateTime, string $input, string $format, string $dateTimeClass): void
     {
         /** @var mixed $input */
-        $rule = new StringRule(null, new RuleChain(), new Validated($input), '');
-        $rule = new ParseDateTime($rule, '', $format, $dateTimeClass);
+        $rule = new ParseDateTime(null, new RuleChain(), new Validated($input), '', $format, $dateTimeClass);
 
         self::assertInstanceOf($dateTimeClass, $rule->nullable());
         self::assertEquals($expectedDateTime, $rule->nullable());
