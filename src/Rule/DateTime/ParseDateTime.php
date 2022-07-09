@@ -24,18 +24,20 @@ final class ParseDateTime extends ReadableRule
     private string $format;
     /** @var class-string<TDateTime>  */
     private string $dateTimeClass;
+    private ?\DateTimeZone $timeZone;
 
     /**
      * @template MakeTDateTime of \DateTimeInterface
      * @param non-empty-string $format
      * @param class-string<MakeTDateTime> $dateTimeClass
      * @param non-empty-string $valueName
+     * @param non-empty-string|null $timeZone
      * @return ParseDateTime<MakeTDateTime>
      */
-    public static function make(?string $value, string $format, string $dateTimeClass, string $valueName = 'variable'): ParseDateTime
+    public static function make(?string $value, string $format, string $dateTimeClass, string $valueName = 'variable', ?string $timeZone = null): ParseDateTime
     {
         /** @var mixed $value */
-        return new ParseDateTime(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, $format, $dateTimeClass);
+        return new ParseDateTime(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, $format, $dateTimeClass, $timeZone);
     }
 
     /**
@@ -44,13 +46,15 @@ final class ParseDateTime extends ReadableRule
      * @param non-empty-string $valueName
      * @param non-empty-string $format
      * @param class-string<TDateTime> $dateTimeClass
+     * @param non-empty-string|null $timeZone
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $format, string $dateTimeClass)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $format, string $dateTimeClass, ?string $timeZone = null)
     {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
         $this->format = $format;
         $this->dateTimeClass = $dateTimeClass;
+        $this->timeZone = $timeZone !== null ? new \DateTimeZone($timeZone) : null;
     }
 
     /**
@@ -141,7 +145,7 @@ final class ParseDateTime extends ReadableRule
      */
     protected function validate($value): \DateTimeInterface
     {
-        $dateTime = \DateTimeImmutable::createFromFormat($this->format, $value);
+        $dateTime = \DateTimeImmutable::createFromFormat($this->format, $value, $this->timeZone);
         if ($dateTime === false) {
             throw new ValueMust('be date time in format: "'.$this->format.'"');
         }
