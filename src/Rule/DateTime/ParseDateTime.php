@@ -147,7 +147,7 @@ final class ParseDateTime extends ReadableRule
     {
         $dateTime = \DateTimeImmutable::createFromFormat($this->format, $value, $this->timeZone);
         if ($dateTime === false) {
-            throw new ValueMust('be date time in format: "'.$this->format.'"');
+            throw new ValueMust('be date time in format: \''.$this->format.'\' example: \''.(new \DateTimeImmutable('now', $this->timeZone))->format($this->format).'\'');
         }
 
         return new $this->dateTimeClass(
