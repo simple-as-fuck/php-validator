@@ -54,6 +54,14 @@ class Min extends Comparison
     }
 
     /**
+     * @return non-empty-string
+     */
+    final protected function comparedName(): string
+    {
+        return $this->comparedName;
+    }
+
+    /**
      * @param TCompared $compared
      * @param TCompared $comparedTo
      */
