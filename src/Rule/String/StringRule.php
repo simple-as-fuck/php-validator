@@ -105,9 +105,9 @@ final class StringRule extends ReadableRule
         return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'');
     }
 
-    public function parseNumeric(bool $allowLeadingZero = false): ParseNumeric
+    public function parseNumeric(bool $allowLeadingZero = false, bool $allowNegative = true): ParseNumeric
     {
-        return new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'', $allowLeadingZero);
+        return new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'', $allowLeadingZero, $allowNegative);
     }
 
     /**

@@ -19,6 +19,7 @@ use SimpleAsFuck\Validator\Rule\General\Same;
 final class ParseNumeric extends ReadableRule
 {
     private bool $allowLeadingZero;
+    private bool $allowNegative;
 
     /**
      * @param RuleChain<string> $ruleChain
@@ -30,10 +31,12 @@ final class ParseNumeric extends ReadableRule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        bool $allowLeadingZero = false
+        bool $allowLeadingZero = false,
+        bool $allowNegative = true
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
         $this->allowLeadingZero = $allowLeadingZero;
+        $this->allowNegative = $allowNegative;
     }
 
     /**
@@ -143,8 +146,8 @@ final class ParseNumeric extends ReadableRule
      */
     protected function validate($value): string
     {
-        if (preg_match('/^-?(0|['.($this->allowLeadingZero ? 0 : 1).'-9]\d*)(\.\d+)?$/', $value) !== 1) {
-            throw new ValueMust('be parsable as number in decimal system'.($this->allowLeadingZero ? ' (leading zero allowed)' : ''));
+        if (preg_match('/^'.($this->allowNegative ? '-?' : '').'(0|['.($this->allowLeadingZero ? 0 : 1).'-9]\d*)(\.\d+)?$/', $value) !== 1) {
+            throw new ValueMust('be parsable as number in decimal system'.($this->allowLeadingZero ? ' (leading zero allowed)' : '').($this->allowNegative ? '' : ' (negative number disabled)'));
         }
 
         /** @var numeric-string $value */
