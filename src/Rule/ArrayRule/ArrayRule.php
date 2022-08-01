@@ -14,7 +14,10 @@ use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
  */
 final class ArrayRule extends Rule
 {
-    public function key(string $key): TypedKey
+    /**
+     * @param string|int $key
+     */
+    public function key($key): TypedKey
     {
         return new TypedKey($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'['.$key.']', $key);
     }
