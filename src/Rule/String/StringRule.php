@@ -16,6 +16,7 @@ use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Same;
 use SimpleAsFuck\Validator\Rule\Numeric\ParseNumeric;
+use SimpleAsFuck\Validator\Rule\Url\ParseProtocolUrl;
 use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 
 /**
@@ -97,17 +98,17 @@ final class StringRule extends ReadableRule
 
     public function parseInt(): ParseInt
     {
-        return new ParseInt($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'');
+        return new ParseInt($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'');
     }
 
     public function parseFloat(): ParseFloat
     {
-        return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'');
+        return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'');
     }
 
     public function parseNumeric(bool $allowLeadingZero = false, bool $allowNegative = true): ParseNumeric
     {
-        return new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'', $allowLeadingZero, $allowNegative);
+        return new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', $allowLeadingZero, $allowNegative);
     }
 
     /**
@@ -117,7 +118,7 @@ final class StringRule extends ReadableRule
      */
     public function parseDecimal(int $digits, int $decimals): Max
     {
-        $numericRule = new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'');
+        $numericRule = new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'');
         return $numericRule->maxDigit($digits)->maxDecimal($decimals);
     }
 
@@ -130,7 +131,7 @@ final class StringRule extends ReadableRule
      */
     public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class, ?string $timeZone = null): ParseDateTime
     {
-        return new ParseDateTime($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'', $format, $dateTimeClass, $timeZone);
+        return new ParseDateTime($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', $format, $dateTimeClass, $timeZone);
     }
 
     /**
@@ -150,7 +151,7 @@ final class StringRule extends ReadableRule
      */
     public function parseUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
     {
-        return new ParseUrl($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'', $requiredComponents, $forbiddenComponents);
+        return new ParseUrl($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', $requiredComponents, $forbiddenComponents);
     }
 
     /**
@@ -160,12 +161,16 @@ final class StringRule extends ReadableRule
      */
     public function parseHttpUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
     {
-        $requiredComponents[] = PHP_URL_SCHEME;
-        $requiredComponents[] = PHP_URL_HOST;
-        /** @var ParseUrl<non-empty-string> $urlRule */
-        $urlRule = $this->parseUrl($requiredComponents, $forbiddenComponents);
-        $urlRule->scheme()->in(['http', 'https'])->notNull();
-        return $urlRule;
+        return new ParseProtocolUrl(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName().': \''.$this->validateChain(true).'\'',
+            $requiredComponents,
+            $forbiddenComponents,
+            ['http', 'https']
+        );
     }
 
     /**
@@ -175,12 +180,16 @@ final class StringRule extends ReadableRule
      */
     public function parseHttpsUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
     {
-        $requiredComponents[] = PHP_URL_SCHEME;
-        $requiredComponents[] = PHP_URL_HOST;
-        /** @var ParseUrl<non-empty-string> $urlRule */
-        $urlRule = $this->parseUrl($requiredComponents, $forbiddenComponents);
-        $urlRule->scheme()->in(['https'])->notNull();
-        return $urlRule;
+        return new ParseProtocolUrl(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName().': \''.$this->validateChain(true).'\'',
+            $requiredComponents,
+            $forbiddenComponents,
+            ['https']
+        );
     }
 
     /**
@@ -210,7 +219,7 @@ final class StringRule extends ReadableRule
      */
     public function regex(string $pattern, int $flags = 0): Regex
     {
-        return new Regex($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain().'\'', $pattern, $flags);
+        return new Regex($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', $pattern, $flags);
     }
 
     /**
