@@ -22,7 +22,7 @@ final class StringRuleTest extends TestCase
      */
     public function testParseHttpsUrl(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new StringRule(null, new RuleChain(), new Validated($value), '');
+        $rule = new StringRule(null, new RuleChain(), new Validated($value), 'value');
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(ValueMust::class);
@@ -68,7 +68,7 @@ final class StringRuleTest extends TestCase
      */
     public function testParseHttpUrl(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new StringRule(null, new RuleChain(), new Validated($value), '');
+        $rule = new StringRule(null, new RuleChain(), new Validated($value), 'value');
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(ValueMust::class);
