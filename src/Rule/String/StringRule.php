@@ -16,6 +16,7 @@ use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Same;
+use SimpleAsFuck\Validator\Rule\Url\ParseProtocolUrl;
 use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 
 /**
@@ -64,12 +65,12 @@ final class StringRule extends ReadableRule
 
     public function parseInt(): ParseInt
     {
-        return new ParseInt($this, $this->valueName().': "'.$this->validateChain().'"');
+        return new ParseInt($this, $this->valueName().': "'.$this->validateChain(true).'"');
     }
 
     public function parseFloat(): ParseFloat
     {
-        return new ParseFloat($this, $this->valueName().': "'.$this->validateChain().'"');
+        return new ParseFloat($this, $this->valueName().': "'.$this->validateChain(true).'"');
     }
 
     /**
@@ -80,7 +81,7 @@ final class StringRule extends ReadableRule
      */
     public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class): ParseDateTime
     {
-        return new ParseDateTime($this, $this->valueName().': "'.$this->validateChain().'"', $format, $dateTimeClass);
+        return new ParseDateTime($this, $this->valueName().': "'.$this->validateChain(true).'"', $format, $dateTimeClass);
     }
 
     /**
@@ -100,7 +101,7 @@ final class StringRule extends ReadableRule
      */
     public function parseUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
     {
-        return new ParseUrl($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain().'"', $requiredComponents, $forbiddenComponents);
+        return new ParseUrl($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': "'.$this->validateChain(true).'"', $requiredComponents, $forbiddenComponents);
     }
 
     /**
@@ -110,12 +111,16 @@ final class StringRule extends ReadableRule
      */
     public function parseHttpUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
     {
-        $requiredComponents[] = PHP_URL_SCHEME;
-        $requiredComponents[] = PHP_URL_HOST;
-        $urlRule = $this->parseUrl($requiredComponents, $forbiddenComponents);
-        $urlRule->scheme()->in(['http', 'https'])->notNull();
-        /** @phpstan-ignore-next-line */
-        return $urlRule;
+        return new ParseProtocolUrl(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName().': \''.$this->validateChain(true).'\'',
+            $requiredComponents,
+            $forbiddenComponents,
+            ['http', 'https']
+        );
     }
 
     /**
@@ -125,12 +130,16 @@ final class StringRule extends ReadableRule
      */
     public function parseHttpsUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
     {
-        $requiredComponents[] = PHP_URL_SCHEME;
-        $requiredComponents[] = PHP_URL_HOST;
-        $urlRule = $this->parseUrl($requiredComponents, $forbiddenComponents);
-        $urlRule->scheme()->in(['https'])->notNull();
-        /** @phpstan-ignore-next-line */
-        return $urlRule;
+        return new ParseProtocolUrl(
+            $this->exceptionFactory(),
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName().': \''.$this->validateChain(true).'\'',
+            $requiredComponents,
+            $forbiddenComponents,
+            ['https']
+        );
     }
 
     /**
@@ -159,7 +168,7 @@ final class StringRule extends ReadableRule
      */
     public function regex(string $pattern, int $flags = 0): Regex
     {
-        return new Regex($this, $this->valueName().': "'.$this->validateChain().'"', $pattern, $flags);
+        return new Regex($this, $this->valueName().': "'.$this->validateChain(true).'"', $pattern, $flags);
     }
 
     /**

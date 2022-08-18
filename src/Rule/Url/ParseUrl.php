@@ -18,7 +18,7 @@ use SimpleAsFuck\Validator\Rule\String\StringLength;
  * @template TString of string
  * @extends ReadableRule<TString, TString>
  */
-final class ParseUrl extends ReadableRule
+class ParseUrl extends ReadableRule
 {
     private const COMPONENT_KEY_MAP = [
         PHP_URL_SCHEME => 'scheme',
@@ -148,6 +148,14 @@ final class ParseUrl extends ReadableRule
         $this->validateChain();
         /** @phpstan-ignore-next-line */
         return new Component($this->exceptionFactory(), new RuleChain(), new Validated($this->urlComponents), $this->valueName().' url fragment', 'fragment');
+    }
+
+    /**
+     * @return array<literal-string&non-empty-string, int|string>
+     */
+    final protected function urlComponents(): array
+    {
+        return $this->urlComponents;
     }
 
     /**
