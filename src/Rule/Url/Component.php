@@ -16,8 +16,8 @@ use SimpleAsFuck\Validator\Rule\General\ForwardRule;
  */
 class Component extends ForwardRule
 {
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $componentName)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $componentName, bool $useSecondaryOutput = false)
     {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, new Key($exceptionFactory, $ruleChain, $validated, $valueName, $componentName));
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, new Key($exceptionFactory, $ruleChain, $validated, $valueName, $componentName), $useSecondaryOutput);
     }
 }
