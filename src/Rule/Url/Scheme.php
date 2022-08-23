@@ -20,7 +20,7 @@ final class Scheme extends ForwardRule
      * @param RuleChain<array<non-empty-string>> $ruleChain
      * @param Validated<mixed> $validated
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $componentName)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $componentName, bool $useSecondaryOutput = false)
     {
         parent::__construct(
             $exceptionFactory,
@@ -35,7 +35,8 @@ final class Scheme extends ForwardRule
                 $validated,
                 $valueName,
                 $componentName
-            )
+            ),
+            $useSecondaryOutput
         );
     }
 

@@ -24,9 +24,9 @@ abstract class ForwardRule extends ReadableRule
      * @param non-empty-string $valueName
      * @param Rule<TIn, TOut> $forwardedRule
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Rule $forwardedRule)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Rule $forwardedRule, bool $useSecondaryOutput = false)
     {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $useSecondaryOutput);
 
         $this->forwardedRule = $forwardedRule;
     }

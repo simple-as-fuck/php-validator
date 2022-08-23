@@ -24,18 +24,21 @@ abstract class Rule
     private Validated $validated;
     /** @var non-empty-string */
     private string $valueName;
+    /** @var bool todo rewrite this un clean design in newest version of package, this is only for not breaking fix */
+    private bool $useSecondaryOutput;
 
     /**
      * @param RuleChain<TIn> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, bool $useSecondaryOutput = false)
     {
         $this->exceptionFactory = $exceptionFactory;
         $this->ruleChain = $ruleChain;
         $this->validated = $validated;
         $this->valueName = $valueName;
+        $this->useSecondaryOutput = $useSecondaryOutput;
     }
 
     /**
@@ -54,6 +57,16 @@ abstract class Rule
      * @throws ValueMust
      */
     abstract protected function validate($value);
+
+    /**
+     * @todo rewrite this un clean design in newest version of package, this is only for not breaking fix
+     * @return Validated<mixed>
+     */
+    protected function secondaryOutput(): Validated
+    {
+        /** @var Validated<mixed> */
+        return new Validated(null);
+    }
 
     final protected function exceptionFactory(): ?Exception
     {
@@ -90,21 +103,28 @@ abstract class Rule
     final protected function validateChain(bool $failAsNull = false)
     {
         $value = $this->validated->value();
+        $secondaryOutput = new Validated(null);
 
         foreach ($this->ruleChain->rules() as $rule) {
-            $value = $this->validateRule($rule, $value, $failAsNull);
+            $value = $this->validateRule($rule, $value, $secondaryOutput, $failAsNull);
+            $secondaryOutput = $rule->secondaryOutput();
         }
-        return $this->validateRule($this, $value, $failAsNull);
+        return $this->validateRule($this, $value, $secondaryOutput, $failAsNull);
     }
 
     /**
      * @template TRuleOut
      * @param Rule<mixed, TRuleOut> $rule
      * @param mixed $value
+     * @param Validated<mixed> $secondaryOutput
      * @return TRuleOut|null
      */
-    private function validateRule(Rule $rule, &$value, bool $failAsNull)
+    private function validateRule(Rule $rule, &$value, Validated $secondaryOutput, bool $failAsNull)
     {
+        // @todo rewrite this un clean design in newest version of package, this is only for not breaking fix
+        if ($rule->useSecondaryOutput) {
+            $value = $secondaryOutput->value();
+        }
         if ($value === null) {
             return null;
         }
