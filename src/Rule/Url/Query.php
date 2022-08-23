@@ -18,9 +18,9 @@ final class Query extends Component
     /** @var array<mixed> */
     private array $parsedParams;
 
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $componentName)
+    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $componentName, bool $useSecondaryOutput = false)
     {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $componentName);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $componentName, $useSecondaryOutput);
         $this->parsedParams = [];
     }
 
