@@ -122,6 +122,9 @@ abstract class Rule
     private function validateRule(Rule $rule, &$value, Validated $secondaryOutput, bool $failAsNull)
     {
         // @todo rewrite this un clean design in newest version of package, this is only for not breaking fix
+        if ($value === null) {
+            return null;
+        }
         if ($rule->useSecondaryOutput) {
             $value = $secondaryOutput->value();
         }

@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
-use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 
 /**
@@ -20,10 +20,10 @@ final class ParseUrlTest extends TestCase
      */
     public function testPort(?int $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(null, new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
@@ -44,7 +44,7 @@ final class ParseUrlTest extends TestCase
             [55, null, 'www.example.com:55', true],
             [null, null, '', false],
             [null, null, '', true],
-            [null, 'be valid url', 'https://', false],
+            [null, 'value must be valid url', 'https://', false],
             [null, null, 'https://', true],
         ];
     }
@@ -56,10 +56,10 @@ final class ParseUrlTest extends TestCase
      */
     public function testHost(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(null, new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
@@ -92,10 +92,10 @@ final class ParseUrlTest extends TestCase
      */
     public function testPass(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(null, new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
@@ -128,10 +128,10 @@ final class ParseUrlTest extends TestCase
      */
     public function testFragment(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(null, new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
@@ -164,10 +164,10 @@ final class ParseUrlTest extends TestCase
      */
     public function testUser(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(null, new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
@@ -200,10 +200,10 @@ final class ParseUrlTest extends TestCase
      */
     public function testQuery(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(null, new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
@@ -236,10 +236,10 @@ final class ParseUrlTest extends TestCase
      */
     public function testScheme(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(null, new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
@@ -272,10 +272,10 @@ final class ParseUrlTest extends TestCase
      */
     public function testPath(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(null, new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 

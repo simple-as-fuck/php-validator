@@ -7,6 +7,7 @@ namespace SimpleAsFuck\Validator\Rule\Url;
 use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
+use SimpleAsFuck\Validator\Model\ValueMust;
 
 /**
  * @extends ParseUrl<non-empty-string>
@@ -46,10 +47,10 @@ final class ParseProtocolUrl extends ParseUrl
     protected function validate($value): string
     {
         $value = parent::validate($value);
-        /** @var Validated<mixed> $validated */
-        $validated = new Validated($this->urlComponents());
-        $scheme = new Scheme($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' url scheme', 'scheme');
-        $scheme->in($this->requiredProtocols)->validateChain();
+        if (! in_array($this->urlComponents()['scheme'], $this->requiredProtocols, true)) {
+            throw new ValueMust('contains one of url schemes: '.implode(', ', $this->requiredProtocols));
+        }
+
         return $value;
     }
 }

@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use SimpleAsFuck\Validator\Model\RuleChain as RuleChain;
-use SimpleAsFuck\Validator\Model\Validated as Validated;
-use SimpleAsFuck\Validator\Model\ValueMust as ValueMust;
+use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
+use SimpleAsFuck\Validator\Model\RuleChain;
+use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\String\StringRule;
 
 /**
@@ -22,10 +22,10 @@ final class StringRuleTest extends TestCase
      */
     public function testParseHttpsUrl(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new StringRule(null, new RuleChain(), new Validated($value), 'value');
+        $rule = new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value');
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
@@ -43,19 +43,19 @@ final class StringRuleTest extends TestCase
             [null, null, null, true],
             [null, null, null, false],
             [null, null, '', true],
-            [null, 'contains scheme url component', '', false],
+            [null, 'value: \'\' must contains scheme url component', '', false],
             [null, null, 'ftp://', true],
-            [null, 'be valid url', 'ftp://', false],
+            [null, 'value: \'ftp://\' must be valid url', 'ftp://', false],
             [null, null, 'sadjfguerg', true],
-            [null, 'contains scheme url component', 'sadjfguerg', false],
+            [null, 'value: \'sadjfguerg\' must contains scheme url component', 'sadjfguerg', false],
             [null, null, 'ftp://test', true],
-            [null, 'be in values list: https', 'ftp://test', false],
+            [null, 'value: \'ftp://test\' must contains one of url schemes: https', 'ftp://test', false],
             ['https://test', null, 'https://test', true],
             ['https://test', null, 'https://test', false],
             [null, null, 'http://test', true],
-            [null, 'be in values list: https', 'http://test', false],
+            [null, 'value: \'http://test\' must contains one of url schemes: https', 'http://test', false],
             [null, null, 5, true],
-            [null, 'be string', 5, false],
+            [null, 'value must be string', 5, false],
         ];
     }
 
@@ -68,10 +68,10 @@ final class StringRuleTest extends TestCase
      */
     public function testParseHttpUrl(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
     {
-        $rule = new StringRule(null, new RuleChain(), new Validated($value), 'value');
+        $rule = new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value');
 
         if ($expectedExceptionMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
@@ -89,19 +89,19 @@ final class StringRuleTest extends TestCase
             [null, null, null, true],
             [null, null, null, false],
             [null, null, '', true],
-            [null, 'contains scheme url component', '', false],
+            [null, 'value: \'\' must contains scheme url component', '', false],
             [null, null, 'ftp://', true],
-            [null, 'be valid url', 'ftp://', false],
+            [null, 'value: \'ftp://\' must be valid url', 'ftp://', false],
             [null, null, 'sadjfguerg', true],
-            [null, 'contains scheme url component', 'sadjfguerg', false],
+            [null, 'value: \'sadjfguerg\' must contains scheme url component', 'sadjfguerg', false],
             [null, null, 'ftp://test', true],
-            [null, 'be in values list: http, https', 'ftp://test', false],
+            [null, 'value: \'ftp://test\' must contains one of url schemes: http, https', 'ftp://test', false],
             ['https://test', null, 'https://test', true],
             ['https://test', null, 'https://test', false],
             ['http://test', null, 'http://test', true],
             ['http://test', null, 'http://test', false],
             [null, null, 5, true],
-            [null, 'be string', 5, false],
+            [null, 'value must be string', 5, false],
         ];
     }
 }
