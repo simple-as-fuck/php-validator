@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 
 use PHPUnit\Framework\TestCase;
+use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
@@ -22,7 +23,7 @@ final class ParseDateTimeTest extends TestCase
     public function test(\DateTimeInterface $expectedDateTime, string $input, string $format, string $dateTimeClass): void
     {
         /** @var mixed $input */
-        $rule = new ParseDateTime(null, new RuleChain(), new Validated($input), '', $format, $dateTimeClass);
+        $rule = new ParseDateTime(new UnexpectedValueException(), new RuleChain(), new Validated($input), 'value', $format, $dateTimeClass);
 
         self::assertInstanceOf($dateTimeClass, $rule->nullable());
         self::assertEquals($expectedDateTime, $rule->nullable());
