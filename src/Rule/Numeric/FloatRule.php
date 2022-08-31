@@ -17,7 +17,7 @@ final class FloatRule extends \SimpleAsFuck\Validator\Rule\General\FloatRule
     protected function validate($value): float
     {
         if (! is_int($value) && ! is_float($value)) {
-            throw new ValueMust('be float');
+            throw new ValueMust('be float, '.gettype($value).' given');
         }
 
         return $value;

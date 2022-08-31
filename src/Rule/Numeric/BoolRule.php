@@ -18,7 +18,7 @@ final class BoolRule extends ReadableRule
     protected function validate($value): bool
     {
         if (! is_bool($value)) {
-            throw new ValueMust('be boolean');
+            throw new ValueMust('be boolean, '.gettype($value).' given');
         }
 
         return $value;

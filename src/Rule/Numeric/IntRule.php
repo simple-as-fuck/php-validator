@@ -17,7 +17,7 @@ final class IntRule extends \SimpleAsFuck\Validator\Rule\General\IntRule
     protected function validate($value): int
     {
         if (! is_int($value)) {
-            throw new ValueMust('be integer');
+            throw new ValueMust('be integer, '.gettype($value).' given');
         }
 
         return $value;

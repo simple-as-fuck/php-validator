@@ -44,7 +44,7 @@ final class ObjectRule extends Rule
     protected function validate($value): object
     {
         if (! is_object($value)) {
-            throw new ValueMust('be object');
+            throw new ValueMust('be object, '.gettype($value).' given');
         }
 
         return $value;
