@@ -163,7 +163,6 @@ final class StringRule extends ReadableRule
     {
         return new ParseProtocolUrl(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().': \''.$this->validateChain(true).'\'',
@@ -182,7 +181,6 @@ final class StringRule extends ReadableRule
     {
         return new ParseProtocolUrl(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().': \''.$this->validateChain(true).'\'',

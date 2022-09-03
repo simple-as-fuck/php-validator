@@ -16,7 +16,7 @@ use SimpleAsFuck\Validator\Rule\String\StringLength;
 
 /**
  * @template TString of string
- * @extends ReadableRule<TString, TString>
+ * @extends ReadableRule<string, TString>
  */
 class ParseUrl extends ReadableRule
 {
@@ -56,6 +56,9 @@ class ParseUrl extends ReadableRule
     }
 
     /**
+     * @param RuleChain<string> $ruleChain
+     * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
      * @param array<int<0,7>> $forbiddenComponents array of PHP_URL_ constants
      */
@@ -222,7 +225,7 @@ class ParseUrl extends ReadableRule
     }
 
     /**
-     * @param TString $value
+     * @param string $value
      * @return TString
      */
     protected function validate($value)
@@ -248,6 +251,7 @@ class ParseUrl extends ReadableRule
 
         $this->urlComponents = $components;
 
+        /** @var TString */
         return $value;
     }
 

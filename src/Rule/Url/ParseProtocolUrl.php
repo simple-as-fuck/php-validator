@@ -18,7 +18,7 @@ final class ParseProtocolUrl extends ParseUrl
     private array $requiredProtocols;
 
     /**
-     * @param RuleChain<non-empty-string> $ruleChain
+     * @param RuleChain<string> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
@@ -41,7 +41,7 @@ final class ParseProtocolUrl extends ParseUrl
     }
 
     /**
-     * @param non-empty-string $value
+     * @param string $value
      * @return non-empty-string
      */
     protected function validate($value): string
@@ -51,6 +51,7 @@ final class ParseProtocolUrl extends ParseUrl
             throw new ValueMust('contains one of url schemes: '.implode(', ', $this->requiredProtocols));
         }
 
+        /** @var non-empty-string */
         return $value;
     }
 }
