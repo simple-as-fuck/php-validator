@@ -223,19 +223,17 @@ final class StringRule extends ReadableRule
     /**
      * @template Tstring of string
      * @param non-empty-array<Tstring> $values
-     * @return InRule<Tstring>
+     * @return InRule<string, Tstring>
      */
     public function in(array $values): InRule
     {
-        /** @var InRule<Tstring> $inRule */
-        $inRule = new InRule(
+        return new InRule(
             $this->exceptionFactory(),
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
             $values
         );
-        return $inRule;
     }
 
     /**

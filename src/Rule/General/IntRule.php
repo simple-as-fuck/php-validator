@@ -53,19 +53,17 @@ abstract class IntRule extends ReadableRule
     /**
      * @template Tint of int
      * @param non-empty-array<Tint> $values
-     * @return InRule<Tint>
+     * @return InRule<int, Tint>
      */
     final public function in(array $values): InRule
     {
-        /** @var InRule<Tint> $inRule */
-        $inRule = new InRule(
+        return new InRule(
             $this->exceptionFactory(),
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
             $values
         );
-        return $inRule;
     }
 
     /**

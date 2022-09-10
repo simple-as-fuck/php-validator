@@ -9,17 +9,18 @@ use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 
 /**
- * @template Tstring of string
- * @extends \SimpleAsFuck\Validator\Rule\General\InRule<Tstring>
+ * @template Tin of string
+ * @template Tout of string
+ * @extends \SimpleAsFuck\Validator\Rule\General\InRule<Tin, Tout>
  */
 final class InRule extends \SimpleAsFuck\Validator\Rule\General\InRule
 {
     private bool $ignoreCharacterSize;
 
     /**
-     * @param RuleChain<Tstring> $ruleChain
+     * @param RuleChain<Tin> $ruleChain
      * @param Validated<mixed> $validated
-     * @param non-empty-array<Tstring> $values
+     * @param non-empty-array<Tout> $values
      */
     public function __construct(
         ?Exception $exceptionFactory,
@@ -30,7 +31,7 @@ final class InRule extends \SimpleAsFuck\Validator\Rule\General\InRule
         bool $ignoreCharacterSize
     ) {
         if ($ignoreCharacterSize) {
-            /** @var non-empty-array<Tstring> $values */
+            /** @var non-empty-array<Tout> $values */
             $values = array_map(fn (string $value): string => strtolower($value), $values);
         }
 
@@ -39,13 +40,13 @@ final class InRule extends \SimpleAsFuck\Validator\Rule\General\InRule
     }
 
     /**
-     * @param Tstring $value
-     * @return Tstring
+     * @param Tin $value
+     * @return Tout
      */
     protected function validate($value): string
     {
         if ($this->ignoreCharacterSize) {
-            /** @var Tstring $value */
+            /** @var Tin $value */
             $value = strtolower($value);
         }
 

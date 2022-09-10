@@ -10,19 +10,20 @@ use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 
 /**
- * @template TValue
- * @extends ReadableRule<TValue, TValue>
+ * @template Tin
+ * @template Tout
+ * @extends ReadableRule<Tin, Tout>
  */
 class InRule extends ReadableRule
 {
-    /** @var non-empty-array<TValue> */
+    /** @var non-empty-array<Tout> */
     private array $values;
 
     /**
-     * @param RuleChain<TValue> $ruleChain
+     * @param RuleChain<Tin> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
-     * @param non-empty-array<TValue> $values
+     * @param non-empty-array<Tout> $values
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, array $values)
     {
@@ -31,8 +32,8 @@ class InRule extends ReadableRule
     }
 
     /**
-     * @param TValue $value
-     * @return TValue
+     * @param Tin $value
+     * @return Tout
      */
     protected function validate($value)
     {

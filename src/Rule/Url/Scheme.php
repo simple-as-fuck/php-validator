@@ -43,12 +43,11 @@ final class Scheme extends ForwardRule
     /**
      * @template Tstring of non-empty-string
      * @param non-empty-array<Tstring> $values
-     * @return InRule<Tstring>
+     * @return InRule<non-empty-string, Tstring>
      */
     public function in(array $values): InRule
     {
-        /** @var InRule<Tstring> $inRule */
-        $inRule = new \SimpleAsFuck\Validator\Rule\String\InRule(
+        return new \SimpleAsFuck\Validator\Rule\String\InRule(
             $this->exceptionFactory(),
             $this->ruleChain(),
             $this->validated(),
@@ -56,6 +55,5 @@ final class Scheme extends ForwardRule
             $values,
             true
         );
-        return $inRule;
     }
 }
