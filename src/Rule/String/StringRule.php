@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\String;
 
+use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
@@ -24,14 +25,33 @@ use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
  */
 final class StringRule extends ReadableRule
 {
+    private bool $emptyAsNull;
+
     /**
      * @param mixed $value
      * @param non-empty-string $valueName
      * @return StringRule
      */
-    public static function make($value, string $valueName = 'variable'): StringRule
+    public static function make($value, string $valueName = 'variable', bool $emptyAsNull = false): StringRule
     {
-        return new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName);
+        return new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, false, $emptyAsNull);
+    }
+
+    /**
+     * @param RuleChain<mixed> $ruleChain
+     * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
+     */
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        bool $useSecondaryOutput = false,
+        bool $emptyAsNull = false
+    ) {
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $useSecondaryOutput);
+        $this->emptyAsNull = $emptyAsNull;
     }
 
     /**
@@ -239,10 +259,14 @@ final class StringRule extends ReadableRule
     /**
      * @param mixed $value
      */
-    protected function validate($value): string
+    protected function validate($value): ?string
     {
         if (! is_string($value)) {
             throw new ValueMust('be string, '.gettype($value).' given');
+        }
+
+        if ($this->emptyAsNull && $value === '') {
+            return null;
         }
 
         return $value;
