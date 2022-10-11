@@ -145,9 +145,13 @@ final class ParseDateTime extends ReadableRule
      */
     protected function validate($value): \DateTimeInterface
     {
-        $dateTime = \DateTimeImmutable::createFromFormat($this->format, $value, $this->timeZone);
+        $dateTime = \DateTime::createFromFormat($this->format, $value, $this->timeZone);
         if ($dateTime === false) {
             throw new ValueMust('be date time in format: \''.$this->format.'\' example: \''.(new \DateTimeImmutable('now', $this->timeZone))->format($this->format).'\'');
+        }
+
+        if ($this->timeZone !== null) {
+            $dateTime->setTimezone($this->timeZone);
         }
 
         return new $this->dateTimeClass(
