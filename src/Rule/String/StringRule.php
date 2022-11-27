@@ -232,12 +232,22 @@ final class StringRule extends ReadableRule
     }
 
     /**
-     * @param non-empty-string $pattern cool example: '/(?P<matchKey>.*)/'
+     * @param non-empty-string $pattern cool example: '/.+/'
+     * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags
      * @return Regex<string>
      */
     public function regex(string $pattern, int $flags = 0): Regex
     {
         return new Regex($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', $pattern, $flags);
+    }
+
+    /**
+     * @param non-empty-string $pattern cool example: '/(?P<matchKey>.*)/'
+     * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags
+     */
+    public function parseRegex(string $pattern, int $flags = 0): ParseRegex
+    {
+        return new ParseRegex($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', $pattern, $flags);
     }
 
     /**
