@@ -17,6 +17,7 @@ use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 final class Regex extends ReadableRule
 {
     private string $pattern;
+    /** @var PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 */
     private int $flags;
     /** @var array<string> */
     private array $matches;
@@ -26,6 +27,7 @@ final class Regex extends ReadableRule
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-string $pattern
+     * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $pattern, int $flags = 0)
     {
@@ -35,6 +37,9 @@ final class Regex extends ReadableRule
         $this->matches = [];
     }
 
+    /**
+     * @deprecated will be removed use: ParseRegex::match (Validator::make()->string()->parseRegex()->match())
+     */
     public function match(string $matchKey): RegexMatch
     {
         $this->validateChain();
