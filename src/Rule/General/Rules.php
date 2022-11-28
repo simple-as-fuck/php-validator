@@ -16,21 +16,15 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
 
 final class Rules
 {
-    private ?Exception $exceptionFactory;
-    /** @var non-empty-string */
-    private string $valueName;
-    /** @var Validated<mixed> */
-    private $validated;
-
     /**
      * @param non-empty-string $valueName
-     * @param Validated<mixed> $value
+     * @param Validated<mixed> $validated
      */
-    public function __construct(?Exception $exceptionFactory, string $valueName, Validated $value)
-    {
-        $this->exceptionFactory = $exceptionFactory;
-        $this->valueName = $valueName;
-        $this->validated = $value;
+    public function __construct(
+        private ?Exception $exceptionFactory,
+        private string $valueName,
+        private Validated $validated
+    ) {
     }
 
     public function int(): IntRule
@@ -45,7 +39,7 @@ final class Rules
 
     public function string(bool $emptyAsNull = false): StringRule
     {
-        return new StringRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, false, $emptyAsNull);
+        return new StringRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, $emptyAsNull);
     }
 
     public function bool(): BoolRule

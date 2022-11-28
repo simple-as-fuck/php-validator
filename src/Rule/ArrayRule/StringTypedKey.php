@@ -15,24 +15,25 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
  */
 final class StringTypedKey extends Rule
 {
-    /** @var Key<mixed> */
-    private Key $keyRule;
-
     /**
      * @param RuleChain<array<mixed>> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param Key<mixed> $keyRule
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Key $keyRule)
-    {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private Key $keyRule
+    ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
-        $this->keyRule = $keyRule;
     }
 
     public function string(bool $emptyAsNull = false): StringRule
     {
-        return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), false, $emptyAsNull);
+        return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $emptyAsNull);
     }
 
     public function array(): ArrayOfString

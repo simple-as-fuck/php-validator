@@ -33,7 +33,7 @@ final class Property extends Rule
 
     public function string(bool $emptyAsNull = false): StringRule
     {
-        return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), false, $emptyAsNull);
+        return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $emptyAsNull);
     }
 
     public function int(): IntRule

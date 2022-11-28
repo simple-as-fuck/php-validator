@@ -15,19 +15,19 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
  */
 class Key extends Rule
 {
-    /** @var int|string */
-    private $key;
-
     /**
      * @param RuleChain<array<TValue>> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
-     * @param int|string $key
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, $key)
-    {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private int|string $key
+    ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
-        $this->key = $key;
     }
 
     /**

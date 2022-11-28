@@ -15,20 +15,20 @@ use SimpleAsFuck\Validator\Model\Validated;
  */
 abstract class ForwardRule extends ReadableRule
 {
-    /** @var Rule<TIn, TOut> */
-    private Rule $forwardedRule;
-
     /**
      * @param RuleChain<TIn> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param Rule<TIn, TOut> $forwardedRule
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Rule $forwardedRule, bool $useSecondaryOutput = false)
-    {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $useSecondaryOutput);
-
-        $this->forwardedRule = $forwardedRule;
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private Rule $forwardedRule
+    ) {
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
     /**

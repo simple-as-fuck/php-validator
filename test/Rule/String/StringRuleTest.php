@@ -14,13 +14,12 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
 final class StringRuleTest extends TestCase
 {
     /**
-     * @dataProvider dataProviderParseHttpsUrl
+     * @dataProvider dataProviderHttpsUrl
      *
      * @param non-empty-string|null $expectedValue
      * @param non-empty-string|null $expectedExceptionMessage
-     * @param mixed $value
      */
-    public function testParseHttpsUrl(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testHttpsUrl(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value');
 
@@ -29,7 +28,7 @@ final class StringRuleTest extends TestCase
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
-        $value = $rule->parseHttpsUrl()->nullable($failAsNull);
+        $value = $rule->httpsUrl()->nullable($failAsNull);
 
         self::assertSame($expectedValue, $value);
     }
@@ -37,17 +36,17 @@ final class StringRuleTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderParseHttpsUrl(): array
+    public function dataProviderHttpsUrl(): array
     {
         return [
             [null, null, null, true],
             [null, null, null, false],
             [null, null, '', true],
-            [null, 'value: \'\' must contains scheme url component', '', false],
+            [null, 'value: \'\' must contains one of url schemes: https', '', false],
             [null, null, 'ftp://', true],
             [null, 'value: \'ftp://\' must be valid url', 'ftp://', false],
             [null, null, 'sadjfguerg', true],
-            [null, 'value: \'sadjfguerg\' must contains scheme url component', 'sadjfguerg', false],
+            [null, 'value: \'sadjfguerg\' must contains one of url schemes: https', 'sadjfguerg', false],
             [null, null, 'ftp://test', true],
             [null, 'value: \'ftp://test\' must contains one of url schemes: https', 'ftp://test', false],
             ['https://test', null, 'https://test', true],
@@ -60,13 +59,12 @@ final class StringRuleTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderParseHttpUrl
+     * @dataProvider dataProviderHttpUrl
      *
      * @param non-empty-string|null $expectedValue
      * @param non-empty-string|null $expectedExceptionMessage
-     * @param mixed $value
      */
-    public function testParseHttpUrl(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testHttpUrl(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value');
 
@@ -75,7 +73,7 @@ final class StringRuleTest extends TestCase
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
-        $value = $rule->parseHttpUrl()->nullable($failAsNull);
+        $value = $rule->httpUrl()->nullable($failAsNull);
 
         self::assertSame($expectedValue, $value);
     }
@@ -83,17 +81,17 @@ final class StringRuleTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderParseHttpUrl(): array
+    public function dataProviderHttpUrl(): array
     {
         return [
             [null, null, null, true],
             [null, null, null, false],
             [null, null, '', true],
-            [null, 'value: \'\' must contains scheme url component', '', false],
+            [null, 'value: \'\' must contains one of url schemes: http, https', '', false],
             [null, null, 'ftp://', true],
             [null, 'value: \'ftp://\' must be valid url', 'ftp://', false],
             [null, null, 'sadjfguerg', true],
-            [null, 'value: \'sadjfguerg\' must contains scheme url component', 'sadjfguerg', false],
+            [null, 'value: \'sadjfguerg\' must contains one of url schemes: http, https', 'sadjfguerg', false],
             [null, null, 'ftp://test', true],
             [null, 'value: \'ftp://test\' must contains one of url schemes: http, https', 'ftp://test', false],
             ['https://test', null, 'https://test', true],
@@ -107,17 +105,14 @@ final class StringRuleTest extends TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param mixed $input
      */
-    public function test(?string $expectedString, $input, bool $emptyAsNull): void
+    public function test(?string $expectedString, mixed $input, bool $emptyAsNull): void
     {
         $rule = new StringRule(
             new UnexpectedValueException(),
             new RuleChain(),
             new Validated($input),
             'value',
-            false,
             $emptyAsNull
         );
 

@@ -9,16 +9,13 @@ use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
-use SimpleAsFuck\Validator\Rule\General\CastString;
-use SimpleAsFuck\Validator\Rule\General\Max;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
-use SimpleAsFuck\Validator\Rule\String\StringLength;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @template TString of string
- * @extends ReadableRule<string, TString>
+ * @extends Rule<string, array<non-empty-string, string>>
  */
-class ParseUrl extends ReadableRule
+final class ParseUrl extends Rule
 {
     private const COMPONENT_KEY_MAP = [
         PHP_URL_SCHEME => 'scheme',
@@ -35,14 +32,12 @@ class ParseUrl extends ReadableRule
     private array $requiredComponents;
     /** @var array<non-empty-string> */
     private array $forbiddenComponents;
-    /** @var array<literal-string&non-empty-string, int|string> */
-    private array $urlComponents;
 
     /**
      * @template MakeTString of string
      * @param MakeTString $value
-     * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
-     * @param array<int<0,7>> $forbiddenComponents array of PHP_URL_ constants
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $requiredComponents array of PHP_URL_ constants
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $forbiddenComponents array of PHP_URL_ constants
      * @param non-empty-string $valueName
      * @return ParseUrl<MakeTString>
      */
@@ -59,8 +54,8 @@ class ParseUrl extends ReadableRule
      * @param RuleChain<string> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
-     * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
-     * @param array<int<0,7>> $forbiddenComponents array of PHP_URL_ constants
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $requiredComponents array of PHP_URL_ constants
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $forbiddenComponents array of PHP_URL_ constants
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, array $requiredComponents, array $forbiddenComponents)
     {
@@ -69,41 +64,18 @@ class ParseUrl extends ReadableRule
         $mapComponent = fn (int $component): string => self::COMPONENT_KEY_MAP[$component];
         $this->requiredComponents = array_map($mapComponent, $requiredComponents);
         $this->forbiddenComponents = array_map($mapComponent, $forbiddenComponents);
-        $this->urlComponents = [];
-    }
-
-    /**
-     * @param positive-int $max
-     * @return Max<TString, int>
-     */
-    public function max(int $max): Max
-    {
-        /** @var Max<TString, int> $maxRule */
-        $maxRule = new Max(
-            $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
-            $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
-            /** @phpstan-ignore-next-line */
-            new StringLength(),
-            new CastString(),
-            $max,
-            'url length'
-        );
-        return $maxRule;
     }
 
     public function scheme(): Scheme
     {
+        /** @var RuleChain<array<non-empty-string, non-empty-string>> $ruleChain */
+        $ruleChain = $this->ruleChain();
         return new Scheme(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
-            $this->ruleChain(),
+            $ruleChain,
             $this->validated(),
             $this->valueName().' url scheme',
-            'scheme',
-            true
+            'scheme'
         );
     }
 
@@ -112,14 +84,13 @@ class ParseUrl extends ReadableRule
      */
     public function host(): Component
     {
+        /** @var Component<non-empty-string> */
         return new Component(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().' url host',
-            'host',
-            true
+            'host'
         );
     }
 
@@ -128,14 +99,13 @@ class ParseUrl extends ReadableRule
      */
     public function port(): Component
     {
+        /** @var Component<positive-int> */
         return new Component(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().' url port',
-            'port',
-            true
+            'port'
         );
     }
 
@@ -144,14 +114,13 @@ class ParseUrl extends ReadableRule
      */
     public function user(): Component
     {
+        /** @var Component<non-empty-string> */
         return new Component(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().' url user',
-            'user',
-            true
+            'user'
         );
     }
 
@@ -160,14 +129,13 @@ class ParseUrl extends ReadableRule
      */
     public function pass(): Component
     {
+        /** @var Component<non-empty-string> */
         return new Component(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().' url pass',
-            'pass',
-            true
+            'pass'
         );
     }
 
@@ -178,26 +146,30 @@ class ParseUrl extends ReadableRule
     {
         return new Component(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().' url path',
-            'path',
-            true
+            'path'
         );
     }
 
-    public function query(): Query
+    /**
+     * @return Component<string>
+     */
+    public function query(): Component
     {
-        return new Query(
+        return new Component(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().' url query',
-            'query',
-            true
+            'query'
         );
+    }
+
+    public function parseQuery(): ParseQuery
+    {
+        return new ParseQuery($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().' url query');
     }
 
     /**
@@ -207,28 +179,18 @@ class ParseUrl extends ReadableRule
     {
         return new Component(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().' url fragment',
-            'fragment',
-            true
+            'fragment'
         );
     }
 
     /**
-     * @return array<literal-string&non-empty-string, int|string>
-     */
-    final protected function urlComponents(): array
-    {
-        return $this->urlComponents;
-    }
-
-    /**
      * @param string $value
-     * @return TString
+     * @return array<non-empty-string, string>
      */
-    protected function validate($value)
+    protected function validate($value): array
     {
         $components = parse_url($value);
         if ($components === false) {
@@ -249,18 +211,7 @@ class ParseUrl extends ReadableRule
             }
         }
 
-        $this->urlComponents = $components;
-
-        /** @var TString */
-        return $value;
-    }
-
-    /**
-     * @return Validated<mixed>
-     */
-    protected function secondaryOutput(): Validated
-    {
-        /** @var Validated<mixed> */
-        return new Validated($this->urlComponents);
+        /** @var array<non-empty-string, string> */
+        return $components;
     }
 }

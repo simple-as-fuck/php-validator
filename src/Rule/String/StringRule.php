@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Same;
 use SimpleAsFuck\Validator\Rule\Numeric\ParseNumeric;
-use SimpleAsFuck\Validator\Rule\Url\ParseProtocolUrl;
+use SimpleAsFuck\Validator\Rule\Url\UrlRule;
 use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 
 /**
@@ -25,16 +25,12 @@ use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
  */
 final class StringRule extends ReadableRule
 {
-    private bool $emptyAsNull;
-
     /**
-     * @param mixed $value
      * @param non-empty-string $valueName
-     * @return StringRule
      */
-    public static function make($value, string $valueName = 'variable', bool $emptyAsNull = false): StringRule
+    public static function make(mixed $value, string $valueName = 'variable', bool $emptyAsNull = false): StringRule
     {
-        return new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, false, $emptyAsNull);
+        return new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, $emptyAsNull);
     }
 
     /**
@@ -47,11 +43,9 @@ final class StringRule extends ReadableRule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        bool $useSecondaryOutput = false,
-        bool $emptyAsNull = false
+        private bool $emptyAsNull = false
     ) {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $useSecondaryOutput);
-        $this->emptyAsNull = $emptyAsNull;
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
     /**
@@ -165,8 +159,8 @@ final class StringRule extends ReadableRule
     }
 
     /**
-     * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
-     * @param array<int<0,7>> $forbiddenComponents array of PHP_URL_ constants
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $requiredComponents
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $forbiddenComponents
      * @return ParseUrl<string>
      */
     public function parseUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
@@ -175,39 +169,44 @@ final class StringRule extends ReadableRule
     }
 
     /**
-     * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
-     * @param array<int<2,7>> $forbiddenComponents array of PHP_URL_ constants
-     * @return ParseUrl<non-empty-string>
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $requiredComponents
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $forbiddenComponents
+     * @param array<non-empty-string> $requiredSchemes
+     * @return UrlRule<string>
      */
-    public function parseHttpUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
+    public function url(array $requiredComponents = [], array $forbiddenComponents = [], array $requiredSchemes = []): UrlRule
     {
-        return new ParseProtocolUrl(
+        return new UrlRule(
             $this->exceptionFactory(),
             $this->ruleChain(),
             $this->validated(),
             $this->valueName().': \''.$this->validateChain(true).'\'',
             $requiredComponents,
             $forbiddenComponents,
-            ['http', 'https']
+            $requiredSchemes
         );
     }
 
     /**
-     * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
-     * @param array<int<2,7>> $forbiddenComponents array of PHP_URL_ constants
-     * @return ParseUrl<non-empty-string>
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $requiredComponents
+     * @param array<PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $forbiddenComponents
+     * @return UrlRule<non-empty-string>
      */
-    public function parseHttpsUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
+    public function httpUrl(array $requiredComponents = [], array $forbiddenComponents = []): UrlRule
     {
-        return new ParseProtocolUrl(
-            $this->exceptionFactory(),
-            $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().': \''.$this->validateChain(true).'\'',
-            $requiredComponents,
-            $forbiddenComponents,
-            ['https']
-        );
+        /** @var UrlRule<non-empty-string> */
+        return $this->url($requiredComponents, $forbiddenComponents, ['http', 'https']);
+    }
+
+    /**
+     * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $requiredComponents
+     * @param array<PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $forbiddenComponents
+     * @return UrlRule<non-empty-string>
+     */
+    public function httpsUrl(array $requiredComponents = [], array $forbiddenComponents = []): UrlRule
+    {
+        /** @var UrlRule<non-empty-string> */
+        return $this->url($requiredComponents, $forbiddenComponents, ['https']);
     }
 
     /**

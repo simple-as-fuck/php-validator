@@ -222,6 +222,8 @@ final class ParseUrlTest extends TestCase
             [null, null, '/www.example.com', true],
             ['query', null, '/www.example.com?query', false],
             ['query', null, '/www.example.com?query', true],
+            ['', null, '/www.example.com?', false],
+            ['', null, '/www.example.com?', true],
             [null, null, '', false],
             [null, null, '', true],
             [null, 'be valid url', 'https://', false],

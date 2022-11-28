@@ -12,16 +12,22 @@ use SimpleAsFuck\Validator\Rule\General\ForwardRule;
 use SimpleAsFuck\Validator\Rule\General\InRule;
 
 /**
- * @extends ForwardRule<array<non-empty-string>, non-empty-string>
+ * @extends ForwardRule<array<non-empty-string, non-empty-string>, non-empty-string>
  */
 final class Scheme extends ForwardRule
 {
     /**
-     * @param RuleChain<array<non-empty-string>> $ruleChain
+     * @param RuleChain<array<non-empty-string, non-empty-string>> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $componentName, bool $useSecondaryOutput = false)
-    {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        string $componentName
+    ) {
         parent::__construct(
             $exceptionFactory,
             $ruleChain,
@@ -35,8 +41,7 @@ final class Scheme extends ForwardRule
                 $validated,
                 $valueName,
                 $componentName
-            ),
-            $useSecondaryOutput
+            )
         );
     }
 
