@@ -75,8 +75,7 @@ final class ExceptionFactory extends \SimpleAsFuck\Validator\Factory\Exception
 
 $exceptionFactory = new \ExceptionFactory();
 
-/** @var mixed $value */
-$value = 1;
+$value = new \SimpleAsFuck\Validator\Model\Validated(1);
 
 $rules = new \SimpleAsFuck\Validator\Rule\General\Rules($exceptionFactory, 'variable', $value);
 

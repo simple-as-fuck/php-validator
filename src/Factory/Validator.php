@@ -10,12 +10,10 @@ use SimpleAsFuck\Validator\Rule\General\Rules;
 final class Validator
 {
     /**
-     * @param mixed|null $value
      * @param non-empty-string $valueName
      */
-    final public static function make($value, string $valueName = 'variable'): Rules
+    final public static function make(mixed $value, string $valueName = 'variable'): Rules
     {
-        $value = new Validated($value);
-        return new Rules(new UnexpectedValueException(), $valueName, $value);
+        return new Rules(new UnexpectedValueException(), $valueName, new Validated($value));
     }
 }

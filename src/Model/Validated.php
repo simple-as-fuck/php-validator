@@ -9,21 +9,18 @@ namespace SimpleAsFuck\Validator\Model;
  */
 final class Validated
 {
-    /** @var TValue|null */
-    private $value;
-
     /**
      * @param TValue|null $value
      */
-    public function __construct($value)
-    {
-        $this->value = $value;
+    public function __construct(
+        private mixed $value
+    ) {
     }
 
     /**
      * @return TValue|null
      */
-    public function value()
+    public function value(): mixed
     {
         return $this->value;
     }
