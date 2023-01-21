@@ -12,7 +12,7 @@ use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
 interface UserClassRule
 {
     /**
-     * @return TClass
+     * @return TClass|null
      */
     public function validate(ObjectRule $rule);
 }

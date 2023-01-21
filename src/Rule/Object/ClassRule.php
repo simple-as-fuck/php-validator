@@ -29,7 +29,7 @@ final class ClassRule extends ReadableRule
 
     /**
      * @param object $value
-     * @return TClass
+     * @return TClass|null
      */
     protected function validate($value)
     {
