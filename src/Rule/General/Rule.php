@@ -111,6 +111,12 @@ abstract class Rule
                 throw $exception;
             }
             throw $this->exceptionFactory->create($rule->valueName.' must '.$exception->getMessage());
+        } catch (\Throwable $exception) {
+            if ($failAsNull) {
+                return null;
+            }
+
+            throw $exception;
         }
     }
 }
