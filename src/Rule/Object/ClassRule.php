@@ -13,18 +13,14 @@ use SimpleAsFuck\Validator\Rule\General\ReadableRule;
  */
 final class ClassRule extends ReadableRule
 {
-    private ObjectRule $rule;
-    /** @var UserClassRule<TClass> */
-    private UserClassRule $classRule;
-
     /**
      * @param UserClassRule<TClass> $classRule
      */
-    public function __construct(ObjectRule $rule, UserClassRule $classRule)
-    {
+    public function __construct(
+        private ObjectRule $rule,
+        private UserClassRule $classRule
+    ) {
         parent::__construct($rule->exceptionFactory(), $rule->ruleChain(), $rule->validated(), $rule->valueName());
-        $this->rule = $rule;
-        $this->classRule = $classRule;
     }
 
     /**
