@@ -12,8 +12,8 @@ final class Validator
     /**
      * @param non-empty-string $valueName
      */
-    final public static function make(mixed $value, string $valueName = 'variable'): Rules
+    final public static function make(mixed $value, string $valueName = 'variable', ?Exception $exceptionFactory = null): Rules
     {
-        return new Rules(new UnexpectedValueException(), $valueName, new Validated($value));
+        return new Rules($exceptionFactory ?? new UnexpectedValueException(), $valueName, new Validated($value));
     }
 }
