@@ -120,9 +120,17 @@ final class StringRule extends ReadableRule
         return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'');
     }
 
+    /**
+     * @deprecated use self::numeric
+     */
     public function parseNumeric(bool $allowLeadingZero = false, bool $allowNegative = true): ParseNumeric
     {
         return new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', $allowLeadingZero, $allowNegative);
+    }
+
+    public function numeric(bool $allowLeadingZero = false): ParseNumeric
+    {
+        return new ParseNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', $allowLeadingZero);
     }
 
     /**
