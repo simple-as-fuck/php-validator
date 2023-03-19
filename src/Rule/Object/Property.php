@@ -7,6 +7,7 @@ namespace SimpleAsFuck\Validator\Rule\Object;
 use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
+use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\ArrayRule\ArrayRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\Numeric\BoolRule;
@@ -19,46 +20,50 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
  */
 final class Property extends Rule
 {
-    private string $propertyName;
-
     /**
      * @param RuleChain<object> $ruleChain
      * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $propertyName)
-    {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName.'->'.$propertyName);
-        $this->propertyName = $propertyName;
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private string $propertyName,
+        private bool $present = false
+    ) {
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
     public function string(bool $emptyAsNull = false): StringRule
     {
-        return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $emptyAsNull);
+        return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName, $emptyAsNull);
     }
 
     public function int(): IntRule
     {
-        return new IntRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new IntRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
     }
 
     public function float(): FloatRule
     {
-        return new FloatRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new FloatRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
     }
 
     public function bool(): BoolRule
     {
-        return new BoolRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new BoolRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
     }
 
     public function object(): ObjectRule
     {
-        return new ObjectRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new ObjectRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
     }
 
     public function array(): ArrayRule
     {
-        return new ArrayRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new ArrayRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
     }
 
     /**
@@ -67,11 +72,10 @@ final class Property extends Rule
      */
     protected function validate($value)
     {
-        $properties = \get_object_vars($value);
-        if (\array_key_exists($this->propertyName, $properties)) {
-            return $properties[$this->propertyName];
+        if ($this->present && ! property_exists($value, $this->propertyName)) {
+            throw new ValueMust('contain property: '.$this->propertyName);
         }
 
-        return null;
+        return \get_object_vars($value)[$this->propertyName] ?? null;
     }
 }

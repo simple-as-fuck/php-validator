@@ -23,9 +23,12 @@ final class ObjectRule extends Rule
         return new ClassRule($this, $rule);
     }
 
-    public function property(string $name): Property
+    /**
+     * @param bool $present true value turns off conversion from not existing property into null
+     */
+    public function property(string $name, bool $present = false): Property
     {
-        return new Property($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $name);
+        return new Property($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $name, $present);
     }
 
     /**
