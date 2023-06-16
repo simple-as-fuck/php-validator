@@ -8,6 +8,7 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\ArrayRule\Key;
+use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
 use SimpleAsFuck\Validator\Rule\General\ForwardRule;
 
 /**
@@ -33,5 +34,17 @@ final class RegexMatch extends ForwardRule
     public function parseFloat(): ParseFloat
     {
         return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+    }
+
+    /**
+     * @template TDateTime of \DateTimeInterface
+     * @param non-empty-string $format
+     * @param class-string<TDateTime> $dateTimeClass
+     * @param non-empty-string|null $timeZone
+     * @return ParseDateTime<TDateTime>
+     */
+    public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class, ?string $timeZone = null): ParseDateTime
+    {
+        return new ParseDateTime($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $format, $dateTimeClass, $timeZone);
     }
 }
