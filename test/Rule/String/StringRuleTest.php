@@ -36,7 +36,7 @@ final class StringRuleTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderHttpsUrl(): array
+    public static function dataProviderHttpsUrl(): array
     {
         return [
             [null, null, null, true],
@@ -81,7 +81,7 @@ final class StringRuleTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderHttpUrl(): array
+    public static function dataProviderHttpUrl(): array
     {
         return [
             [null, null, null, true],
@@ -122,7 +122,7 @@ final class StringRuleTest extends TestCase
     /**
      * @return non-empty-array<array{?string, mixed, bool}>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             ['', '', false],

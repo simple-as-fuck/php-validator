@@ -33,7 +33,7 @@ final class ParseUrlTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderPort(): array
+    public static function dataProviderPort(): array
     {
         return [
             [null, null, null, false],
@@ -69,7 +69,7 @@ final class ParseUrlTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderHost(): array
+    public static function dataProviderHost(): array
     {
         return [
             [null, null, null, false],
@@ -105,7 +105,7 @@ final class ParseUrlTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderPass(): array
+    public static function dataProviderPass(): array
     {
         return [
             [null, null, null, false],
@@ -141,7 +141,7 @@ final class ParseUrlTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderFragment(): array
+    public static function dataProviderFragment(): array
     {
         return [
             [null, null, null, false],
@@ -177,7 +177,7 @@ final class ParseUrlTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderUser(): array
+    public static function dataProviderUser(): array
     {
         return [
             [null, null, null, false],
@@ -213,7 +213,7 @@ final class ParseUrlTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderQuery(): array
+    public static function dataProviderQuery(): array
     {
         return [
             [null, null, null, false],
@@ -251,7 +251,7 @@ final class ParseUrlTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderScheme(): array
+    public static function dataProviderScheme(): array
     {
         return [
             [null, null, null, false],
@@ -287,7 +287,7 @@ final class ParseUrlTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProviderPath(): array
+    public static function dataProviderPath(): array
     {
         return [
             [null, null, null, false],

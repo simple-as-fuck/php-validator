@@ -43,7 +43,7 @@ final class ParseDateTimeTest extends TestCase
     /**
      * @return non-empty-array<array{non-empty-string, non-empty-string, string, non-empty-string, class-string<\DateTimeInterface>, non-empty-string|null}>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             ['1999-05-06 10:15:16', 'Y-m-d H:i:s', '1999-05-06 10:15:16', 'Y-m-d H:i:s', \DateTime::class, null],

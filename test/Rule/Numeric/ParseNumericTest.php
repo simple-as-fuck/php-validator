@@ -32,7 +32,7 @@ final class ParseNumericTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             ['1', null, '1'],
