@@ -47,4 +47,9 @@ final class RegexMatch extends ForwardRule
     {
         return new ParseDateTime($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $format, $dateTimeClass, $timeZone);
     }
+
+    public function notEmpty(): NotEmpty
+    {
+        return new NotEmpty($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+    }
 }
