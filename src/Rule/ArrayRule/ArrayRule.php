@@ -61,6 +61,14 @@ final class ArrayRule extends Rule
     }
 
     /**
+     * @return Collection<bool>
+     */
+    public function ofBool(): Collection
+    {
+        return $this->of(static fn (TypedKey $key): bool => $key->bool()->notNull());
+    }
+
+    /**
      * @return Collection<string>
      */
     public function ofString(): Collection
