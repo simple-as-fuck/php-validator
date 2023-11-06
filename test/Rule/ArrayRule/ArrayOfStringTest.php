@@ -28,7 +28,7 @@ final class ArrayOfStringTest extends TestCase
         $rule = new ArrayOfString(new UnexpectedValueException(), new RuleChain(), $validated, 'value');
 
         $this->expectException(\UnexpectedValueException::class);
-        $this->expectErrorMessage('value[test] must be not null');
+        $this->expectExceptionMessage('value[test] must be not null');
 
         $rule->key('test')->string()->notNull();
     }
@@ -47,7 +47,7 @@ final class ArrayOfStringTest extends TestCase
         $rule = new ArrayOfString(new UnexpectedValueException(), new RuleChain(), $validated, 'value');
 
         $this->expectException(\UnexpectedValueException::class);
-        $this->expectErrorMessage('value[0] must be string');
+        $this->expectExceptionMessage('value[0] must be string');
 
         $rule->of(fn (StringTypedKey $key): string => $key->string()->notNull())->notNull();
     }
