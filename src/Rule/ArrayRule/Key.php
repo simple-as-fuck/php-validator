@@ -36,7 +36,7 @@ class Key extends Rule
      */
     protected function validate($value)
     {
-        if (! array_key_exists($this->key, $value)) {
+        if (!array_key_exists($this->key, $value)) {
             return null;
         }
 

@@ -278,7 +278,7 @@ final class StringRule extends ReadableRule
      */
     protected function validate($value): ?string
     {
-        if (! is_string($value)) {
+        if (!is_string($value)) {
             throw new ValueMust('be string, '.gettype($value).' given');
         }
 
