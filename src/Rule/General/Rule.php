@@ -35,7 +35,7 @@ abstract class Rule
      * @param UserDefinedRule<TOut, TCustomOut> $rule
      * @return CustomRule<TOut, TCustomOut>
      */
-    final public function custom(UserDefinedRule $rule): CustomRule
+    public function custom(UserDefinedRule $rule): CustomRule
     {
         return new CustomRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $rule);
     }

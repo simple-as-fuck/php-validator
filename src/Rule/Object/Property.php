@@ -9,6 +9,8 @@ use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\ArrayRule\ArrayRule;
+use SimpleAsFuck\Validator\Rule\Custom\CustomRule;
+use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\Numeric\BoolRule;
 use SimpleAsFuck\Validator\Rule\Numeric\FloatRule;
@@ -64,6 +66,16 @@ final class Property extends Rule
     public function array(): ArrayRule
     {
         return new ArrayRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
+    }
+
+    /**
+     * @template TCustomOut
+     * @param UserDefinedRule<mixed, TCustomOut> $rule
+     * @return CustomRule<mixed, TCustomOut>
+     */
+    public function custom(UserDefinedRule $rule): CustomRule
+    {
+        return new CustomRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName, $rule);
     }
 
     /**
