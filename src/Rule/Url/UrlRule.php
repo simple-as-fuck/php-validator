@@ -75,7 +75,7 @@ final class UrlRule extends ReadableRule
     protected function validate($value): string
     {
         $components = $this->parseUrl->validate($value);
-        if (count($this->requiredSchemes) !== 0 && ! in_array($components['scheme'] ?? null, $this->requiredSchemes, true)) {
+        if (count($this->requiredSchemes) !== 0 && !in_array($components['scheme'] ?? null, $this->requiredSchemes, true)) {
             throw new ValueMust('contains one of url schemes: '.implode(', ', $this->requiredSchemes));
         }
         return $value;
