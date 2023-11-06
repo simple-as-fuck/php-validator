@@ -82,7 +82,7 @@ final class ArrayRule extends Rule
      */
     protected function validate($value): array
     {
-        if (! is_array($value)) {
+        if (!is_array($value)) {
             throw new ValueMust('be array, '.gettype($value).' given');
         }
 

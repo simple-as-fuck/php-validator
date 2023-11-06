@@ -47,7 +47,7 @@ final class ParseProtocolUrl extends ParseUrl
     protected function validate($value): string
     {
         $value = parent::validate($value);
-        if (! in_array($this->urlComponents()['scheme'], $this->requiredProtocols, true)) {
+        if (!in_array($this->urlComponents()['scheme'], $this->requiredProtocols, true)) {
             throw new ValueMust('contains one of url schemes: '.implode(', ', $this->requiredProtocols));
         }
 

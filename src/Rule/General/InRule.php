@@ -36,7 +36,7 @@ class InRule extends ReadableRule
      */
     protected function validate($value)
     {
-        if (! in_array($value, $this->values, true)) {
+        if (!in_array($value, $this->values, true)) {
             throw new ValueMust('be in values list: '.implode(', ', $this->values));
         }
 
