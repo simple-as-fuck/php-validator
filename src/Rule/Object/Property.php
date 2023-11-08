@@ -32,8 +32,8 @@ final class Property extends Rule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private string $propertyName,
-        private bool $present = false
+        private readonly string $propertyName,
+        private readonly bool $present = false
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
@@ -58,9 +58,15 @@ final class Property extends Rule
         return new BoolRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
     }
 
-    public function object(): ObjectRule
+    public function object(bool $emptyAsNull = false): ObjectRule
     {
-        return new ObjectRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
+        return new ObjectRule(
+            $this->exceptionFactory(),
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName().'->'.$this->propertyName,
+            $emptyAsNull
+        );
     }
 
     public function array(): ArrayRule
@@ -82,7 +88,7 @@ final class Property extends Rule
      * @param object $value
      * @return mixed|null
      */
-    protected function validate($value)
+    protected function validate($value): mixed
     {
         if ($this->present && !property_exists($value, $this->propertyName)) {
             throw new ValueMust('contain property: '.$this->propertyName);
