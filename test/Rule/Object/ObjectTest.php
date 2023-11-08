@@ -3,9 +3,6 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
-use SimpleAsFuck\Validator\Model\RuleChain;
-use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
 use SimpleAsFuck\Validator\Rule\Object\Property;
 
@@ -16,12 +13,7 @@ final class ObjectTest extends TestCase
      */
     public function testNullable(mixed $expectedValue, mixed $object): void
     {
-        $rule = new ObjectRule(
-            new UnexpectedValueException(),
-            new RuleChain(),
-            new Validated($object),
-            'object'
-        );
+        $rule = ObjectRule::make($object);
 
         $value = $rule->nullable('property', static fn (Property $property): string => $property->string()->notNull());
 
@@ -38,6 +30,31 @@ final class ObjectTest extends TestCase
             [null, (object) []],
             [null, (object) ['otherProperty' => 'aaa']],
             ['bbb', (object) ['property' => 'bbb']],
+            [null, (object) ['property' => null]],
+        ];
+    }
+
+    /**
+     * @dataProvider dataEmptyAsNull
+     */
+    public function testEmptyAsNull(mixed $expectedValue, mixed $object): void
+    {
+        $rule = ObjectRule::make($object, emptyAsNull: true);
+
+        $value = $rule->property('property', present: true)->string()->nullable();
+
+        self::assertSame($expectedValue, $value);
+    }
+
+    /**
+     * @return non-empty-array<non-empty-array<mixed>>
+     */
+    public static function dataEmptyAsNull(): array
+    {
+        return [
+            [null, null],
+            [null, (object) []],
+            ['test', (object) ['property' => 'test']],
             [null, (object) ['property' => null]],
         ];
     }
