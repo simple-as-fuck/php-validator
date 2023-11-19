@@ -43,7 +43,7 @@ final class StringRule extends ReadableRule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private bool $emptyAsNull = false
+        private readonly bool $emptyAsNull = false,
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
@@ -113,6 +113,22 @@ final class StringRule extends ReadableRule
     public function parseInt(): ParseInt
     {
         return new ParseInt($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'');
+    }
+
+    /**
+     * @param non-empty-string $trueDefinition
+     * @param non-empty-string $falseDefinition
+     */
+    public function parseBool(string $trueDefinition = 'true', string $falseDefinition = 'false'): ParseBool
+    {
+        return new ParseBool(
+            $this->exceptionFactory(),
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName() . ': \'' . $this->validateChain(true) . '\'',
+            $trueDefinition,
+            $falseDefinition
+        );
     }
 
     public function parseFloat(): ParseFloat
@@ -222,7 +238,7 @@ final class StringRule extends ReadableRule
      */
     public function parseIpv4(bool $private = false): ParseIp
     {
-        return new ParseIp($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), true, $private);
+        return new ParseIp($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', true, $private);
     }
 
     /**
@@ -230,7 +246,7 @@ final class StringRule extends ReadableRule
      */
     public function parseIpv6(bool $private = false): ParseIp
     {
-        return new ParseIp($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), false, $private);
+        return new ParseIp($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', false, $private);
     }
 
     public function notEmpty(): NotEmpty
