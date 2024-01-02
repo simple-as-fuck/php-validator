@@ -16,19 +16,20 @@ use SimpleAsFuck\Validator\Model\ValueMust;
  */
 class InRule extends ReadableRule
 {
-    /** @var non-empty-array<Tout> */
-    private array $values;
-
     /**
      * @param RuleChain<Tin> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-array<Tout> $values
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, array $values)
-    {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private readonly array $values
+    ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
-        $this->values = $values;
     }
 
     /**

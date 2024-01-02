@@ -7,3 +7,6 @@ parameters:
     paths:
         - src
         - test
+    ignoreErrors:
+        # todo remove in new break changes version
+        - '#^Instantiation of deprecated class SimpleAsFuck\\Validator\\Rule\\String\\InRule:\nuse CaseInsensitiveInRule$#'

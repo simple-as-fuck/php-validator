@@ -290,6 +290,22 @@ final class StringRule extends ReadableRule
     }
 
     /**
+     * @template Tstring of string
+     * @param non-empty-array<Tstring> $values
+     * @return InRule<string, Tstring>
+     */
+    public function caseInsensitiveIn(array $values): InRule
+    {
+        return new CaseInsensitiveInRule(
+            $this->exceptionFactory(),
+            $this->ruleChain(),
+            $this->validated(),
+            $this->valueName(),
+            $values
+        );
+    }
+
+    /**
      * @param mixed $value
      */
     protected function validate($value): ?string

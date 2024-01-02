@@ -9,6 +9,7 @@ use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 
 /**
+ * @deprecated use CaseInsensitiveInRule
  * @template Tin of string
  * @template Tout of string
  * @extends \SimpleAsFuck\Validator\Rule\General\InRule<Tin, Tout>
