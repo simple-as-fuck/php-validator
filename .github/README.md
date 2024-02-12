@@ -25,9 +25,10 @@ $value = $config->get('some_value_name');
 $rules = \SimpleAsFuck\Validator\Factory\Validator::make($value, 'Config "some_value_name" value');
 $validValue = $rules->string()->notEmpty()->notNull();
 /*
- * now you have in $value really not empty string and even phpstan know the type without any annoying annotation
+ * now you have in $validValue really not empty string and even phpstan know the type without any annoying annotation
  * if validation failed \UnexpectedValueException('Config "some_value_name" value must ...') is thrown from rule chain
  */
+$stringValues = $rules->array()->ofString()->notNull();
 
 /*
  * shorter notation, value name in validator factory is optional and here is unnecessary,
