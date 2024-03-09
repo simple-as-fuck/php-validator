@@ -26,6 +26,7 @@ use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 final class StringRule extends ReadableRule
 {
     /**
+     * @deprecated $emptyAsNull param will be removed use $this->notEmpty(emptyAsNull: true)
      * @param non-empty-string $valueName
      */
     public static function make(mixed $value, string $valueName = 'variable', bool $emptyAsNull = false): StringRule
