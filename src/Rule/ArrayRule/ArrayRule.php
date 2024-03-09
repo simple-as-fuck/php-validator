@@ -23,6 +23,7 @@ final class ArrayRule extends Rule
     }
 
     /**
+     * @deprecated will have new interface and usage
      * @template TOut
      * @param callable(TypedKey): TOut $callable
      * @return TOut|null

@@ -48,8 +48,8 @@ final class RegexMatch extends ForwardRule
         return new ParseDateTime($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $format, $dateTimeClass, $timeZone);
     }
 
-    public function notEmpty(): NotEmpty
+    public function notEmpty(bool $emptyAsNull = false): NotEmpty
     {
-        return new NotEmpty($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new NotEmpty($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $emptyAsNull);
     }
 }

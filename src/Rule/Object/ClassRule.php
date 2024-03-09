@@ -17,8 +17,8 @@ final class ClassRule extends ReadableRule
      * @param UserClassRule<TClass> $classRule
      */
     public function __construct(
-        private ObjectRule $rule,
-        private UserClassRule $classRule
+        private readonly ObjectRule $rule,
+        private readonly UserClassRule $classRule
     ) {
         parent::__construct($rule->exceptionFactory(), $rule->ruleChain(), $rule->validated(), $rule->valueName());
     }

@@ -14,7 +14,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
  */
 final class ArrayOfString extends Rule
 {
-    private ArrayRule $arrayRule;
+    private readonly ArrayRule $arrayRule;
 
     /**
      * @param RuleChain<mixed> $ruleChain
@@ -35,6 +35,7 @@ final class ArrayOfString extends Rule
     }
 
     /**
+     * @deprecated will have new interface and usage
      * @template TOut
      * @param callable(StringTypedKey): TOut $callable
      * @return TOut|null

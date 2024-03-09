@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\String;
 
+use SimpleAsFuck\Validator\Factory\Exception;
+use SimpleAsFuck\Validator\Model\RuleChain;
+use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\Max;
@@ -14,6 +17,16 @@ use SimpleAsFuck\Validator\Rule\General\ReadableRule;
  */
 final class NotEmpty extends ReadableRule
 {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private readonly bool $emptyAsNull = false,
+    ) {
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
+    }
+
     /**
      * @param positive-int $max
      * @return Max<non-empty-string, int>
@@ -38,11 +51,15 @@ final class NotEmpty extends ReadableRule
 
     /**
      * @param string $value
-     * @return non-empty-string
+     * @return non-empty-string|null
      */
-    protected function validate($value): string
+    protected function validate($value): ?string
     {
         if ($value === '') {
+            if ($this->emptyAsNull) {
+                return null;
+            }
+
             throw new ValueMust('be non empty string');
         }
 

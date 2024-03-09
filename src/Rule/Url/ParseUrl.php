@@ -29,9 +29,9 @@ final class ParseUrl extends Rule
     ];
 
     /** @var array<non-empty-string> */
-    private array $requiredComponents;
+    private readonly array $requiredComponents;
     /** @var array<non-empty-string> */
-    private array $forbiddenComponents;
+    private readonly array $forbiddenComponents;
 
     /**
      * @template MakeTString of string

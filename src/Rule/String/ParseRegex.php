@@ -27,8 +27,8 @@ final class ParseRegex extends Rule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private string $pattern,
-        private int $flags
+        private readonly string $pattern,
+        private readonly int $flags
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }

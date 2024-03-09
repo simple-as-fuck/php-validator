@@ -25,7 +25,7 @@ class Key extends Rule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private int|string $key
+        private readonly int|string $key
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
@@ -36,10 +36,6 @@ class Key extends Rule
      */
     protected function validate($value)
     {
-        if (!array_key_exists($this->key, $value)) {
-            return null;
-        }
-
-        return $value[$this->key];
+        return $value[$this->key] ?? null;
     }
 }

@@ -15,10 +15,8 @@ final class ParseUrlTest extends TestCase
 {
     /**
      * @dataProvider dataProviderPort
-     *
-     * @param mixed $value
      */
-    public function testPort(?int $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testPort(?int $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
@@ -51,10 +49,8 @@ final class ParseUrlTest extends TestCase
 
     /**
      * @dataProvider dataProviderHost
-     *
-     * @param mixed $value
      */
-    public function testHost(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testHost(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
@@ -87,10 +83,8 @@ final class ParseUrlTest extends TestCase
 
     /**
      * @dataProvider dataProviderPass
-     *
-     * @param mixed $value
      */
-    public function testPass(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testPass(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
@@ -123,10 +117,8 @@ final class ParseUrlTest extends TestCase
 
     /**
      * @dataProvider dataProviderFragment
-     *
-     * @param mixed $value
      */
-    public function testFragment(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testFragment(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
@@ -159,10 +151,8 @@ final class ParseUrlTest extends TestCase
 
     /**
      * @dataProvider dataProviderUser
-     *
-     * @param mixed $value
      */
-    public function testUser(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testUser(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
@@ -195,10 +185,8 @@ final class ParseUrlTest extends TestCase
 
     /**
      * @dataProvider dataProviderQuery
-     *
-     * @param mixed $value
      */
-    public function testQuery(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testQuery(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
@@ -233,10 +221,8 @@ final class ParseUrlTest extends TestCase
 
     /**
      * @dataProvider dataProviderScheme
-     *
-     * @param mixed $value
      */
-    public function testScheme(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testScheme(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 
@@ -269,10 +255,8 @@ final class ParseUrlTest extends TestCase
 
     /**
      * @dataProvider dataProviderPath
-     *
-     * @param mixed $value
      */
-    public function testPath(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testPath(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
 

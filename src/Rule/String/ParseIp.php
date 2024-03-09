@@ -15,9 +15,6 @@ use SimpleAsFuck\Validator\Rule\General\ReadableRule;
  */
 final class ParseIp extends ReadableRule
 {
-    private ?bool $v4;
-    private bool $private;
-
     /**
      * @param RuleChain<string> $ruleChain
      * @param Validated<mixed> $validated
@@ -27,12 +24,10 @@ final class ParseIp extends ReadableRule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        ?bool $v4,
-        bool $private = false
+        private readonly ?bool $v4,
+        private readonly bool $private = false
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
-        $this->v4 = $v4;
-        $this->private = $private;
     }
 
     /**

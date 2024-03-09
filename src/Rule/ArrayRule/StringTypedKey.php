@@ -26,11 +26,14 @@ final class StringTypedKey extends Rule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private Key $keyRule
+        private readonly Key $keyRule
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
+    /**
+     * @deprecated $emptyAsNull param will be removed use string()->notEmpty(emptyAsNull: true)
+     */
     public function string(bool $emptyAsNull = false): StringRule
     {
         return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $emptyAsNull);

@@ -26,8 +26,8 @@ final class ClassFromArray extends ReadableRule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private object $arrayRule,
-        private UserArrayRule $userArrayRule
+        private readonly object $arrayRule,
+        private readonly UserArrayRule $userArrayRule
     ) {
         parent::__construct(
             $exceptionFactory,

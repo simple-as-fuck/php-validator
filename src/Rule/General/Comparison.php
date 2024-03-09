@@ -15,11 +15,6 @@ use SimpleAsFuck\Validator\Model\Validated;
  */
 abstract class Comparison extends ReadableRule
 {
-    /** @var Conversion<TValue, TCompared> */
-    private Conversion $conversion;
-    /** @var TCompared */
-    private $comparedTo;
-
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
@@ -27,11 +22,15 @@ abstract class Comparison extends ReadableRule
      * @param Conversion<TValue, TCompared> $conversion
      * @param TCompared $comparedTo
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Conversion $conversion, $comparedTo)
-    {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private readonly Conversion $conversion,
+        private readonly mixed $comparedTo
+    ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
-        $this->conversion = $conversion;
-        $this->comparedTo = $comparedTo;
     }
 
     /**

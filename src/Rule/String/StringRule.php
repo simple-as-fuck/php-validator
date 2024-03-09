@@ -34,6 +34,7 @@ final class StringRule extends ReadableRule
     }
 
     /**
+     * @deprecated $emptyAsNull param will be removed use $this->notEmpty(emptyAsNull: true)
      * @param RuleChain<mixed> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
@@ -249,9 +250,9 @@ final class StringRule extends ReadableRule
         return new ParseIp($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().': \''.$this->validateChain(true).'\'', false, $private);
     }
 
-    public function notEmpty(): NotEmpty
+    public function notEmpty(bool $emptyAsNull = false): NotEmpty
     {
-        return new NotEmpty($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new NotEmpty($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $emptyAsNull);
     }
 
     /**

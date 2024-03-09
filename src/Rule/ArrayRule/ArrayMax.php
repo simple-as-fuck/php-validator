@@ -13,6 +13,7 @@ use SimpleAsFuck\Validator\Rule\General\Max;
 final class ArrayMax extends Max
 {
     /**
+     * @deprecated use nullable() ?? []
      * @return array<TValue>
      */
     public function notNull(bool $failAsEmpty = false): array

@@ -16,19 +16,20 @@ use SimpleAsFuck\Validator\Rule\General\ReadableRule;
  */
 final class CustomRule extends ReadableRule
 {
-    /** @var UserDefinedRule<TIn, TOut> */
-    private UserDefinedRule $userDefinedRule;
-
     /**
      * @param RuleChain<TIn> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param UserDefinedRule<TIn, TOut> $userDefinedRule
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, UserDefinedRule $userDefinedRule)
-    {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private readonly UserDefinedRule $userDefinedRule
+    ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
-        $this->userDefinedRule = $userDefinedRule;
     }
 
     /**

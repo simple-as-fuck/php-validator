@@ -21,7 +21,7 @@ use SimpleAsFuck\Validator\Rule\String\StringLength;
 final class UrlRule extends ReadableRule
 {
     /** @var ParseUrl<Tstring> */
-    private ParseUrl $parseUrl;
+    private readonly ParseUrl $parseUrl;
 
     /**
      * @param RuleChain<Tstring> $ruleChain
@@ -38,7 +38,7 @@ final class UrlRule extends ReadableRule
         string $valueName,
         array $requiredComponents,
         array $forbiddenComponents,
-        private array $requiredSchemes
+        private readonly array $requiredSchemes
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 

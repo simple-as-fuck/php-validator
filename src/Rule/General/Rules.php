@@ -21,9 +21,9 @@ final class Rules
      * @param Validated<mixed> $validated
      */
     public function __construct(
-        private ?Exception $exceptionFactory,
-        private string $valueName,
-        private Validated $validated
+        private readonly ?Exception $exceptionFactory,
+        private readonly string $valueName,
+        private readonly Validated $validated
     ) {
     }
 
@@ -53,13 +53,14 @@ final class Rules
     }
 
     /**
+     * @deprecated will be removed
      * @template TOut
      * @param callable(ObjectRule): TOut $callable
      * @return TOut|null
      */
     public function nullable(callable $callable)
     {
-        return $this->validated->value() === null ? null : $callable($this->object());
+        return $this->validated->value === null ? null : $callable($this->object());
     }
 
     public function array(): ArrayRule

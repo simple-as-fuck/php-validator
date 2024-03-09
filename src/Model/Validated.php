@@ -13,11 +13,12 @@ final class Validated
      * @param TValue|null $value
      */
     public function __construct(
-        private mixed $value
+        public readonly mixed $value
     ) {
     }
 
     /**
+     * @deprecated use value property
      * @return TValue|null
      */
     public function value(): mixed

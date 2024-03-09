@@ -20,11 +20,7 @@ use SimpleAsFuck\Validator\Rule\General\ReadableRule;
  */
 final class ParseDateTime extends ReadableRule
 {
-    /** @var non-empty-string */
-    private string $format;
-    /** @var class-string<TDateTime>  */
-    private string $dateTimeClass;
-    private ?\DateTimeZone $timeZone;
+    private readonly ?\DateTimeZone $timeZone;
 
     /**
      * @template MakeTDateTime of \DateTimeInterface
@@ -48,12 +44,17 @@ final class ParseDateTime extends ReadableRule
      * @param class-string<TDateTime> $dateTimeClass
      * @param non-empty-string|null $timeZone
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $format, string $dateTimeClass, ?string $timeZone = null)
-    {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private readonly string $format,
+        private readonly string $dateTimeClass,
+        ?string $timeZone = null
+    ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
-        $this->format = $format;
-        $this->dateTimeClass = $dateTimeClass;
         $this->timeZone = $timeZone !== null ? new \DateTimeZone($timeZone) : null;
     }
 

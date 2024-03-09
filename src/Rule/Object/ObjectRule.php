@@ -59,6 +59,7 @@ final class ObjectRule extends Rule
     }
 
     /**
+     * @deprecated will have new interface and usage
      * @template TOut
      * @param callable(Property): TOut $callable
      * @return TOut|null

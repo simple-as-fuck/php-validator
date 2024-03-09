@@ -16,9 +16,6 @@ use SimpleAsFuck\Validator\Model\ValueMust;
  */
 final class Same extends Comparison
 {
-    /** @var non-empty-string */
-    private string $comparedName;
-
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
@@ -27,10 +24,16 @@ final class Same extends Comparison
      * @param TCompared $comparedTo
      * @param non-empty-string $comparedName
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, Conversion $conversion, $comparedTo, string $comparedName = 'value')
-    {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        Conversion $conversion,
+        $comparedTo,
+        private readonly string $comparedName = 'value'
+    ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $conversion, $comparedTo);
-        $this->comparedName = $comparedName;
     }
 
     /**

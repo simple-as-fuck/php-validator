@@ -25,8 +25,8 @@ final class ParseNumeric extends Numeric
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private bool $allowLeadingZero = false,
-        private bool $allowNegative = true
+        private readonly bool $allowLeadingZero = false,
+        private readonly bool $allowNegative = true
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }

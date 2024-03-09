@@ -28,8 +28,8 @@ final class Regex extends ReadableRule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private string $pattern,
-        private int $flags = 0
+        private readonly string $pattern,
+        private readonly int $flags = 0
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }

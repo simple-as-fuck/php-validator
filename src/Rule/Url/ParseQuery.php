@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class ParseQuery extends Rule
 {
     /** @var Key<string> */
-    private Key $key;
+    private readonly Key $key;
 
     /**
      * @param RuleChain<array<non-empty-string, string>> $ruleChain

@@ -16,11 +16,6 @@ use SimpleAsFuck\Validator\Model\ValueMust;
  */
 class Min extends Comparison
 {
-    /** @var Conversion<TCompared, string> */
-    private Conversion $toString;
-    /** @var non-empty-string */
-    private string $comparedName;
-
     /**
      * @param RuleChain<TValue> $ruleChain
      * @param Validated<mixed> $validated
@@ -36,13 +31,11 @@ class Min extends Comparison
         Validated $validated,
         string $valueName,
         Conversion $conversion,
-        Conversion $toString,
+        private readonly Conversion $toString,
         $comparedTo,
-        string $comparedName = 'value'
+        private readonly string $comparedName = 'value'
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $conversion, $comparedTo);
-        $this->toString = $toString;
-        $this->comparedName = $comparedName;
     }
 
     /**

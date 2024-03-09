@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 final class Component extends ReadableRule
 {
     /** @var Key<TComponent> */
-    private Key $key;
+    private readonly Key $key;
 
     /**
      * @param RuleChain<array<non-empty-string, TComponent>> $ruleChain

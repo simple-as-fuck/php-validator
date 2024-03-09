@@ -38,6 +38,9 @@ final class Property extends Rule
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
+    /**
+     * @deprecated $emptyAsNull param will be removed use string()->notEmpty(emptyAsNull: true)
+     */
     public function string(bool $emptyAsNull = false): StringRule
     {
         return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName, $emptyAsNull);

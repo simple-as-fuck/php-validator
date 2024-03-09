@@ -12,7 +12,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class RuleChain
 {
     /** @var array<Rule<mixed, mixed>> */
-    private array $rules;
+    public readonly array $rules;
 
     /**
      * @param array<Rule<mixed, mixed>> $rules
@@ -20,13 +20,15 @@ final class RuleChain
      */
     public function __construct(array $rules = [], Rule $lastRule = null)
     {
-        $this->rules = $rules;
         if ($lastRule !== null) {
-            $this->rules[] = $lastRule;
+            $rules[] = $lastRule;
         }
+
+        $this->rules = $rules;
     }
 
     /**
+     * @deprecated use rules property
      * @return array<Rule<mixed, mixed>>
      */
     public function rules(): array

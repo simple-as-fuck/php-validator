@@ -18,22 +18,20 @@ use SimpleAsFuck\Validator\Rule\General\Same;
  */
 final class Collection extends ReadableRule
 {
-    /** @var RuleChain<array<mixed>> */
-    private RuleChain $ruleChain;
-    /** @var callable(TypedKey): TOut  */
-    private $callable;
-
     /**
      * @param RuleChain<array<mixed>> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param callable(TypedKey): TOut $callable
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, callable $callable)
-    {
+    public function __construct(
+        ?Exception $exceptionFactory,
+        private readonly RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private readonly mixed $callable
+    ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
-        $this->ruleChain = $ruleChain;
-        $this->callable = $callable;
     }
 
     /**
@@ -101,6 +99,7 @@ final class Collection extends ReadableRule
     }
 
     /**
+     * @deprecated use nullable() ?? []
      * @return array<TOut>
      */
     public function notNull(bool $failAsEmpty = false): array

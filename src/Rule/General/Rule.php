@@ -23,10 +23,10 @@ abstract class Rule
      * @param non-empty-string $valueName
      */
     public function __construct(
-        private ?Exception $exceptionFactory,
-        private RuleChain $ruleChain,
-        private Validated $validated,
-        private string $valueName
+        private readonly ?Exception $exceptionFactory,
+        private readonly RuleChain $ruleChain,
+        private readonly Validated $validated,
+        private readonly string $valueName
     ) {
     }
 
@@ -57,7 +57,7 @@ abstract class Rule
      */
     final protected function ruleChain(): RuleChain
     {
-        return new RuleChain($this->ruleChain->rules(), $this);
+        return new RuleChain($this->ruleChain->rules, $this);
     }
 
     /**
@@ -81,9 +81,9 @@ abstract class Rule
      */
     final protected function validateChain(bool $failAsNull = false): mixed
     {
-        $value = $this->validated->value();
+        $value = $this->validated->value;
 
-        foreach ($this->ruleChain->rules() as $rule) {
+        foreach ($this->ruleChain->rules as $rule) {
             $value = $this->validateRule($rule, $value, $failAsNull);
         }
         return $this->validateRule($this, $value, $failAsNull);
