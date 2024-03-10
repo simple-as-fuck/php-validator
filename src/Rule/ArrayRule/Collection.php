@@ -10,14 +10,14 @@ use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\General\Same;
 
 /**
  * @template TOut
- * @extends ReadableRule<array<mixed>, array<TOut>>
+ * @extends Rule<array<mixed>, array<TOut>>
  */
-final class Collection extends ReadableRule
+final class Collection extends Rule
 {
     /**
      * @param RuleChain<array<mixed>> $ruleChain

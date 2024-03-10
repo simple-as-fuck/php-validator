@@ -41,6 +41,35 @@ abstract class Rule
     }
 
     /**
+     * @return TOut
+     */
+    public function notNull()
+    {
+        $value = $this->nullable();
+        if ($value === null) {
+            if ($this->exceptionFactory === null) {
+                throw new ValueMust('be not null');
+            }
+            throw $this->exceptionFactory->create($this->valueName.' must be not null');
+        }
+
+        return $value;
+    }
+
+    /**
+     * @return TOut|null
+     */
+    public function nullable(bool $failAsNull = false)
+    {
+        $value = $this->validated->value;
+
+        foreach ($this->ruleChain->rules as $rule) {
+            $value = $this->validateRule($rule, $value, $failAsNull);
+        }
+        return $this->validateRule($this, $value, $failAsNull);
+    }
+
+    /**
      * @param TIn $value
      * @return TOut|null
      * @throws ValueMust
@@ -82,16 +111,12 @@ abstract class Rule
     }
 
     /**
+     * @deprecated use nullable()
      * @return TOut|null
      */
     final protected function validateChain(bool $failAsNull = false): mixed
     {
-        $value = $this->validated->value;
-
-        foreach ($this->ruleChain->rules as $rule) {
-            $value = $this->validateRule($rule, $value, $failAsNull);
-        }
-        return $this->validateRule($this, $value, $failAsNull);
+        return $this->nullable($failAsNull);
     }
 
     /**

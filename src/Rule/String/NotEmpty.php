@@ -10,12 +10,12 @@ use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\Max;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
- * @extends ReadableRule<string, non-empty-string>
+ * @extends Rule<string, non-empty-string>
  */
-final class NotEmpty extends ReadableRule
+final class NotEmpty extends Rule
 {
     /**
      * @param RuleChain<string> $ruleChain

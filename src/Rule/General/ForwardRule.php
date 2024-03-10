@@ -11,9 +11,9 @@ use SimpleAsFuck\Validator\Model\Validated;
 /**
  * @template TIn
  * @template TOut
- * @extends ReadableRule<TIn, TOut>
+ * @extends Rule<TIn, TOut>
  */
-abstract class ForwardRule extends ReadableRule
+abstract class ForwardRule extends Rule
 {
     /**
      * @param RuleChain<covariant TIn> $ruleChain

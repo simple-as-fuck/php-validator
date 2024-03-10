@@ -8,14 +8,14 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\Custom\UserArrayRule;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @template TArrayRule of object
  * @template TClass of object
- * @extends ReadableRule<array<mixed>, TClass>
+ * @extends Rule<array<mixed>, TClass>
  */
-final class ClassFromArray extends ReadableRule
+final class ClassFromArray extends Rule
 {
     /**
      * @param TArrayRule $arrayRule

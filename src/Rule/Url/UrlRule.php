@@ -11,14 +11,14 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\Conversion;
 use SimpleAsFuck\Validator\Rule\General\Max;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\String\StringLength;
 
 /**
  * @template Tstring of string
- * @extends ReadableRule<Tstring, Tstring>
+ * @extends Rule<Tstring, Tstring>
  */
-final class UrlRule extends ReadableRule
+final class UrlRule extends Rule
 {
     /** @var ParseUrl<Tstring> */
     private readonly ParseUrl $parseUrl;

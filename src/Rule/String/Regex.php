@@ -8,13 +8,13 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @template Tstring of string
- * @extends ReadableRule<Tstring, Tstring>
+ * @extends Rule<Tstring, Tstring>
  */
-final class Regex extends ReadableRule
+final class Regex extends Rule
 {
     /**
      * @param RuleChain<Tstring> $ruleChain

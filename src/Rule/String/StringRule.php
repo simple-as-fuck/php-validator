@@ -13,16 +13,16 @@ use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\InRule;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\General\Same;
 use SimpleAsFuck\Validator\Rule\Numeric\ParseNumeric;
 use SimpleAsFuck\Validator\Rule\Url\UrlRule;
 use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 
 /**
- * @extends ReadableRule<mixed, string>
+ * @extends Rule<mixed, string>
  */
-final class StringRule extends ReadableRule
+final class StringRule extends Rule
 {
     /**
      * @param non-empty-string $valueName
@@ -96,7 +96,7 @@ final class StringRule extends ReadableRule
 
     public function parseInt(): ParseInt
     {
-        return new ParseInt($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'');
+        return new ParseInt($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'');
     }
 
     /**
@@ -109,7 +109,7 @@ final class StringRule extends ReadableRule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName . ': \'' . $this->validateChain(true) . '\'',
+            $this->valueName . ': \'' . $this->nullable(true) . '\'',
             $trueDefinition,
             $falseDefinition
         );
@@ -117,12 +117,12 @@ final class StringRule extends ReadableRule
 
     public function parseFloat(): ParseFloat
     {
-        return new ParseFloat($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'');
+        return new ParseFloat($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'');
     }
 
     public function numeric(bool $allowLeadingZero = false): ParseNumeric
     {
-        return new ParseNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'', $allowLeadingZero);
+        return new ParseNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $allowLeadingZero);
     }
 
     /**
@@ -132,7 +132,7 @@ final class StringRule extends ReadableRule
      */
     public function parseDecimal(int $digits, int $decimals): Max
     {
-        $numericRule = new ParseNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'');
+        $numericRule = new ParseNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'');
         return $numericRule->maxDigit($digits)->maxDecimal($decimals);
     }
 
@@ -145,7 +145,7 @@ final class StringRule extends ReadableRule
      */
     public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class, ?string $timeZone = null): ParseDateTime
     {
-        return new ParseDateTime($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'', $format, $dateTimeClass, $timeZone);
+        return new ParseDateTime($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $format, $dateTimeClass, $timeZone);
     }
 
     /**
@@ -165,7 +165,7 @@ final class StringRule extends ReadableRule
      */
     public function parseUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
     {
-        return new ParseUrl($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'', $requiredComponents, $forbiddenComponents);
+        return new ParseUrl($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $requiredComponents, $forbiddenComponents);
     }
 
     /**
@@ -180,7 +180,7 @@ final class StringRule extends ReadableRule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName.': \''.$this->validateChain(true).'\'',
+            $this->valueName.': \''.$this->nullable(true).'\'',
             $requiredComponents,
             $forbiddenComponents,
             $requiredSchemes
@@ -214,7 +214,7 @@ final class StringRule extends ReadableRule
      */
     public function parseIpv4(bool $private = false): ParseIp
     {
-        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'', true, $private);
+        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', true, $private);
     }
 
     /**
@@ -222,7 +222,7 @@ final class StringRule extends ReadableRule
      */
     public function parseIpv6(bool $private = false): ParseIp
     {
-        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'', false, $private);
+        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', false, $private);
     }
 
     public function notEmpty(bool $emptyAsNull = false): NotEmpty
@@ -237,7 +237,7 @@ final class StringRule extends ReadableRule
      */
     public function regex(string $pattern, int $flags = 0): Regex
     {
-        return new Regex($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'', $pattern, $flags);
+        return new Regex($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $pattern, $flags);
     }
 
     /**
@@ -246,7 +246,7 @@ final class StringRule extends ReadableRule
      */
     public function parseRegex(string $pattern, int $flags = 0): ParseRegex
     {
-        return new ParseRegex($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->validateChain(true).'\'', $pattern, $flags);
+        return new ParseRegex($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $pattern, $flags);
     }
 
     /**

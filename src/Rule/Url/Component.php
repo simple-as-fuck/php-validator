@@ -8,12 +8,12 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\ArrayRule\Key;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
- * @extends ReadableRule<array{scheme?: string, host?: string, user?: string, pass?: string, path?: string, query?: string, fragment?: string}, string>
+ * @extends Rule<array{scheme?: string, host?: string, user?: string, pass?: string, path?: string, query?: string, fragment?: string}, string>
  */
-final class Component extends ReadableRule
+final class Component extends Rule
 {
     /** @var Key<string> */
     private readonly Key $key;

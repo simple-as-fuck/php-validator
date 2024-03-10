@@ -7,6 +7,7 @@ namespace SimpleAsFuck\Validator\Rule\General;
 use SimpleAsFuck\Validator\Model\ValueMust;
 
 /**
+ * @deprecated use General Rule instead
  * @template TIn
  * @template TOut
  * @extends Rule<TIn, TOut>

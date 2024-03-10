@@ -7,14 +7,14 @@ namespace SimpleAsFuck\Validator\Rule\Custom;
 use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @template TIn
  * @template TOut
- * @extends ReadableRule<TIn, TOut>
+ * @extends Rule<TIn, TOut>
  */
-final class CustomRule extends ReadableRule
+final class CustomRule extends Rule
 {
     /**
      * @param RuleChain<TIn> $ruleChain

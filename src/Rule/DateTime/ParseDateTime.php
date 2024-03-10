@@ -12,13 +12,13 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\NoConversion;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @template TDateTime of \DateTimeInterface
- * @extends ReadableRule<string, TDateTime>
+ * @extends Rule<string, TDateTime>
  */
-final class ParseDateTime extends ReadableRule
+final class ParseDateTime extends Rule
 {
     private readonly ?\DateTimeZone $timeZone;
 

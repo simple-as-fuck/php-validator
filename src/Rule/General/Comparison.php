@@ -12,9 +12,9 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 /**
  * @template TValue
  * @template TCompared
- * @extends ReadableRule<TValue, TValue>
+ * @extends Rule<TValue, TValue>
  */
-abstract class Comparison extends ReadableRule
+abstract class Comparison extends Rule
 {
     /**
      * @param RuleChain<TValue> $ruleChain

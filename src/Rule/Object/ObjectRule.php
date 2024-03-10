@@ -59,18 +59,6 @@ final class ObjectRule extends Rule
     }
 
     /**
-     * @deprecated will have new interface and usage
-     * @template TOut
-     * @param callable(Property): TOut $callable
-     * @return TOut|null
-     */
-    public function nullable(string $name, callable $callable)
-    {
-        $property = $this->property($name);
-        return $property->validateChain() === null ? null : $callable($property);
-    }
-
-    /**
      * @param mixed $value
      */
     protected function validate($value): ?object

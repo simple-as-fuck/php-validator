@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\Url;
 
 use SimpleAsFuck\Validator\Rule\General\InRule;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\String\CaseInsensitiveInRule;
 
 /**
- * @extends ReadableRule<array{scheme?: string}, string>
+ * @extends Rule<array{scheme?: string}, string>
  */
-final class Scheme extends ReadableRule
+final class Scheme extends Rule
 {
     /**
      * @template Tstring of non-empty-string

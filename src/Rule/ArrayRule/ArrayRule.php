@@ -23,17 +23,6 @@ final class ArrayRule extends Rule
     }
 
     /**
-     * @deprecated will have new interface and usage
-     * @template TOut
-     * @param callable(TypedKey): TOut $callable
-     * @return TOut|null
-     */
-    public function nullable(string $key, callable $callable)
-    {
-        return $this->validateChain() === null ? null : $callable($this->key($key));
-    }
-
-    /**
      * @template TMapped
      * @param callable(TypedKey): TMapped $callable
      * @return Collection<TMapped>

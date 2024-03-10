@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\Numeric;
 
 use SimpleAsFuck\Validator\Model\ValueMust;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
- * @extends ReadableRule<mixed, bool>
+ * @extends Rule<mixed, bool>
  */
-final class BoolRule extends ReadableRule
+final class BoolRule extends Rule
 {
     /**
      * @param mixed $value

@@ -6,9 +6,9 @@ namespace SimpleAsFuck\Validator\Rule\General;
 
 /**
  * @template TIn
- * @extends ReadableRule<TIn, int>
+ * @extends Rule<TIn, int>
  */
-abstract class IntRule extends ReadableRule
+abstract class IntRule extends Rule
 {
     /**
      * @return MinWithMax<int, int>

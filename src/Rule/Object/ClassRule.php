@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\Object;
 
 use SimpleAsFuck\Validator\Rule\Custom\UserClassRule;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @template TClass of object
- * @extends ReadableRule<object, TClass>
+ * @extends Rule<object, TClass>
  */
-final class ClassRule extends ReadableRule
+final class ClassRule extends Rule
 {
     /**
      * @param UserClassRule<TClass> $classRule

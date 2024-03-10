@@ -6,14 +6,14 @@ namespace SimpleAsFuck\Validator\Rule\Numeric;
 
 use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\Max;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\General\Same;
 
 /**
  * @template Tin of string
- * @extends ReadableRule<Tin, numeric-string>
+ * @extends Rule<Tin, numeric-string>
  */
-abstract class Numeric extends ReadableRule
+abstract class Numeric extends Rule
 {
     /**
      * @param positive-int $min minimum digits before decimal separator, without minus sign

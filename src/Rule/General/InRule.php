@@ -12,9 +12,9 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 /**
  * @template Tin
  * @template Tout
- * @extends ReadableRule<Tin, Tout>
+ * @extends Rule<Tin, Tout>
  */
-class InRule extends ReadableRule
+class InRule extends Rule
 {
     /**
      * @param RuleChain<covariant Tin> $ruleChain

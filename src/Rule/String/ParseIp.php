@@ -8,12 +8,12 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
-use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
- * @extends ReadableRule<string, non-empty-string>
+ * @extends Rule<string, non-empty-string>
  */
-final class ParseIp extends ReadableRule
+final class ParseIp extends Rule
 {
     /**
      * @param RuleChain<string> $ruleChain
