@@ -7,7 +7,7 @@ namespace SimpleAsFuck\Validator\Rule\ArrayRule;
 use SimpleAsFuck\Validator\Rule\General\Conversion;
 
 /**
- * @extends Conversion<array, int>
+ * @extends Conversion<array<mixed>, int>
  */
 final class ArraySize extends Conversion
 {

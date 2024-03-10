@@ -7,6 +7,7 @@ namespace SimpleAsFuck\Validator\Rule\ArrayRule;
 use SimpleAsFuck\Validator\Rule\General\Max;
 
 /**
+ * @deprecated will be removed
  * @template TValue
  * @extends Max<array<TValue>, int>
  */

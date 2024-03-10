@@ -8,6 +8,7 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\General\CastString;
+use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\ReadableRule;
 use SimpleAsFuck\Validator\Rule\General\Same;
@@ -43,10 +44,10 @@ final class Collection extends ReadableRule
         /** @var Same<non-empty-array<TOut>, int> $sameRule */
         $sameRule = new Same(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
+            /** @phpstan-ignore-next-line */
             new ArraySize(),
             $size,
             'array size'
@@ -63,7 +64,6 @@ final class Collection extends ReadableRule
         /** @var MinWithMax<non-empty-array<TOut>, int> $minRule */
         $minRule = new MinWithMax(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
@@ -78,33 +78,22 @@ final class Collection extends ReadableRule
 
     /**
      * @param positive-int $max
-     * @return ArrayMax<TOut>
+     * @return Max<array<TOut>, int>
      */
-    public function max(int $max): ArrayMax
+    public function max(int $max): Max
     {
-        /** @var ArrayMax<TOut> $maxRule */
-        $maxRule = new ArrayMax(
+        /** @var Max<array<TOut>, int> */
+        return new Max(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            new ArraySize(),
             /** @phpstan-ignore-next-line */
+            new ArraySize(),
             new CastString(),
             $max,
             'array size'
         );
-        return $maxRule;
-    }
-
-    /**
-     * @deprecated use nullable() ?? []
-     * @return array<TOut>
-     */
-    public function notNull(bool $failAsEmpty = false): array
-    {
-        return $this->validateChain($failAsEmpty) ?? [];
     }
 
     /**
