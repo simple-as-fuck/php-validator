@@ -18,7 +18,7 @@ use SimpleAsFuck\Validator\Rule\General\InRule;
 final class CaseInsensitiveInRule extends InRule
 {
     /**
-     * @param RuleChain<string> $ruleChain
+     * @param RuleChain<covariant string> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-array<Tout> $values

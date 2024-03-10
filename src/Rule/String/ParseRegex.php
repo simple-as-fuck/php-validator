@@ -38,7 +38,7 @@ final class ParseRegex extends Rule
      */
     public function match(string $matchKey): RegexMatch
     {
-        return new RegexMatch($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().' regex: \''.$this->pattern.'\' match: \''.$matchKey.'\'', $matchKey);
+        return new RegexMatch($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' regex: \''.$this->pattern.'\' match: \''.$matchKey.'\'', $matchKey);
     }
 
     /**

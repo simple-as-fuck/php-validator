@@ -42,11 +42,11 @@ final class Collection extends ReadableRule
     {
         /** @var Same<non-empty-array<TOut>, int> $sameRule */
         $sameRule = new Same(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new ArraySize(),
             $size,
             'array size'
@@ -62,11 +62,11 @@ final class Collection extends ReadableRule
     {
         /** @var MinWithMax<non-empty-array<TOut>, int> $minRule */
         $minRule = new MinWithMax(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             /** @phpstan-ignore-next-line */
             new ArraySize(),
             new CastString(),
@@ -84,11 +84,11 @@ final class Collection extends ReadableRule
     {
         /** @var ArrayMax<TOut> $maxRule */
         $maxRule = new ArrayMax(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new ArraySize(),
             /** @phpstan-ignore-next-line */
             new CastString(),
@@ -115,7 +115,7 @@ final class Collection extends ReadableRule
     {
         $result = [];
         foreach ($value as $key => $item) {
-            $result[$key] = ($this->callable)(new TypedKey($this->exceptionFactory(), $this->ruleChain, $this->validated(), $this->valueName().'['.$key.']', $key));
+            $result[$key] = ($this->callable)(new TypedKey($this->exceptionFactory, $this->ruleChain, $this->validated, $this->valueName.'['.$key.']', $key));
         }
 
         return $result;

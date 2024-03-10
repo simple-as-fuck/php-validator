@@ -18,15 +18,15 @@ use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
 abstract class Rule
 {
     /**
-     * @param RuleChain<TIn> $ruleChain
+     * @param RuleChain<covariant TIn> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(
-        private readonly ?Exception $exceptionFactory,
+        protected readonly ?Exception $exceptionFactory,
         private readonly RuleChain $ruleChain,
-        private readonly Validated $validated,
-        private readonly string $valueName
+        protected readonly Validated $validated,
+        protected readonly string $valueName
     ) {
     }
 
@@ -47,6 +47,9 @@ abstract class Rule
      */
     abstract protected function validate($value);
 
+    /**
+     * @deprecated use property exceptionFactory
+     */
     final protected function exceptionFactory(): ?Exception
     {
         return $this->exceptionFactory;
@@ -61,6 +64,7 @@ abstract class Rule
     }
 
     /**
+     * @deprecated use property validated
      * @return Validated<mixed>
      */
     final protected function validated(): Validated
@@ -69,6 +73,7 @@ abstract class Rule
     }
 
     /**
+     * @deprecated use property valueName
      * @return non-empty-string
      */
     final protected function valueName(): string

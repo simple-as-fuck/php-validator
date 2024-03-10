@@ -31,7 +31,7 @@ final class ArrayOfString extends Rule
     public function key(string $key): StringTypedKey
     {
         $typedKey = $this->arrayRule->key($key);
-        return new StringTypedKey($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $typedKey->valueName(), $typedKey);
+        return new StringTypedKey($this->exceptionFactory, $this->ruleChain(), $this->validated, $typedKey->valueName, $typedKey);
     }
 
     /**
@@ -54,7 +54,7 @@ final class ArrayOfString extends Rule
     {
         return $this->arrayRule->of(
             fn (TypedKey $typedKey) => $callable(
-                new StringTypedKey($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $typedKey->valueName(), $typedKey)
+                new StringTypedKey($this->exceptionFactory, $this->ruleChain(), $this->validated, $typedKey->valueName, $typedKey)
             )
         );
     }

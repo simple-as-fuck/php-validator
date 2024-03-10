@@ -31,14 +31,15 @@ class Min extends Comparison
         Validated $validated,
         string $valueName,
         Conversion $conversion,
-        private readonly Conversion $toString,
+        protected readonly Conversion $toString,
         $comparedTo,
-        private readonly string $comparedName = 'value'
+        protected readonly string $comparedName = 'value'
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $conversion, $comparedTo);
     }
 
     /**
+     * @deprecated use property toString
      * @return Conversion<TCompared, string>
      */
     final protected function toString(): Conversion
@@ -47,6 +48,7 @@ class Min extends Comparison
     }
 
     /**
+     * @deprecated use property comparedName
      * @return non-empty-string
      */
     final protected function comparedName(): string

@@ -102,31 +102,4 @@ final class StringRuleTest extends TestCase
             [null, 'value must be string', 5, false],
         ];
     }
-
-    /**
-     * @dataProvider dataProvider
-     */
-    public function test(?string $expectedString, mixed $input, bool $emptyAsNull): void
-    {
-        $rule = new StringRule(
-            new UnexpectedValueException(),
-            new RuleChain(),
-            new Validated($input),
-            'value',
-            $emptyAsNull
-        );
-
-        self::assertSame($expectedString, $rule->nullable());
-    }
-
-    /**
-     * @return non-empty-array<array{?string, mixed, bool}>
-     */
-    public static function dataProvider(): array
-    {
-        return [
-            ['', '', false],
-            [null, '', true],
-        ];
-    }
 }

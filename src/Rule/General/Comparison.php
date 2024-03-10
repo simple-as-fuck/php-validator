@@ -7,6 +7,7 @@ namespace SimpleAsFuck\Validator\Rule\General;
 use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
+use SimpleAsFuck\Validator\Model\ValueMust;
 
 /**
  * @template TValue
@@ -27,8 +28,8 @@ abstract class Comparison extends ReadableRule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private readonly Conversion $conversion,
-        private readonly mixed $comparedTo
+        protected readonly Conversion $conversion,
+        protected readonly mixed $comparedTo
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
@@ -46,10 +47,12 @@ abstract class Comparison extends ReadableRule
     /**
      * @param TCompared $compared
      * @param TCompared $comparedTo
+     * @throws ValueMust
      */
     abstract protected function compare($compared, $comparedTo): void;
 
     /**
+     * @deprecated use property conversion
      * @return Conversion<TValue, TCompared>
      */
     protected function conversion(): Conversion
@@ -58,6 +61,7 @@ abstract class Comparison extends ReadableRule
     }
 
     /**
+     * @deprecated use property comparedTo
      * @return TCompared
      */
     protected function comparedTo()

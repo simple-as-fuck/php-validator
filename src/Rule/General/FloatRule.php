@@ -17,11 +17,11 @@ abstract class FloatRule extends ReadableRule
     {
         /** @var MinWithMax<float, float> $minRule */
         $minRule = new MinWithMax(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new NoConversion(),
             /** @phpstan-ignore-next-line */
             new CastString(),
@@ -37,11 +37,11 @@ abstract class FloatRule extends ReadableRule
     {
         /** @var Max<float, float> $maxRule */
         $maxRule = new Max(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new NoConversion(),
             /** @phpstan-ignore-next-line */
             new CastString(),

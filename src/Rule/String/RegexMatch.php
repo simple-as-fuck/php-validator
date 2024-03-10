@@ -28,12 +28,12 @@ final class RegexMatch extends ForwardRule
 
     public function parseInt(): ParseInt
     {
-        return new ParseInt($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new ParseInt($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function parseFloat(): ParseFloat
     {
-        return new ParseFloat($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new ParseFloat($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     /**
@@ -45,11 +45,11 @@ final class RegexMatch extends ForwardRule
      */
     public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class, ?string $timeZone = null): ParseDateTime
     {
-        return new ParseDateTime($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $format, $dateTimeClass, $timeZone);
+        return new ParseDateTime($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $format, $dateTimeClass, $timeZone);
     }
 
     public function notEmpty(bool $emptyAsNull = false): NotEmpty
     {
-        return new NotEmpty($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $emptyAsNull);
+        return new NotEmpty($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $emptyAsNull);
     }
 }

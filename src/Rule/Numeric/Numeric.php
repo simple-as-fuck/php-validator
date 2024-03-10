@@ -21,10 +21,10 @@ abstract class Numeric extends ReadableRule
     public function minDigit(int $min): MinDigit
     {
         return new MinDigit(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new DigitCount(),
             /** @phpstan-ignore-next-line */
             new CastString(),
@@ -39,10 +39,10 @@ abstract class Numeric extends ReadableRule
     public function maxDigit(int $max): MaxDigit
     {
         return new MaxDigit(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new DigitCount(),
             /** @phpstan-ignore-next-line */
             new CastString(),
@@ -59,11 +59,11 @@ abstract class Numeric extends ReadableRule
     {
         /** @var Max<numeric-string, int> $maxRule */
         $maxRule = new Max(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             /** @phpstan-ignore-next-line */
             new DecimalCount(),
             new CastString(),
@@ -92,11 +92,11 @@ abstract class Numeric extends ReadableRule
     public function exactDigit(int $number, int $maxDecimal = 0): Max
     {
         $same = new Same(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             /** @phpstan-ignore-next-line */
             new DigitCount(),
             $number,
@@ -104,10 +104,10 @@ abstract class Numeric extends ReadableRule
         );
         /** @var Max<numeric-string, int> */
         return new Max(
-            $same->exceptionFactory(),
+            $same->exceptionFactory,
             $same->ruleChain(),
-            $same->validated(),
-            $same->valueName(),
+            $same->validated,
+            $same->valueName,
             /** @phpstan-ignore-next-line */
             new DecimalCount(),
             new CastString(),

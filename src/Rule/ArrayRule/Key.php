@@ -16,7 +16,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 class Key extends Rule
 {
     /**
-     * @param RuleChain<array<TValue>> $ruleChain
+     * @param RuleChain<covariant array<TValue>> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      */

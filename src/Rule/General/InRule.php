@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 class InRule extends ReadableRule
 {
     /**
-     * @param RuleChain<Tin> $ruleChain
+     * @param RuleChain<covariant Tin> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-array<Tout> $values

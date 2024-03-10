@@ -16,7 +16,7 @@ use SimpleAsFuck\Validator\Model\Validated;
 abstract class ForwardRule extends ReadableRule
 {
     /**
-     * @param RuleChain<TIn> $ruleChain
+     * @param RuleChain<covariant TIn> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param Rule<TIn, TOut> $forwardedRule
@@ -26,7 +26,7 @@ abstract class ForwardRule extends ReadableRule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private Rule $forwardedRule
+        private readonly Rule $forwardedRule
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }

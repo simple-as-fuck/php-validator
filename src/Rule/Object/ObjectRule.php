@@ -55,7 +55,7 @@ final class ObjectRule extends Rule
      */
     public function property(string $name, bool $present = false): Property
     {
-        return new Property($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $name, $present);
+        return new Property($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $name, $present);
     }
 
     /**

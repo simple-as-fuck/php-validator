@@ -17,11 +17,11 @@ abstract class IntRule extends ReadableRule
     {
         /** @var MinWithMax<int, int> $minRule */
         $minRule = new MinWithMax(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new NoConversion(),
             /** @phpstan-ignore-next-line */
             new CastString(),
@@ -37,11 +37,11 @@ abstract class IntRule extends ReadableRule
     {
         /** @var Max<int, int> $maxRule */
         $maxRule = new Max(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new NoConversion(),
             /** @phpstan-ignore-next-line */
             new CastString(),
@@ -58,10 +58,10 @@ abstract class IntRule extends ReadableRule
     final public function in(array $values): InRule
     {
         return new InRule(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             $values
         );
     }

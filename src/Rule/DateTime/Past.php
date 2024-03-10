@@ -19,10 +19,10 @@ final class Past extends Max
      */
     public function min(\DateTimeInterface $min): Min
     {
-        if ($this->comparedTo() <= $min) {
+        if ($this->comparedTo <= $min) {
             throw new \LogicException('Min value rule parameter must be in past');
         }
 
-        return new Min($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $this->conversion(), $this->toString(), $min);
+        return new Min($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $this->conversion, $this->toString, $min);
     }
 }

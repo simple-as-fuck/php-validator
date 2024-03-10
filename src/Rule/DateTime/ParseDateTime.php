@@ -66,11 +66,11 @@ final class ParseDateTime extends ReadableRule
     {
         /** @var MinWithMax<TDateTime, TDateTime> $minRule */
         $minRule = new MinWithMax(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new NoConversion(),
             /** @phpstan-ignore-next-line */
             new ToIsoString(),
@@ -86,11 +86,11 @@ final class ParseDateTime extends ReadableRule
     {
         /** @var MinWithMax<TDateTime, TDateTime> $minRule */
         $minRule = new MinWithMax(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new NoConversion(),
             /** @phpstan-ignore-next-line */
             new ToIsoString(),
@@ -106,10 +106,10 @@ final class ParseDateTime extends ReadableRule
     {
         /** @var Past<TDateTime> $pastRule */
         $pastRule = new Past(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             /** @phpstan-ignore-next-line */
             new NoConversion(),
             /** @phpstan-ignore-next-line */
@@ -127,11 +127,11 @@ final class ParseDateTime extends ReadableRule
     {
         /** @var Max<TDateTime, TDateTime> $maxRule */
         $maxRule = new Max(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             new NoConversion(),
             /** @phpstan-ignore-next-line */
             new ToIsoString(),

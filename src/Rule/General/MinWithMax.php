@@ -17,19 +17,19 @@ final class MinWithMax extends Min
      */
     public function max($maxValue): Max
     {
-        if ($this->comparedTo() >= $maxValue) {
+        if ($this->comparedTo >= $maxValue) {
             throw new \LogicException('Max value rule parameter must be greater than min value');
         }
 
         return new Max(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
-            $this->conversion(),
-            $this->toString(),
+            $this->validated,
+            $this->valueName,
+            $this->conversion,
+            $this->toString,
             $maxValue,
-            $this->comparedName()
+            $this->comparedName
         );
     }
 }

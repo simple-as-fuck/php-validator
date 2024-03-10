@@ -42,7 +42,7 @@ final class UrlRule extends ReadableRule
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
-        $this->parseUrl = new ParseUrl(null, new RuleChain(), $this->validated(), $this->valueName(), $requiredComponents, $forbiddenComponents);
+        $this->parseUrl = new ParseUrl(null, new RuleChain(), $this->validated, $this->valueName, $requiredComponents, $forbiddenComponents);
     }
 
     /**
@@ -57,10 +57,10 @@ final class UrlRule extends ReadableRule
         $stringLength = new StringLength();
         /** @var Max<Tstring, int> */
         return new Max(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $ruleChain,
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             $stringLength,
             new CastString(),
             $max,

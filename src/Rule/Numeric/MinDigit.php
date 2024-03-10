@@ -16,19 +16,19 @@ final class MinDigit extends Min
      */
     public function maxDigit(int $max): MaxDigit
     {
-        if ($this->comparedTo() >= $max) {
+        if ($this->comparedTo >= $max) {
             throw new \LogicException('Max value rule parameter must be greater than min value');
         }
 
         return new MaxDigit(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
-            $this->conversion(),
-            $this->toString(),
+            $this->validated,
+            $this->valueName,
+            $this->conversion,
+            $this->toString,
             $max,
-            $this->comparedName()
+            $this->comparedName
         );
     }
 }

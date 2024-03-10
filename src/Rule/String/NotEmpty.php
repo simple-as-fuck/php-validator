@@ -17,6 +17,11 @@ use SimpleAsFuck\Validator\Rule\General\ReadableRule;
  */
 final class NotEmpty extends ReadableRule
 {
+    /**
+     * @param RuleChain<string> $ruleChain
+     * @param Validated<mixed> $validated
+     * @param non-empty-string $valueName
+     */
     public function __construct(
         ?Exception $exceptionFactory,
         RuleChain $ruleChain,
@@ -35,11 +40,11 @@ final class NotEmpty extends ReadableRule
     {
         /** @var Max<non-empty-string, int> $maxRule */
         $maxRule = new Max(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             /** @phpstan-ignore-next-line */
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
+            $this->validated,
+            $this->valueName,
             /** @phpstan-ignore-next-line */
             new StringLength(),
             new CastString(),

@@ -16,7 +16,7 @@ final class UnsignedNumeric extends Numeric
      */
     public function nonZero(): Numeric
     {
-        return new NonZeroNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new NonZeroNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     /**

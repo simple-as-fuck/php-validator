@@ -19,7 +19,7 @@ final class ArrayRule extends Rule
      */
     public function key($key): TypedKey
     {
-        return new TypedKey($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'['.$key.']', $key);
+        return new TypedKey($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'['.$key.']', $key);
     }
 
     /**
@@ -40,7 +40,7 @@ final class ArrayRule extends Rule
      */
     public function of(callable $callable): Collection
     {
-        return new Collection($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $callable);
+        return new Collection($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $callable);
     }
 
     /**
