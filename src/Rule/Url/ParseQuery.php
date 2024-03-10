@@ -12,7 +12,7 @@ use SimpleAsFuck\Validator\Rule\ArrayRule\StringTypedKey;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
- * @extends Rule<array<non-empty-string, string>, array<mixed>>
+ * @extends Rule<array{query?: string}, array<mixed>>
  */
 final class ParseQuery extends Rule
 {
@@ -20,7 +20,7 @@ final class ParseQuery extends Rule
     private readonly Key $key;
 
     /**
-     * @param RuleChain<array<non-empty-string, string>> $ruleChain
+     * @param RuleChain<covariant array{query?: string}> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      */
@@ -42,22 +42,22 @@ final class ParseQuery extends Rule
     public function key(string $key): StringTypedKey
     {
         return new StringTypedKey(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().' parameter '.$key,
+            $this->validated,
+            $this->valueName.' parameter '.$key,
             new Key(
-                $this->exceptionFactory(),
+                $this->exceptionFactory,
                 $this->ruleChain(),
-                $this->validated(),
-                $this->valueName().' parameter '.$key,
+                $this->validated,
+                $this->valueName.' parameter '.$key,
                 $key
             )
         );
     }
 
     /**
-     * @param array<non-empty-string, string> $value
+     * @param array{query?: string} $value
      * @return array<mixed>
      */
     protected function validate($value): array

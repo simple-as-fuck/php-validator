@@ -4,61 +4,36 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\Url;
 
-use SimpleAsFuck\Validator\Factory\Exception;
-use SimpleAsFuck\Validator\Model\RuleChain;
-use SimpleAsFuck\Validator\Model\Validated;
-use SimpleAsFuck\Validator\Rule\ArrayRule\Key;
-use SimpleAsFuck\Validator\Rule\General\ForwardRule;
 use SimpleAsFuck\Validator\Rule\General\InRule;
+use SimpleAsFuck\Validator\Rule\General\ReadableRule;
+use SimpleAsFuck\Validator\Rule\String\CaseInsensitiveInRule;
 
 /**
- * @extends ForwardRule<array<non-empty-string, non-empty-string>, non-empty-string>
+ * @extends ReadableRule<array{scheme?: string}, string>
  */
-final class Scheme extends ForwardRule
+final class Scheme extends ReadableRule
 {
     /**
-     * @param RuleChain<array<non-empty-string, non-empty-string>> $ruleChain
-     * @param Validated<mixed> $validated
-     * @param non-empty-string $valueName
+     * @template Tstring of non-empty-string
+     * @param non-empty-array<Tstring> $values
+     * @return InRule<string, Tstring>
      */
-    public function __construct(
-        ?Exception $exceptionFactory,
-        RuleChain $ruleChain,
-        Validated $validated,
-        string $valueName,
-        string $componentName
-    ) {
-        parent::__construct(
-            $exceptionFactory,
-            $ruleChain,
-            $validated,
-            $valueName,
-            /** @phpstan-ignore-next-line */
-            new Key(
-                $exceptionFactory,
-                /** @phpstan-ignore-next-line */
-                $ruleChain,
-                $validated,
-                $valueName,
-                $componentName
-            )
+    public function in(array $values): InRule
+    {
+        return new CaseInsensitiveInRule(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            $values
         );
     }
 
     /**
-     * @template Tstring of non-empty-string
-     * @param non-empty-array<Tstring> $values
-     * @return InRule<non-empty-string, Tstring>
+     * @param array{scheme?: string} $value
      */
-    public function in(array $values): InRule
+    protected function validate($value): ?string
     {
-        return new \SimpleAsFuck\Validator\Rule\String\InRule(
-            $this->exceptionFactory(),
-            $this->ruleChain(),
-            $this->validated(),
-            $this->valueName(),
-            $values,
-            true
-        );
+        return $value['scheme'] ?? null;
     }
 }

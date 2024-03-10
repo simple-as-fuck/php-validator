@@ -9,11 +9,12 @@ use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
+use SimpleAsFuck\Validator\Rule\General\IntRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
  * @template TString of string
- * @extends Rule<string, array<non-empty-string, string>>
+ * @extends Rule<string, array{scheme?: string, host?: string, port?: int<0, 65535>, user?: string, pass?: string, path?: string, query?: string, fragment?: string}>
  */
 final class ParseUrl extends Rule
 {
@@ -68,127 +69,101 @@ final class ParseUrl extends Rule
 
     public function scheme(): Scheme
     {
-        /** @var RuleChain<array<non-empty-string, non-empty-string>> $ruleChain */
-        $ruleChain = $this->ruleChain();
         return new Scheme(
-            $this->exceptionFactory(),
-            $ruleChain,
-            $this->validated(),
-            $this->valueName().' url scheme',
-            'scheme'
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName.' url scheme'
         );
     }
 
-    /**
-     * @return Component<non-empty-string>
-     */
     public function host(): Component
     {
-        /** @var Component<non-empty-string> */
         return new Component(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().' url host',
+            $this->validated,
+            $this->valueName.' url host',
             'host'
         );
     }
 
     /**
-     * @return Component<positive-int>
+     * @return IntRule<array{port?: int<0, 65535>}>
      */
-    public function port(): Component
+    public function port(): IntRule
     {
-        /** @var Component<positive-int> */
-        return new Component(
-            $this->exceptionFactory(),
+        return new Port(
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().' url port',
-            'port'
+            $this->validated,
+            $this->valueName.' url port'
         );
     }
 
-    /**
-     * @return Component<non-empty-string>
-     */
     public function user(): Component
     {
-        /** @var Component<non-empty-string> */
         return new Component(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().' url user',
+            $this->validated,
+            $this->valueName.' url user',
             'user'
         );
     }
 
-    /**
-     * @return Component<non-empty-string>
-     */
     public function pass(): Component
     {
-        /** @var Component<non-empty-string> */
         return new Component(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().' url pass',
+            $this->validated,
+            $this->valueName.' url pass',
             'pass'
         );
     }
 
-    /**
-     * @return Component<string>
-     */
     public function path(): Component
     {
         return new Component(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().' url path',
+            $this->validated,
+            $this->valueName.' url path',
             'path'
         );
     }
 
-    /**
-     * @return Component<string>
-     */
     public function query(): Component
     {
         return new Component(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().' url query',
+            $this->validated,
+            $this->valueName.' url query',
             'query'
         );
     }
 
     public function parseQuery(): ParseQuery
     {
-        return new ParseQuery($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().' url query');
+        return new ParseQuery($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' url query');
     }
 
-    /**
-     * @return Component<string>
-     */
     public function fragment(): Component
     {
         return new Component(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().' url fragment',
+            $this->validated,
+            $this->valueName.' url fragment',
             'fragment'
         );
     }
 
     /**
      * @param string $value
-     * @return array<non-empty-string, string>
+     * @return array{scheme?: string, host?: string, port?: int<0, 65535>, user?: string, pass?: string, path?: string, query?: string, fragment?: string}
      */
     protected function validate($value): array
     {
@@ -211,7 +186,6 @@ final class ParseUrl extends Rule
             }
         }
 
-        /** @var array<non-empty-string, string> */
         return $components;
     }
 }
