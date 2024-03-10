@@ -37,6 +37,9 @@ final class Rules
         return new FloatRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
     }
 
+    /**
+     * @deprecated $emptyAsNull param will be removed use string()->notEmpty(emptyAsNull: true)
+     */
     public function string(bool $emptyAsNull = false): StringRule
     {
         return new StringRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, $emptyAsNull);
