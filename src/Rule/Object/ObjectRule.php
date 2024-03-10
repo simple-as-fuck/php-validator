@@ -51,6 +51,23 @@ final class ObjectRule extends Rule
     }
 
     /**
+     * @template TClass of object
+     * @param callable(ObjectRule): TClass $callable
+     * @return CallableRule<TClass>
+     */
+    public function callableClass(callable $callable): CallableRule
+    {
+        return new CallableRule(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            $this,
+            $callable
+        );
+    }
+
+    /**
      * @param bool $present true value turns off conversion from not existing property into null
      */
     public function property(string $name, bool $present = false): Property

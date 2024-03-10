@@ -8,6 +8,7 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
+use SimpleAsFuck\Validator\Rule\Custom\CallableRule;
 use SimpleAsFuck\Validator\Rule\Custom\CustomRule;
 use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
 
@@ -38,6 +39,16 @@ abstract class Rule
     public function custom(UserDefinedRule $rule): CustomRule
     {
         return new CustomRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $rule);
+    }
+
+    /**
+     * @template TCallableOut
+     * @param callable(TOut): TCallableOut $callable
+     * @return CallableRule<TOut, TCallableOut>
+     */
+    public function callable(callable $callable): CallableRule
+    {
+        return new CallableRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $callable);
     }
 
     /**

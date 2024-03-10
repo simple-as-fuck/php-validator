@@ -9,6 +9,7 @@ use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\ArrayRule\ArrayRule;
+use SimpleAsFuck\Validator\Rule\Custom\CallableRule;
 use SimpleAsFuck\Validator\Rule\Custom\CustomRule;
 use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
@@ -82,6 +83,16 @@ final class Property extends Rule
     public function custom(UserDefinedRule $rule): CustomRule
     {
         return new CustomRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName, $rule);
+    }
+
+    /**
+     * @template TCallableOut
+     * @param callable(mixed): TCallableOut $callable
+     * @return CallableRule<mixed, TCallableOut>
+     */
+    public function callable(callable $callable): CallableRule
+    {
+        return new CallableRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName, $callable);
     }
 
     /**
