@@ -37,12 +37,9 @@ final class Rules
         return new FloatRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
     }
 
-    /**
-     * @deprecated $emptyAsNull param will be removed use string()->notEmpty(emptyAsNull: true)
-     */
-    public function string(bool $emptyAsNull = false): StringRule
+    public function string(): StringRule
     {
-        return new StringRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, $emptyAsNull);
+        return new StringRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
     }
 
     public function bool(): BoolRule
@@ -53,17 +50,6 @@ final class Rules
     public function object(): ObjectRule
     {
         return new ObjectRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
-    }
-
-    /**
-     * @deprecated will be removed
-     * @template TOut
-     * @param callable(ObjectRule): TOut $callable
-     * @return TOut|null
-     */
-    public function nullable(callable $callable)
-    {
-        return $this->validated->value === null ? null : $callable($this->object());
     }
 
     public function array(): ArrayRule

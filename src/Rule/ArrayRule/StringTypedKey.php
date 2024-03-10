@@ -31,17 +31,14 @@ final class StringTypedKey extends Rule
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
-    /**
-     * @deprecated $emptyAsNull param will be removed use string()->notEmpty(emptyAsNull: true)
-     */
-    public function string(bool $emptyAsNull = false): StringRule
+    public function string(): StringRule
     {
-        return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $emptyAsNull);
+        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function array(): ArrayOfString
     {
-        return new ArrayOfString($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new ArrayOfString($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     /**

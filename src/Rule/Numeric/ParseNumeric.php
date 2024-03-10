@@ -18,7 +18,6 @@ final class ParseNumeric extends Numeric
      * @param RuleChain<string> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
-     * @param bool $allowNegative Deprecated use self::unsigned
      */
     public function __construct(
         ?Exception $exceptionFactory,
@@ -26,14 +25,13 @@ final class ParseNumeric extends Numeric
         Validated $validated,
         string $valueName,
         private readonly bool $allowLeadingZero = false,
-        private readonly bool $allowNegative = true
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
     public function unsigned(): UnsignedNumeric
     {
-        return new UnsignedNumeric($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new UnsignedNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     /**
@@ -50,8 +48,8 @@ final class ParseNumeric extends Numeric
      */
     protected function validate($value): string
     {
-        if (preg_match('/^'.($this->allowNegative ? '-?' : '').'(0|['.($this->allowLeadingZero ? 0 : 1).'-9]\d*)(\.\d+)?$/', $value) !== 1) {
-            throw new ValueMust('be parsable as number in decimal system'.($this->allowLeadingZero ? ' (leading zero allowed)' : '').($this->allowNegative ? '' : ' (negative number disabled)'));
+        if (preg_match('/^-?(0|['.($this->allowLeadingZero ? 0 : 1).'-9]\d*)(\.\d+)?$/', $value) !== 1) {
+            throw new ValueMust('be parsable as number in decimal system'.($this->allowLeadingZero ? ' (leading zero allowed)' : ''));
         }
 
         /** @var numeric-string $value */

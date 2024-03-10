@@ -15,36 +15,33 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
  */
 final class TypedKey extends Key
 {
-    /**
-     * @deprecated $emptyAsNull param will be removed use string()->notEmpty(emptyAsNull: true)
-     */
-    public function string(bool $emptyAsNull = false): StringRule
+    public function string(): StringRule
     {
-        return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName(), $emptyAsNull);
+        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function int(): IntRule
     {
-        return new IntRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new IntRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function float(): FloatRule
     {
-        return new FloatRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new FloatRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function bool(): BoolRule
     {
-        return new BoolRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new BoolRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function object(): ObjectRule
     {
-        return new ObjectRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new ObjectRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function array(): ArrayRule
     {
-        return new ArrayRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName());
+        return new ArrayRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 }

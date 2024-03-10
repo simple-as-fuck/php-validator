@@ -38,43 +38,40 @@ final class Property extends Rule
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
-    /**
-     * @deprecated $emptyAsNull param will be removed use string()->notEmpty(emptyAsNull: true)
-     */
-    public function string(bool $emptyAsNull = false): StringRule
+    public function string(): StringRule
     {
-        return new StringRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName, $emptyAsNull);
+        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName);
     }
 
     public function int(): IntRule
     {
-        return new IntRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
+        return new IntRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName);
     }
 
     public function float(): FloatRule
     {
-        return new FloatRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
+        return new FloatRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName);
     }
 
     public function bool(): BoolRule
     {
-        return new BoolRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
+        return new BoolRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName);
     }
 
     public function object(bool $emptyAsNull = false): ObjectRule
     {
         return new ObjectRule(
-            $this->exceptionFactory(),
+            $this->exceptionFactory,
             $this->ruleChain(),
-            $this->validated(),
-            $this->valueName().'->'.$this->propertyName,
+            $this->validated,
+            $this->valueName.'->'.$this->propertyName,
             $emptyAsNull
         );
     }
 
     public function array(): ArrayRule
     {
-        return new ArrayRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName);
+        return new ArrayRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName);
     }
 
     /**
@@ -84,7 +81,7 @@ final class Property extends Rule
      */
     public function custom(UserDefinedRule $rule): CustomRule
     {
-        return new CustomRule($this->exceptionFactory(), $this->ruleChain(), $this->validated(), $this->valueName().'->'.$this->propertyName, $rule);
+        return new CustomRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName, $rule);
     }
 
     /**
