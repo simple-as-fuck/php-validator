@@ -9,6 +9,7 @@ use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
+use SimpleAsFuck\Validator\Rule\Enum\Enum;
 use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\InRule;
 use SimpleAsFuck\Validator\Rule\General\Max;
@@ -279,6 +280,20 @@ final class StringRule extends Rule
             $this->valueName,
             $values
         );
+    }
+
+    /**
+     * @template TEnum of \BackedEnum of string
+     * @param class-string<TEnum> $enumClass
+     * @return Enum<TEnum>
+     */
+    public function enum(string $enumClass): Enum
+    {
+        if (((string) (new \ReflectionEnum($enumClass))->getBackingType()) !== 'string') {
+            throw new \LogicException('BackedEnum: '.$enumClass.' must be of type string');
+        }
+
+        return new Enum($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $enumClass);
     }
 
     /**

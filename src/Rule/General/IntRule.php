@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\General;
 
+use SimpleAsFuck\Validator\Rule\Enum\Enum;
+
 /**
  * @template TIn
  * @extends Rule<TIn, int>
@@ -64,6 +66,20 @@ abstract class IntRule extends Rule
             $this->valueName,
             $values
         );
+    }
+
+    /**
+     * @template TEnum of \BackedEnum of int
+     * @param class-string<TEnum> $enumClass
+     * @return Enum<TEnum>
+     */
+    public function enum(string $enumClass): Enum
+    {
+        if (((string) (new \ReflectionEnum($enumClass))->getBackingType()) !== 'int') {
+            throw new \LogicException('BackedEnum: '.$enumClass.' must be of type integer');
+        }
+
+        return new Enum($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $enumClass);
     }
 
     /**
