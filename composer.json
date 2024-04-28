@@ -1,7 +1,8 @@
 {
     "name": "simple-as-fuck/php-validator",
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "ext-mbstring": "*"
     },
     "autoload": {
         "psr-4": {

@@ -34,6 +34,46 @@ final class StringRule extends Rule
     }
 
     /**
+     * @param positive-int $number of bytes that string length can have
+     * @return Rule<string, non-empty-string>
+     */
+    public function exactByte(int $number): Rule
+    {
+        /** @var Rule<string, non-empty-string> */
+        return new Same(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            /** @phpstan-ignore-next-line */
+            new StringLength(),
+            $number,
+            'string length in bytes'
+        );
+    }
+
+    /**
+     * @param positive-int $number of encoded chars that string length can have
+     * @param non-empty-string $encoding
+     * @return Rule<string, non-empty-string>
+     */
+    public function exactChar(int $number, string $encoding = 'UTF-8'): Rule
+    {
+        /** @var Rule<string, non-empty-string> */
+        return new Same(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            /** @phpstan-ignore-next-line */
+            new CharacterCount($encoding),
+            $number,
+            'number of ' . $encoding . ' encoded chars'
+        );
+    }
+
+    /**
+     * @deprecated use static::exactChar or static::exactByte
      * @param positive-int $size
      * @return Same<non-empty-string, int>
      */
@@ -55,6 +95,48 @@ final class StringRule extends Rule
 
     /**
      * @param positive-int $min
+     * @return MinLength<non-empty-string>
+     */
+    public function minByte(int $min): MinLength
+    {
+        /** @var MinLength<non-empty-string> */
+        return new MinLength(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            new StringLength(),
+            /** @phpstan-ignore-next-line */
+            new CastString(),
+            $min,
+            'string length in bytes'
+        );
+    }
+
+    /**
+     * @param positive-int $min
+     * @param non-empty-string $encoding
+     * @return MinLength<non-empty-string>
+     */
+    public function minChar(int $min, string $encoding = 'UTF-8'): MinLength
+    {
+        /** @var MinLength<non-empty-string> */
+        return new MinLength(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            new CharacterCount($encoding),
+            /** @phpstan-ignore-next-line */
+            new CastString(),
+            $min,
+            'number of ' . $encoding . ' encoded chars'
+        );
+    }
+
+    /**
+     * @deprecated use static::minChar or static::minByte
+     * @param positive-int $min
      * @return MinWithMax<non-empty-string, int>
      */
     public function min(int $min): MinWithMax
@@ -75,6 +157,46 @@ final class StringRule extends Rule
     }
 
     /**
+     * @param positive-int $max
+     * @return Rule<string, string>
+     */
+    public function maxByte(int $max): Rule
+    {
+        return new Max(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            /** @phpstan-ignore-next-line */
+            new StringLength(),
+            new CastString(),
+            $max,
+            'string length in bytes'
+        );
+    }
+
+    /**
+     * @param positive-int $max
+     * @param non-empty-string $encoding
+     * @return Rule<string, string>
+     */
+    public function maxChar(int $max, string $encoding = 'UTF-8'): Rule
+    {
+        return new Max(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            /** @phpstan-ignore-next-line */
+            new CharacterCount($encoding),
+            new CastString(),
+            $max,
+            'number of ' . $encoding . ' encoded chars'
+        );
+    }
+
+    /**
+     * @deprecated use static::maxChar or static::maxByte
      * @param positive-int $max
      * @return Max<string, int>
      */
