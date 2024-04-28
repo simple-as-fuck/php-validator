@@ -41,7 +41,6 @@ final class NotEmpty extends Rule
         /** @var Max<non-empty-string, int> $maxRule */
         $maxRule = new Max(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,

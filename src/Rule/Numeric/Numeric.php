@@ -60,7 +60,6 @@ abstract class Numeric extends Rule
         /** @var Max<numeric-string, int> $maxRule */
         $maxRule = new Max(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,

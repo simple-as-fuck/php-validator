@@ -38,7 +38,6 @@ abstract class FloatRule extends Rule
         /** @var Max<float, float> $maxRule */
         $maxRule = new Max(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,

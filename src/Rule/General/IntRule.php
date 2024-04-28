@@ -40,7 +40,6 @@ abstract class IntRule extends Rule
         /** @var Max<int, int> $maxRule */
         $maxRule = new Max(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,

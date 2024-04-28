@@ -128,7 +128,6 @@ final class ParseDateTime extends Rule
         /** @var Max<TDateTime, TDateTime> $maxRule */
         $maxRule = new Max(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,

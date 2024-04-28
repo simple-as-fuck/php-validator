@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 abstract class Comparison extends Rule
 {
     /**
-     * @param RuleChain<TValue> $ruleChain
+     * @param RuleChain<covariant TValue> $ruleChain
      * @param Validated<mixed> $validated
      * @param non-empty-string $valueName
      * @param Conversion<TValue, TCompared> $conversion
