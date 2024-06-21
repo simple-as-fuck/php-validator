@@ -20,8 +20,11 @@ jobs:
         - name: Install dependencies
           run: composer install --no-interaction
 
+        - name: Chesk code style
+          run: tools/php-cs-fixer fix --dry-run --no-interaction --show-progress=none
+
         - name: Run static analysis
-          run: vendor/bin/phpstan analyse
+          run: vendor/bin/phpstan analyse --no-progress
 
         - name: Run tests
           run: tools/phpunit test/ --bootstrap vendor/autoload.php
@@ -40,11 +43,8 @@ jobs:
         - name: Install dependencies
           run: composer install --no-interaction
 
-        - name: Chesk code style
-          run: tools/php-cs-fixer fix --dry-run --no-interaction
-
         - name: Run static analysis
-          run: vendor/bin/phpstan analyse
+          run: vendor/bin/phpstan analyse --no-progress
 
         - name: Run tests
           run: tools/phpunit test/ --bootstrap vendor/autoload.php
@@ -61,7 +61,7 @@ jobs:
           run: composer install --no-interaction
 
         - name: Run static analysis
-          run: vendor/bin/phpstan analyse
+          run: vendor/bin/phpstan analyse --no-progress
 
         - name: Run tests
           run: vendor/bin/phpunit test/
