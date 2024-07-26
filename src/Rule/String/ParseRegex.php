@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\String;
 
 use SimpleAsFuck\Validator\Factory\Exception;
+use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
@@ -15,6 +16,18 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
  */
 final class ParseRegex extends Rule
 {
+    /**
+     * @param non-empty-string $pattern cool example: '/(?P<matchKey>.*)/'
+     * @param string $value
+     * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags
+     * @param non-empty-string $valueName
+     */
+    public static function make(string $pattern, string $value, int $flags = 0, string $valueName = 'variable'): ParseRegex
+    {
+        /** @var mixed $value */
+        return new ParseRegex(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, $pattern, $flags);
+    }
+
     /**
      * @param RuleChain<string> $ruleChain
      * @param Validated<mixed> $validated
