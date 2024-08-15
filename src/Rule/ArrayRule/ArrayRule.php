@@ -51,6 +51,15 @@ final class ArrayRule extends Rule
     }
 
     /**
+     * @return Collection<positive-int>
+     */
+    public function ofPositiveInt(): Collection
+    {
+        /** @var Collection<positive-int> */
+        return $this->of(static fn (TypedKey $key): int => $key->int()->positive()->notNull());
+    }
+
+    /**
      * @return Collection<bool>
      */
     public function ofBool(): Collection
@@ -64,6 +73,15 @@ final class ArrayRule extends Rule
     public function ofString(): Collection
     {
         return $this->of(static fn (TypedKey $key): string => $key->string()->notNull());
+    }
+
+    /**
+     * @return Collection<non-empty-string>
+     */
+    public function ofNonEmptyString(): Collection
+    {
+        /** @var Collection<non-empty-string> */
+        return $this->of(static fn (TypedKey $key): string => $key->string()->notEmpty()->notNull());
     }
 
     /**
