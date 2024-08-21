@@ -136,10 +136,11 @@ final class YourClassRule implements \SimpleAsFuck\Validator\Rule\Custom\UserCla
     }
 }
 
-$object = new \stdClass();
+/** @var mixed $data */
 
-$rules = \SimpleAsFuck\Validator\Factory\Validator::make($object);
+$rules = \SimpleAsFuck\Validator\Factory\Validator::make($data);
 
 $yourObject = $rules->object()->class(new YourClassRule())->notNull();
+$yourObjects = $rules->array()->ofClass(new YourClassRule())->notNull();
 
 ```
