@@ -42,7 +42,7 @@ $stringValues = $rules->array()->ofString()->notNull();
 This validation can be applied into any php variable and is appropriately usable for json decoded data.
 All rules have declared types for next rule in chain so not look for any rules list,
 your IDE should hint you available rules and rule chain is designed for preventing redundant rules or
-rule combination witch do not make sense.
+rule combination which do not make sense.
 
 ## Validation exception type changing
 
