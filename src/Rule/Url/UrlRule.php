@@ -9,7 +9,6 @@ use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\CastString;
-use SimpleAsFuck\Validator\Rule\General\Conversion;
 use SimpleAsFuck\Validator\Rule\General\Max;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\String\StringLength;
@@ -42,7 +41,9 @@ final class UrlRule extends Rule
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
-        $this->parseUrl = new ParseUrl(null, new RuleChain(), $this->validated, $this->valueName, $requiredComponents, $forbiddenComponents);
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
+        $this->parseUrl = new ParseUrl(null, $ruleChain, $this->validated, $this->valueName, $requiredComponents, $forbiddenComponents);
     }
 
     /**
@@ -51,17 +52,15 @@ final class UrlRule extends Rule
      */
     public function max(int $max): Max
     {
-        /** @var RuleChain<string> $ruleChain */
-        $ruleChain = $this->ruleChain();
-        /** @var Conversion<string, float|int|string|\Stringable> $stringLength */
-        $stringLength = new StringLength();
         /** @var Max<Tstring, int> */
         return new Max(
             $this->exceptionFactory,
-            $ruleChain,
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            $stringLength,
+            /** @phpstan-ignore-next-line */
+            new StringLength(),
             new CastString(),
             $max,
             'url length'

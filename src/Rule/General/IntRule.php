@@ -86,7 +86,7 @@ abstract class IntRule extends Rule
      */
     final public function positive(): MinWithMax
     {
-        /** @var MinWithMax<positive-int, int> */
+        /** @phpstan-ignore-next-line */
         return $this->min(1);
     }
 }

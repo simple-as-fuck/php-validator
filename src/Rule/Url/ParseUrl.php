@@ -46,14 +46,16 @@ final class ParseUrl extends Rule
     {
         /** @var Validated<mixed> $validated */
         $validated = new Validated($value);
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
         /** @var ParseUrl<MakeTString> $parseUrl */
-        $parseUrl = new ParseUrl(new UnexpectedValueException(), new RuleChain(), $validated, $valueName, $requiredComponents, $forbiddenComponents);
+        $parseUrl = new ParseUrl(new UnexpectedValueException(), $ruleChain, $validated, $valueName, $requiredComponents, $forbiddenComponents);
         return $parseUrl;
     }
 
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $requiredComponents array of PHP_URL_ constants
      * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $forbiddenComponents array of PHP_URL_ constants
@@ -125,6 +127,7 @@ final class ParseUrl extends Rule
 
     public function path(): Component
     {
+        /** @var Component<string> */
         return new Component(
             $this->exceptionFactory,
             $this->ruleChain(),
@@ -152,6 +155,7 @@ final class ParseUrl extends Rule
 
     public function fragment(): Component
     {
+        /** @var Component<string> */
         return new Component(
             $this->exceptionFactory,
             $this->ruleChain(),

@@ -3,9 +3,6 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
-use SimpleAsFuck\Validator\Model\RuleChain;
-use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 
 /**
@@ -16,9 +13,9 @@ final class ParseUrlTest extends TestCase
     /**
      * @dataProvider dataProviderPort
      */
-    public function testPort(?int $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
+    public function testPort(?int $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = ParseUrl::make($value);
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(\UnexpectedValueException::class);
@@ -34,15 +31,13 @@ final class ParseUrlTest extends TestCase
     public static function dataProviderPort(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             [null, null, 'www.example.com', false],
             [null, null, 'www.example.com', true],
             [55, null, 'www.example.com:55', false],
             [55, null, 'www.example.com:55', true],
             [null, null, '', false],
             [null, null, '', true],
-            [null, 'value must be valid url', 'https://', false],
+            [null, 'variable must be valid url', 'https://', false],
             [null, null, 'https://', true],
         ];
     }
@@ -50,9 +45,9 @@ final class ParseUrlTest extends TestCase
     /**
      * @dataProvider dataProviderHost
      */
-    public function testHost(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
+    public function testHost(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = ParseUrl::make($value);
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(\UnexpectedValueException::class);
@@ -68,8 +63,6 @@ final class ParseUrlTest extends TestCase
     public static function dataProviderHost(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             [null, null, '/www.example.com', false],
             [null, null, '/www.example.com', true],
             ['www.example.com', null, 'https://www.example.com', false],
@@ -84,9 +77,9 @@ final class ParseUrlTest extends TestCase
     /**
      * @dataProvider dataProviderPass
      */
-    public function testPass(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
+    public function testPass(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = ParseUrl::make($value);
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(\UnexpectedValueException::class);
@@ -102,8 +95,6 @@ final class ParseUrlTest extends TestCase
     public static function dataProviderPass(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             [null, null, '/www.example.com', false],
             [null, null, '/www.example.com', true],
             ['pass', null, 'https://user:pass@www.example.com', false],
@@ -118,9 +109,9 @@ final class ParseUrlTest extends TestCase
     /**
      * @dataProvider dataProviderFragment
      */
-    public function testFragment(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
+    public function testFragment(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = ParseUrl::make($value);
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(\UnexpectedValueException::class);
@@ -136,8 +127,6 @@ final class ParseUrlTest extends TestCase
     public static function dataProviderFragment(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             [null, null, '/www.example.com', false],
             [null, null, '/www.example.com', true],
             ['fragment', null, '/www.example.com#fragment', false],
@@ -152,9 +141,9 @@ final class ParseUrlTest extends TestCase
     /**
      * @dataProvider dataProviderUser
      */
-    public function testUser(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
+    public function testUser(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = ParseUrl::make($value);
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(\UnexpectedValueException::class);
@@ -170,8 +159,6 @@ final class ParseUrlTest extends TestCase
     public static function dataProviderUser(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             [null, null, '/www.example.com', false],
             [null, null, '/www.example.com', true],
             ['user', null, 'https://user:pass@www.example.com', false],
@@ -186,9 +173,9 @@ final class ParseUrlTest extends TestCase
     /**
      * @dataProvider dataProviderQuery
      */
-    public function testQuery(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
+    public function testQuery(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = ParseUrl::make($value);
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(\UnexpectedValueException::class);
@@ -204,8 +191,6 @@ final class ParseUrlTest extends TestCase
     public static function dataProviderQuery(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             [null, null, '/www.example.com', false],
             [null, null, '/www.example.com', true],
             ['query', null, '/www.example.com?query', false],
@@ -222,9 +207,9 @@ final class ParseUrlTest extends TestCase
     /**
      * @dataProvider dataProviderScheme
      */
-    public function testScheme(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
+    public function testScheme(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = ParseUrl::make($value);
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(\UnexpectedValueException::class);
@@ -240,8 +225,6 @@ final class ParseUrlTest extends TestCase
     public static function dataProviderScheme(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             [null, null, '/www.example.com', false],
             [null, null, '/www.example.com', true],
             ['https', null, 'https://www.example.com', false],
@@ -256,9 +239,9 @@ final class ParseUrlTest extends TestCase
     /**
      * @dataProvider dataProviderPath
      */
-    public function testPath(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
+    public function testPath(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
-        $rule = new ParseUrl(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value', [], []);
+        $rule = ParseUrl::make($value);
 
         if ($expectedExceptionMessage !== null) {
             $this->expectException(\UnexpectedValueException::class);
@@ -274,8 +257,6 @@ final class ParseUrlTest extends TestCase
     public static function dataProviderPath(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             [null, null, 'https://www.example.com', false],
             [null, null, 'https://www.example.com', true],
             ['/www.example.com', null, '/www.example.com', false],

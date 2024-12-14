@@ -15,16 +15,18 @@ final class CaseInsensitiveInRuleTest extends TestCase
      *
      * @param non-empty-array<string> $values
      */
-    public function test(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, array $values): void
+    public function test(?string $expectedValue, ?string $expectedExceptionMessage, string $value, array $values): void
     {
         if ($expectedExceptionMessage !== null) {
             $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedExceptionMessage);
         }
 
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
         $rule = new CaseInsensitiveInRule(
             new UnexpectedValueException(),
-            new RuleChain(),
+            $ruleChain,
             new Validated($value),
             'variable',
             $values

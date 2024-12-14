@@ -32,13 +32,14 @@ final class ParseDateTime extends Rule
      */
     public static function make(?string $value, string $format, string $dateTimeClass, string $valueName = 'variable', ?string $timeZone = null): ParseDateTime
     {
-        /** @var mixed $value */
-        return new ParseDateTime(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName, $format, $dateTimeClass, $timeZone);
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
+        return new ParseDateTime(new UnexpectedValueException(), $ruleChain, new Validated($value), $valueName, $format, $dateTimeClass, $timeZone);
     }
 
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-string $format
      * @param class-string<TDateTime> $dateTimeClass

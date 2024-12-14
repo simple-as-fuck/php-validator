@@ -20,7 +20,7 @@ abstract class Rule
 {
     /**
      * @param RuleChain<covariant TIn> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(
@@ -109,6 +109,7 @@ abstract class Rule
      */
     final protected function validated(): Validated
     {
+        /** @var Validated<mixed> */
         return $this->validated;
     }
 

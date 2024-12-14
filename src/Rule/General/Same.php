@@ -43,7 +43,12 @@ final class Same extends Comparison
     protected function compare($compared, $comparedTo): void
     {
         if ($compared !== $comparedTo) {
-            throw new ValueMust('have '.$this->comparedName.': '.$comparedTo);
+            /** todo remove is_ and use like string types in template */
+            if (is_string($comparedTo) || is_int($comparedTo) || is_float($comparedTo)) {
+                throw new ValueMust('have '.$this->comparedName.': '.$comparedTo);
+            }
+
+            throw new ValueMust('have '.$this->comparedName.': correct value');
         }
     }
 }

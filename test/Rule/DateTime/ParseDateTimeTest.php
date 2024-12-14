@@ -25,10 +25,11 @@ final class ParseDateTimeTest extends TestCase
      */
     public function test(string $expectedDateTime, string $expectedFormat, string $input, string $format, string $dateTimeClass, ?string $timezone): void
     {
-        /** @var mixed $input */
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
         $rule = new ParseDateTime(
             new UnexpectedValueException(),
-            new RuleChain(),
+            $ruleChain,
             new Validated($input),
             'value',
             $format,

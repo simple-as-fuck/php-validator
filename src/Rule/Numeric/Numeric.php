@@ -92,11 +92,9 @@ abstract class Numeric extends Rule
     {
         $same = new Same(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new DigitCount(),
             $number,
             'digits before decimals'
