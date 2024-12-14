@@ -18,7 +18,7 @@ class InRule extends ReadableRule
 {
     /**
      * @param RuleChain<Tin> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-array<Tout> $values
      */

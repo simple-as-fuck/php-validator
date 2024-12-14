@@ -70,11 +70,10 @@ final class ParseUrl extends Rule
 
     public function scheme(): Scheme
     {
-        /** @var RuleChain<array<non-empty-string, non-empty-string>> $ruleChain */
-        $ruleChain = $this->ruleChain();
         return new Scheme(
             $this->exceptionFactory(),
-            $ruleChain,
+            /** @phpstan-ignore-next-line */
+            $this->ruleChain(),
             $this->validated(),
             $this->valueName().' url scheme',
             'scheme'

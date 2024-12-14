@@ -28,7 +28,7 @@ final class Component extends ReadableRule
     {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
-        /** @var RuleChain<array<TComponent>> $ruleChain */
+        /** @phpstan-ignore-next-line */
         $this->key = new Key($exceptionFactory, $ruleChain, $validated, $valueName, $componentName);
     }
 

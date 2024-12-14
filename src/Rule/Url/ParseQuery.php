@@ -32,7 +32,7 @@ final class ParseQuery extends Rule
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
-        /** @var RuleChain<array<string>> $ruleChain */
+        /** @phpstan-ignore-next-line */
         $this->key = new Key($exceptionFactory, $ruleChain, $validated, $valueName, 'query');
     }
 

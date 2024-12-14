@@ -60,7 +60,6 @@ abstract class Numeric extends ReadableRule
         /** @var Max<numeric-string, int> $maxRule */
         $maxRule = new Max(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
@@ -93,11 +92,9 @@ abstract class Numeric extends ReadableRule
     {
         $same = new Same(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            /** @phpstan-ignore-next-line */
             new DigitCount(),
             $number,
             'digits before decimals'

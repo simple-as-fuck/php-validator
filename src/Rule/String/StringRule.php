@@ -219,7 +219,7 @@ final class StringRule extends ReadableRule
      */
     public function httpUrl(array $requiredComponents = [], array $forbiddenComponents = []): UrlRule
     {
-        /** @var UrlRule<non-empty-string> */
+        /** @phpstan-ignore-next-line */
         return $this->url($requiredComponents, $forbiddenComponents, ['http', 'https']);
     }
 
@@ -230,7 +230,7 @@ final class StringRule extends ReadableRule
      */
     public function httpsUrl(array $requiredComponents = [], array $forbiddenComponents = []): UrlRule
     {
-        /** @var UrlRule<non-empty-string> */
+        /** @phpstan-ignore-next-line */
         return $this->url($requiredComponents, $forbiddenComponents, ['https']);
     }
 

@@ -24,7 +24,7 @@ final class Property extends Rule
 {
     /**
      * @param RuleChain<object> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(

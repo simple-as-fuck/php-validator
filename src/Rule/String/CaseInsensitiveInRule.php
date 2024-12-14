@@ -19,7 +19,7 @@ final class CaseInsensitiveInRule extends InRule
 {
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-array<Tout> $values
      */

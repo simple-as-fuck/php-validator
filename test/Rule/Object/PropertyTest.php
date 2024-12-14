@@ -19,23 +19,23 @@ final class PropertyTest extends TestCase
         $object = new \stdClass();
         $object->property = 0;
 
-        /** @var mixed $object */
-
+        /** @var RuleChain<object> $ruleChain */
+        $ruleChain = new RuleChain();
         $rule = new \SimpleAsFuck\Validator\Rule\Object\Property(
             new UnexpectedValueException(),
-            new RuleChain(),
+            $ruleChain,
             new Validated($object),
             'object',
             'property'
         );
 
-        $this->expectExceptionMessage('object->property must be something not value: 0');
+        $this->expectExceptionMessage('object->property must be something not value type: int');
 
         $rule
             ->custom(new class () implements UserDefinedRule {
                 public function validate($value)
                 {
-                    throw new ValueMust('be something not value: ' . $value);
+                    throw new ValueMust('be something not value type: ' . gettype($value));
                 }
             })
             ->notNull()
