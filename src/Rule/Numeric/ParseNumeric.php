@@ -23,7 +23,7 @@ final class ParseNumeric extends ReadableRule
 
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(
@@ -84,7 +84,6 @@ final class ParseNumeric extends ReadableRule
         /** @var Max<numeric-string, int> $maxRule */
         $maxRule = new Max(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
@@ -117,11 +116,9 @@ final class ParseNumeric extends ReadableRule
     {
         $same = new Same(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            /** @phpstan-ignore-next-line */
             new DigitCount(),
             $number,
             'digits before decimals'

@@ -22,8 +22,9 @@ final class ParseDateTimeTest extends TestCase
      */
     public function test(\DateTimeInterface $expectedDateTime, string $input, string $format, string $dateTimeClass): void
     {
-        /** @var mixed $input */
-        $rule = new ParseDateTime(new UnexpectedValueException(), new RuleChain(), new Validated($input), 'value', $format, $dateTimeClass);
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
+        $rule = new ParseDateTime(new UnexpectedValueException(), $ruleChain, new Validated($input), 'value', $format, $dateTimeClass);
 
         self::assertInstanceOf($dateTimeClass, $rule->nullable());
         self::assertEquals($expectedDateTime, $rule->nullable());

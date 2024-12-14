@@ -21,6 +21,7 @@ final class RegexMatch extends ForwardRule
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $key)
     {
+        /** @phpstan-ignore-next-line */
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, new Key($exceptionFactory, $ruleChain, $validated, $valueName, $key));
     }
 

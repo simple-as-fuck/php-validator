@@ -20,7 +20,7 @@ abstract class Rule
     private ?Exception $exceptionFactory;
     /** @var RuleChain<TIn> */
     private RuleChain $ruleChain;
-    /** @var Validated<mixed> */
+    /** @var Validated<covariant mixed> */
     private Validated $validated;
     /** @var non-empty-string */
     private string $valueName;
@@ -29,7 +29,7 @@ abstract class Rule
 
     /**
      * @param RuleChain<TIn> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, bool $useSecondaryOutput = false)
@@ -86,6 +86,7 @@ abstract class Rule
      */
     final protected function validated(): Validated
     {
+        /** @var Validated<mixed> */
         return $this->validated;
     }
 

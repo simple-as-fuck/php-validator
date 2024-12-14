@@ -50,14 +50,16 @@ class ParseUrl extends ReadableRule
     {
         /** @var Validated<mixed> $validated */
         $validated = new Validated($value);
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
         /** @var ParseUrl<MakeTString> $parseUrl */
-        $parseUrl = new ParseUrl(new UnexpectedValueException(), new RuleChain(), $validated, $valueName, $requiredComponents, $forbiddenComponents);
+        $parseUrl = new ParseUrl(new UnexpectedValueException(), $ruleChain, $validated, $valueName, $requiredComponents, $forbiddenComponents);
         return $parseUrl;
     }
 
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
      * @param array<int<0,7>> $forbiddenComponents array of PHP_URL_ constants
@@ -112,6 +114,7 @@ class ParseUrl extends ReadableRule
      */
     public function host(): Component
     {
+        /** @var Component<non-empty-string> */
         return new Component(
             $this->exceptionFactory(),
             /** @phpstan-ignore-next-line */
@@ -128,6 +131,7 @@ class ParseUrl extends ReadableRule
      */
     public function port(): Component
     {
+        /** @var Component<positive-int> */
         return new Component(
             $this->exceptionFactory(),
             /** @phpstan-ignore-next-line */
@@ -144,6 +148,7 @@ class ParseUrl extends ReadableRule
      */
     public function user(): Component
     {
+        /** @var Component<non-empty-string> */
         return new Component(
             $this->exceptionFactory(),
             /** @phpstan-ignore-next-line */
@@ -160,6 +165,7 @@ class ParseUrl extends ReadableRule
      */
     public function pass(): Component
     {
+        /** @var Component<non-empty-string> */
         return new Component(
             $this->exceptionFactory(),
             /** @phpstan-ignore-next-line */
@@ -176,6 +182,7 @@ class ParseUrl extends ReadableRule
      */
     public function path(): Component
     {
+        /** @var Component<string> */
         return new Component(
             $this->exceptionFactory(),
             /** @phpstan-ignore-next-line */
@@ -205,6 +212,7 @@ class ParseUrl extends ReadableRule
      */
     public function fragment(): Component
     {
+        /** @var Component<string> */
         return new Component(
             $this->exceptionFactory(),
             /** @phpstan-ignore-next-line */

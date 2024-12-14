@@ -19,7 +19,7 @@ final class ParseProtocolUrl extends ParseUrl
 
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param array<int<0,7>> $requiredComponents array of PHP_URL_ constants
      * @param array<int<0,7>> $forbiddenComponents array of PHP_URL_ constants

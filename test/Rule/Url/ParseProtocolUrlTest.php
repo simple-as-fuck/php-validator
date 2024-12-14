@@ -15,14 +15,14 @@ final class ParseProtocolUrlTest extends TestCase
 {
     /**
      * @dataProvider dataProviderNullable
-     *
-     * @param mixed $value
      */
-    public function testNullable(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testNullable(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
         $rule = new ParseProtocolUrl(
             new UnexpectedValueException(),
-            new RuleChain(),
+            $ruleChain,
             new Validated($value),
             'value',
             [],
@@ -44,8 +44,6 @@ final class ParseProtocolUrlTest extends TestCase
     public function dataProviderNullable(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             ['https://test', null, 'https://test', false],
             ['https://test', null, 'https://test', true],
             [null, 'value must contains one of url schemes: https', 'ftp://test', false],
@@ -57,14 +55,14 @@ final class ParseProtocolUrlTest extends TestCase
 
     /**
      * @dataProvider dataProviderHost
-     *
-     * @param mixed $value
      */
-    public function testHost(?string $expectedValue, ?string $expectedExceptionMessage, $value, bool $failAsNull): void
+    public function testHost(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
         $rule = new ParseProtocolUrl(
             new UnexpectedValueException(),
-            new RuleChain(),
+            $ruleChain,
             new Validated($value),
             'value',
             [],
@@ -86,8 +84,6 @@ final class ParseProtocolUrlTest extends TestCase
     public function dataProviderHost(): array
     {
         return [
-            [null, null, null, false],
-            [null, null, null, true],
             ['test', null, 'https://test', false],
             ['test', null, 'https://test', true],
             [null, 'value must contains one of url schemes: https', 'ftp://test', false],

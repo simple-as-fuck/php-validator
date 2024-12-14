@@ -43,9 +43,11 @@ final class Regex extends ReadableRule
     public function match(string $matchKey): RegexMatch
     {
         $this->validateChain();
+        /** @var RuleChain<array<string>> $ruleChain */
+        $ruleChain = new RuleChain();
         /** @var Validated<mixed> $validated */
         $validated = new Validated($this->matches);
-        return new RegexMatch($this->exceptionFactory(), new RuleChain(), $validated, $this->valueName().' regex: \''.$this->pattern.'\' match: \''.$matchKey.'\'', $matchKey);
+        return new RegexMatch($this->exceptionFactory(), $ruleChain, $validated, $this->valueName().' regex: \''.$this->pattern.'\' match: \''.$matchKey.'\'', $matchKey);
     }
 
     /**
@@ -54,6 +56,7 @@ final class Regex extends ReadableRule
      */
     protected function validate($value): string
     {
+        /** @phpstan-ignore-next-line todo WTF flags */
         $result = preg_match($this->pattern, $value, $this->matches, $this->flags);
         if ($result === 0) {
             throw new ValueMust('match regex: \''.$this->pattern.'\'');

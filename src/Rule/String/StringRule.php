@@ -66,7 +66,6 @@ final class StringRule extends ReadableRule
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             $size,
             'string length'

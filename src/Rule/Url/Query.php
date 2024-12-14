@@ -30,6 +30,7 @@ final class Query extends Component
     public function key(string $key): StringTypedKey
     {
         $this->validateChain();
+        /** @var RuleChain<array<mixed>> $ruleChain */
         $ruleChain = new RuleChain();
         /** @var Validated<mixed> $validatedParams */
         $validatedParams = new Validated($this->parsedParams);

@@ -21,7 +21,7 @@ final class CustomRule extends ReadableRule
 
     /**
      * @param RuleChain<TIn> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param UserDefinedRule<TIn, TOut> $userDefinedRule
      */
