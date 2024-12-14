@@ -36,6 +36,7 @@ final class InRule extends \SimpleAsFuck\Validator\Rule\General\InRule
             $values = array_map(fn (string $value): string => strtolower($value), $values);
         }
 
+        /** @phpstan-ignore-next-line todo rewrite char size ignore */
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $values);
         $this->ignoreCharacterSize = $ignoreCharacterSize;
     }
@@ -51,6 +52,7 @@ final class InRule extends \SimpleAsFuck\Validator\Rule\General\InRule
             $value = strtolower($value);
         }
 
+        /** @phpstan-ignore-next-line todo rewrite char size ignore */
         return parent::validate($value);
     }
 }

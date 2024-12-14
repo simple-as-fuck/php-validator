@@ -15,12 +15,12 @@ final class ParseNumericTest extends TestCase
 {
     /**
      * @dataProvider dataProvider
-     *
-     * @param mixed $input
      */
-    public function test(string $expectedOutput, ?string $expectedErrorMessage, $input): void
+    public function test(string $expectedOutput, ?string $expectedErrorMessage, string $input): void
     {
-        $rule = new ParseNumeric(null, new RuleChain(), new Validated($input), 'input');
+        /** @var RuleChain<string> $ruleChain */
+        $ruleChain = new RuleChain();
+        $rule = new ParseNumeric(null, $ruleChain, new Validated($input), 'input');
 
         if ($expectedErrorMessage !== null) {
             $this->expectException(ValueMust::class);

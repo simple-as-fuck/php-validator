@@ -43,10 +43,10 @@ final class Collection extends ReadableRule
         /** @var Same<non-empty-array<TOut>, int> $sameRule */
         $sameRule = new Same(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
+            /** @phpstan-ignore-next-line */
             new ArraySize(),
             $size,
             'array size'
@@ -63,7 +63,6 @@ final class Collection extends ReadableRule
         /** @var MinWithMax<non-empty-array<TOut>, int> $minRule */
         $minRule = new MinWithMax(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
@@ -85,10 +84,10 @@ final class Collection extends ReadableRule
         /** @var ArrayMax<TOut> $maxRule */
         $maxRule = new ArrayMax(
             $this->exceptionFactory(),
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated(),
             $this->valueName(),
+            /** @phpstan-ignore-next-line */
             new ArraySize(),
             /** @phpstan-ignore-next-line */
             new CastString(),

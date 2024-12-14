@@ -16,7 +16,7 @@ final class ParseNumeric extends Numeric
 {
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param bool $allowNegative Deprecated use self::unsigned
      */

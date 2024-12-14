@@ -36,7 +36,6 @@ final class Scheme extends ForwardRule
             /** @phpstan-ignore-next-line */
             new Key(
                 $exceptionFactory,
-                /** @phpstan-ignore-next-line */
                 $ruleChain,
                 $validated,
                 $valueName,
@@ -52,6 +51,7 @@ final class Scheme extends ForwardRule
      */
     public function in(array $values): InRule
     {
+        /** @phpstan-ignore-next-line todo WTF function template */
         return new \SimpleAsFuck\Validator\Rule\String\InRule(
             $this->exceptionFactory(),
             $this->ruleChain(),
