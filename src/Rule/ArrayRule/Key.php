@@ -17,7 +17,7 @@ class Key extends Rule
 {
     /**
      * @param RuleChain<covariant array<TValue>> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(

@@ -18,7 +18,7 @@ final class Enum extends Rule
 {
     /**
      * @param RuleChain<covariant int|string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param class-string<TEnum> $enumClass
      */

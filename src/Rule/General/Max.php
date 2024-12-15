@@ -18,7 +18,7 @@ class Max extends Comparison
 {
     /**
      * @param RuleChain<covariant TValue> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param Conversion<TValue, TCompared> $conversion
      * @param Conversion<TCompared, string> $toString

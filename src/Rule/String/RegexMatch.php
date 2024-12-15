@@ -18,7 +18,7 @@ final class RegexMatch extends ForwardRule
 {
     /**
      * @param RuleChain<array<string>> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $key)

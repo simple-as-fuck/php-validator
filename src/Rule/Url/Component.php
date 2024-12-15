@@ -20,7 +20,7 @@ final class Component extends Rule
 
     /**
      * @param RuleChain<covariant array{scheme?: string, host?: string, user?: string, pass?: string, path?: string, query?: string, fragment?: string}> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param 'scheme'|'host'|'user'|'pass'|'path'|'query'|'fragment' $componentName
      */

@@ -19,7 +19,7 @@ final class NotEmpty extends Rule
 {
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(
@@ -38,7 +38,7 @@ final class NotEmpty extends Rule
      */
     public function maxByte(int $max): Rule
     {
-        /** @var Rule<non-empty-string, non-empty-string> */
+        /** @phpstan-ignore-next-line */
         return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),
@@ -59,7 +59,7 @@ final class NotEmpty extends Rule
      */
     public function maxChar(int $max, string $encoding = 'UTF-8'): Rule
     {
-        /** @var Rule<non-empty-string, non-empty-string> */
+        /** @phpstan-ignore-next-line */
         return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),

@@ -127,7 +127,6 @@ final class ParseUrl extends Rule
 
     public function path(): Component
     {
-        /** @var Component<string> */
         return new Component(
             $this->exceptionFactory,
             $this->ruleChain(),
@@ -155,7 +154,6 @@ final class ParseUrl extends Rule
 
     public function fragment(): Component
     {
-        /** @var Component<string> */
         return new Component(
             $this->exceptionFactory,
             $this->ruleChain(),

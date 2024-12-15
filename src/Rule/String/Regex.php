@@ -18,7 +18,7 @@ final class Regex extends Rule
 {
     /**
      * @param RuleChain<Tstring> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-string $pattern
      * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags

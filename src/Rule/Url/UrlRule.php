@@ -24,7 +24,7 @@ final class UrlRule extends Rule
 
     /**
      * @param RuleChain<Tstring> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $requiredComponents
      * @param array<PHP_URL_SCHEME|PHP_URL_HOST|PHP_URL_PORT|PHP_URL_USER|PHP_URL_PASS|PHP_URL_PATH|PHP_URL_QUERY|PHP_URL_FRAGMENT> $forbiddenComponents
@@ -55,7 +55,6 @@ final class UrlRule extends Rule
         /** @var Max<Tstring, int> */
         return new Max(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,

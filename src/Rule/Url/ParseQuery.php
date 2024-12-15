@@ -21,7 +21,7 @@ final class ParseQuery extends Rule
 
     /**
      * @param RuleChain<covariant array{query?: string}> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(
@@ -32,7 +32,6 @@ final class ParseQuery extends Rule
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
-        /** @phpstan-ignore-next-line */
         $this->key = new Key($exceptionFactory, $ruleChain, $validated, $valueName, 'query');
     }
 

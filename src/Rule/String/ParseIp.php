@@ -17,7 +17,7 @@ final class ParseIp extends Rule
 {
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      */
     public function __construct(
         ?Exception $exceptionFactory,

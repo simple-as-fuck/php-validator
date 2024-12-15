@@ -17,7 +17,7 @@ final class CallableRule extends Rule
 {
     /**
      * @param RuleChain<object> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param callable(ObjectRule): TClass $callable
      */

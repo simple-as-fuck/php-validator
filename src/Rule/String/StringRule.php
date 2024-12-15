@@ -39,13 +39,12 @@ final class StringRule extends Rule
      */
     public function exactByte(int $number): Rule
     {
-        /** @var Rule<string, non-empty-string> */
+        /** @phpstan-ignore-next-line */
         return new Same(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             $number,
             'string length in bytes'
@@ -59,13 +58,12 @@ final class StringRule extends Rule
      */
     public function exactChar(int $number, string $encoding = 'UTF-8'): Rule
     {
-        /** @var Rule<string, non-empty-string> */
+        /** @phpstan-ignore-next-line */
         return new Same(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new CharacterCount($encoding),
             $number,
             'number of ' . $encoding . ' encoded chars'
@@ -85,7 +83,6 @@ final class StringRule extends Rule
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             $size,
             'string length'

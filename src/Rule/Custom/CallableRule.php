@@ -18,7 +18,7 @@ final class CallableRule extends Rule
 {
     /**
      * @param RuleChain<TIn> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param callable(TIn): TOut $callable
      */

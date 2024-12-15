@@ -17,7 +17,7 @@ final class ParseBool extends Rule
 {
     /**
      * @param RuleChain<string> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-string $trueDefinition
      * @param non-empty-string $falseDefinition

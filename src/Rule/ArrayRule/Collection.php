@@ -21,7 +21,7 @@ final class Collection extends Rule
 {
     /**
      * @param RuleChain<array<mixed>> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param callable(TypedKey): TOut $callable
      */
