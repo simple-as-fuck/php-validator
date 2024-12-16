@@ -20,7 +20,7 @@ abstract class Comparison extends Rule
      * @param RuleChain<covariant TValue> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
-     * @param Conversion<TValue, TCompared> $conversion
+     * @param Conversion<TValue, covariant TCompared> $conversion
      * @param TCompared $comparedTo
      */
     public function __construct(
@@ -57,6 +57,7 @@ abstract class Comparison extends Rule
      */
     protected function conversion(): Conversion
     {
+        /** @var Conversion<TValue, TCompared> */
         return $this->conversion;
     }
 

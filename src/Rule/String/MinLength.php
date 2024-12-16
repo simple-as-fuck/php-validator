@@ -25,13 +25,12 @@ final class MinLength extends Min
             throw new \LogicException('Max value rule parameter must be greater than min value');
         }
 
-        /** @phpstan-ignore-next-line */
+        /** @var Max<Tstring, positive-int> */
         return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             new CastString(),
             $max,
@@ -50,13 +49,12 @@ final class MinLength extends Min
             throw new \LogicException('Max value rule parameter must be greater than min value');
         }
 
-        /** @phpstan-ignore-next-line */
+        /** @var Max<Tstring, positive-int> */
         return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new CharacterCount($encoding),
             new CastString(),
             $max,

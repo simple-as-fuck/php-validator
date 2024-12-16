@@ -63,7 +63,6 @@ abstract class Numeric extends Rule
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new DecimalCount(),
             new CastString(),
             $max,
@@ -105,7 +104,6 @@ abstract class Numeric extends Rule
             $same->ruleChain(),
             $same->validated,
             $same->valueName,
-            /** @phpstan-ignore-next-line */
             new DecimalCount(),
             new CastString(),
             $maxDecimal,

@@ -38,13 +38,12 @@ final class NotEmpty extends Rule
      */
     public function maxByte(int $max): Rule
     {
-        /** @phpstan-ignore-next-line */
+        /** @var Max<non-empty-string, positive-int> */
         return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             new CastString(),
             $max,
@@ -59,13 +58,12 @@ final class NotEmpty extends Rule
      */
     public function maxChar(int $max, string $encoding = 'UTF-8'): Rule
     {
-        /** @phpstan-ignore-next-line */
+        /** @var Max<non-empty-string, positive-int> */
         return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new CharacterCount($encoding),
             new CastString(),
             $max,
@@ -86,7 +84,6 @@ final class NotEmpty extends Rule
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             new CastString(),
             $max,

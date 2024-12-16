@@ -58,7 +58,6 @@ final class UrlRule extends Rule
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             new CastString(),
             $max,

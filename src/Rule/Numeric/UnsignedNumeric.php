@@ -25,7 +25,7 @@ final class UnsignedNumeric extends Numeric
      */
     protected function validate($value): string
     {
-        if (str_contains($value, '-')) {
+        if (str_starts_with($value, '-')) {
             throw new ValueMust('be unsigned numeric string');
         }
 

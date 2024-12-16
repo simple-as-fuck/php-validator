@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\String;
 
+use Egulias\EmailValidator\Validation\DNSCheckValidation;
+use Egulias\EmailValidator\Validation\EmailValidation;
+use Egulias\EmailValidator\Validation\RFCValidation;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
+use SimpleAsFuck\Validator\Rule\Email\EmailRule;
 use SimpleAsFuck\Validator\Rule\Enum\Enum;
 use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\InRule;
@@ -144,7 +148,6 @@ final class StringRule extends Rule
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             new CastString(),
             $min,
@@ -164,7 +167,6 @@ final class StringRule extends Rule
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             new CastString(),
             $max,
@@ -184,7 +186,6 @@ final class StringRule extends Rule
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new CharacterCount($encoding),
             new CastString(),
             $max,
@@ -205,7 +206,6 @@ final class StringRule extends Rule
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new StringLength(),
             new CastString(),
             $max,
@@ -413,6 +413,14 @@ final class StringRule extends Rule
         }
 
         return new Enum($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $enumClass);
+    }
+
+    /**
+     * @param non-empty-array<EmailValidation> $validations with and
+     */
+    public function email(array $validations = [new RFCValidation(), new DNSCheckValidation()]): EmailRule
+    {
+        return new EmailRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $validations);
     }
 
     /**

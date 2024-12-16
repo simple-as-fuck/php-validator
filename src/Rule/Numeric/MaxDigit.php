@@ -24,7 +24,6 @@ final class MaxDigit extends Max
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            /** @phpstan-ignore-next-line */
             new DecimalCount(),
             new CastString(),
             $max,
