@@ -72,27 +72,6 @@ final class NotEmpty extends Rule
     }
 
     /**
-     * @deprecated use static::maxChar or static::maxByte
-     * @param positive-int $max
-     * @return Max<non-empty-string, int>
-     */
-    public function max(int $max): Max
-    {
-        /** @var Max<non-empty-string, int> $maxRule */
-        $maxRule = new Max(
-            $this->exceptionFactory,
-            $this->ruleChain(),
-            $this->validated,
-            $this->valueName,
-            new StringLength(),
-            new CastString(),
-            $max,
-            'string length'
-        );
-        return $maxRule;
-    }
-
-    /**
      * @param string $value
      * @return non-empty-string|null
      */

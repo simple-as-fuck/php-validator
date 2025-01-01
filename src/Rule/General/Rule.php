@@ -54,7 +54,7 @@ abstract class Rule
     /**
      * @return TOut
      */
-    public function notNull()
+    final public function notNull()
     {
         $value = $this->nullable();
         if ($value === null) {
@@ -70,7 +70,7 @@ abstract class Rule
     /**
      * @return TOut|null
      */
-    public function nullable(bool $failAsNull = false)
+    final public function nullable(bool $failAsNull = false)
     {
         $value = $this->validated->value;
 
@@ -88,47 +88,11 @@ abstract class Rule
     abstract protected function validate($value);
 
     /**
-     * @deprecated use property exceptionFactory
-     */
-    final protected function exceptionFactory(): ?Exception
-    {
-        return $this->exceptionFactory;
-    }
-
-    /**
      * @return RuleChain<TOut>
      */
     final protected function ruleChain(): RuleChain
     {
         return new RuleChain($this->ruleChain->rules, $this);
-    }
-
-    /**
-     * @deprecated use property validated
-     * @return Validated<mixed>
-     */
-    final protected function validated(): Validated
-    {
-        /** @var Validated<mixed> */
-        return $this->validated;
-    }
-
-    /**
-     * @deprecated use property valueName
-     * @return non-empty-string
-     */
-    final protected function valueName(): string
-    {
-        return $this->valueName;
-    }
-
-    /**
-     * @deprecated use nullable()
-     * @return TOut|null
-     */
-    final protected function validateChain(bool $failAsNull = false): mixed
-    {
-        return $this->nullable($failAsNull);
     }
 
     /**

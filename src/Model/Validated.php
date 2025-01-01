@@ -16,13 +16,4 @@ final class Validated
         public readonly mixed $value
     ) {
     }
-
-    /**
-     * @deprecated use value property
-     * @return TValue|null
-     */
-    public function value(): mixed
-    {
-        return $this->value;
-    }
 }

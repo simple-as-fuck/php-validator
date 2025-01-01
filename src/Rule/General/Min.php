@@ -39,24 +39,6 @@ class Min extends Comparison
     }
 
     /**
-     * @deprecated use property toString
-     * @return Conversion<TCompared, string>
-     */
-    final protected function toString(): Conversion
-    {
-        return $this->toString;
-    }
-
-    /**
-     * @deprecated use property comparedName
-     * @return non-empty-string
-     */
-    final protected function comparedName(): string
-    {
-        return $this->comparedName;
-    }
-
-    /**
      * @param TCompared $compared
      * @param TCompared $comparedTo
      */

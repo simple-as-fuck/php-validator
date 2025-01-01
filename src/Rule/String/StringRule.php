@@ -18,7 +18,6 @@ use SimpleAsFuck\Validator\Rule\Enum\Enum;
 use SimpleAsFuck\Validator\Rule\General\CastString;
 use SimpleAsFuck\Validator\Rule\General\InRule;
 use SimpleAsFuck\Validator\Rule\General\Max;
-use SimpleAsFuck\Validator\Rule\General\MinWithMax;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\General\Same;
 use SimpleAsFuck\Validator\Rule\Numeric\ParseNumeric;
@@ -76,26 +75,6 @@ final class StringRule extends Rule
     }
 
     /**
-     * @deprecated use static::exactChar or static::exactByte
-     * @param positive-int $size
-     * @return Same<non-empty-string, int>
-     */
-    public function size(int $size): Same
-    {
-        /** @var Same<non-empty-string, int> $sameRule */
-        $sameRule = new Same(
-            $this->exceptionFactory,
-            $this->ruleChain(),
-            $this->validated,
-            $this->valueName,
-            new StringLength(),
-            $size,
-            'string length'
-        );
-        return $sameRule;
-    }
-
-    /**
      * @param positive-int $min
      * @return MinLength<non-empty-string>
      */
@@ -137,27 +116,6 @@ final class StringRule extends Rule
     }
 
     /**
-     * @deprecated use static::minChar or static::minByte
-     * @param positive-int $min
-     * @return MinWithMax<non-empty-string, int>
-     */
-    public function min(int $min): MinWithMax
-    {
-        /** @var MinWithMax<non-empty-string, int> $minRule */
-        $minRule = new MinWithMax(
-            $this->exceptionFactory,
-            $this->ruleChain(),
-            $this->validated,
-            $this->valueName,
-            new StringLength(),
-            new CastString(),
-            $min,
-            'string length'
-        );
-        return $minRule;
-    }
-
-    /**
      * @param positive-int $max
      * @return Rule<string, string>
      */
@@ -192,27 +150,6 @@ final class StringRule extends Rule
             $max,
             'number of ' . $encoding . ' encoded chars'
         );
-    }
-
-    /**
-     * @deprecated use static::maxChar or static::maxByte
-     * @param positive-int $max
-     * @return Max<string, int>
-     */
-    public function max(int $max): Max
-    {
-        /** @var Max<string, int> $maxRule */
-        $maxRule = new Max(
-            $this->exceptionFactory,
-            $this->ruleChain(),
-            $this->validated,
-            $this->valueName,
-            new StringLength(),
-            new CastString(),
-            $max,
-            'string length'
-        );
-        return $maxRule;
     }
 
     public function parseInt(): ParseInt

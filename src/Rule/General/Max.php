@@ -39,15 +39,6 @@ class Max extends Comparison
     }
 
     /**
-     * @deprecated use property toString
-     * @return Conversion<TCompared, string>
-     */
-    final protected function toString(): Conversion
-    {
-        return $this->toString;
-    }
-
-    /**
      * @param TCompared $compared
      * @param TCompared $comparedTo
      */

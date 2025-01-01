@@ -50,23 +50,4 @@ abstract class Comparison extends Rule
      * @throws ValueMust
      */
     abstract protected function compare($compared, $comparedTo): void;
-
-    /**
-     * @deprecated use property conversion
-     * @return Conversion<TValue, TCompared>
-     */
-    protected function conversion(): Conversion
-    {
-        /** @var Conversion<TValue, TCompared> */
-        return $this->conversion;
-    }
-
-    /**
-     * @deprecated use property comparedTo
-     * @return TCompared
-     */
-    protected function comparedTo()
-    {
-        return $this->comparedTo;
-    }
 }

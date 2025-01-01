@@ -26,13 +26,4 @@ final class RuleChain
 
         $this->rules = $rules;
     }
-
-    /**
-     * @deprecated use rules property
-     * @return array<Rule<mixed, mixed>>
-     */
-    public function rules(): array
-    {
-        return $this->rules;
-    }
 }
