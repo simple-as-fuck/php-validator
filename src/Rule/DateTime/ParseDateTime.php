@@ -113,7 +113,6 @@ final class ParseDateTime extends Rule
             $this->valueName,
             /** @phpstan-ignore-next-line */
             new NoConversion(),
-            /** @phpstan-ignore-next-line */
             new ToIsoString(),
             new \DateTimeImmutable()
         );

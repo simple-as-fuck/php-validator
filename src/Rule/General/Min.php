@@ -21,7 +21,7 @@ class Min extends Comparison
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param Conversion<TValue, covariant TCompared> $conversion
-     * @param Conversion<TCompared, string> $toString
+     * @param Conversion<TCompared, covariant string> $toString
      * @param TCompared $comparedTo
      * @param non-empty-string $comparedName
      */

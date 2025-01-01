@@ -37,12 +37,12 @@ final class Collection extends Rule
 
     /**
      * @param positive-int $size
-     * @return Same<non-empty-array<TOut>, int>
+     * @return Rule<array<TOut>, non-empty-array<TOut>>
      */
-    public function size(int $size): Same
+    public function size(int $size): Rule
     {
-        /** @var Same<non-empty-array<TOut>, int> $sameRule */
-        $sameRule = new Same(
+        /** @phpstan-ignore-next-line */
+        return new Same(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
@@ -52,7 +52,6 @@ final class Collection extends Rule
             $size,
             'array size'
         );
-        return $sameRule;
     }
 
     /**

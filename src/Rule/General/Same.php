@@ -11,17 +11,15 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 
 /**
  * @template TValue
- * @template TCompared
- * @extends Comparison<TValue, TCompared>
+ * @extends Comparison<TValue, int>
  */
 final class Same extends Comparison
 {
     /**
-     * @param RuleChain<TValue> $ruleChain
+     * @param RuleChain<covariant TValue> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
-     * @param Conversion<TValue, TCompared> $conversion
-     * @param TCompared $comparedTo
+     * @param Conversion<TValue, covariant int> $conversion
      * @param non-empty-string $comparedName
      */
     public function __construct(
@@ -30,25 +28,20 @@ final class Same extends Comparison
         Validated $validated,
         string $valueName,
         Conversion $conversion,
-        $comparedTo,
+        int $comparedTo,
         private readonly string $comparedName = 'value'
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $conversion, $comparedTo);
     }
 
     /**
-     * @param TCompared $compared
-     * @param TCompared $comparedTo
+     * @param int $compared
+     * @param int $comparedTo
      */
     protected function compare($compared, $comparedTo): void
     {
         if ($compared !== $comparedTo) {
-            /** todo remove is_ and use like string types in template */
-            if (is_string($comparedTo) || is_int($comparedTo) || is_float($comparedTo)) {
-                throw new ValueMust('have '.$this->comparedName.': '.$comparedTo);
-            }
-
-            throw new ValueMust('have '.$this->comparedName.': correct value');
+            throw new ValueMust('have '.$this->comparedName.': '.$comparedTo);
         }
     }
 }
