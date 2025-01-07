@@ -11,6 +11,7 @@ use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
+use SimpleAsFuck\Validator\Rule\DateTime\DateTime;
 use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
 use SimpleAsFuck\Validator\Rule\Email\EmailRule;
 use SimpleAsFuck\Validator\Rule\Enum\Enum;
@@ -254,6 +255,23 @@ final class StringRule extends Rule
     {
         $numericRule = new ParseNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'');
         return $numericRule->maxDigit($digits)->maxDecimal($decimals);
+    }
+
+    /**
+     * @param non-empty-string $format
+     * @param non-empty-string|null $timeZone
+     * @return Rule<string, non-empty-string>
+     */
+    public function dateTime(string $format, ?string $timeZone = null): Rule
+    {
+        return new DateTime(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName.': \''.$this->nullable(true).'\'',
+            $format,
+            $timeZone,
+        );
     }
 
     /**
