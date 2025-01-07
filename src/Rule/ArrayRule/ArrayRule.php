@@ -89,9 +89,20 @@ final class ArrayRule extends Rule
      * @param class-string<TEnum> $enumClass
      * @return Collection<TEnum>
      */
+    public function ofParseEnum(string $enumClass): Collection
+    {
+        return $this->of(static fn (TypedKey $key): \BackedEnum => $key->string()->parseEnum($enumClass)->notNull());
+    }
+
+    /**
+     * @deprecated use static::ofParseEnum
+     * @template TEnum of \BackedEnum of string
+     * @param class-string<TEnum> $enumClass
+     * @return Collection<TEnum>
+     */
     public function ofEnum(string $enumClass): Collection
     {
-        return $this->of(static fn (TypedKey $key): \BackedEnum => $key->string()->enum($enumClass)->notNull());
+        return $this->of(static fn (TypedKey $key): \BackedEnum => $key->string()->parseEnum($enumClass)->notNull());
     }
 
     /**

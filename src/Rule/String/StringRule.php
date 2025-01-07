@@ -247,6 +247,7 @@ final class StringRule extends Rule
     }
 
     /**
+     * @deprecated use static::decimal
      * @param positive-int $digits maximum digits before decimal separator, without minus sign
      * @param int<0, max> $decimals maximum digits after decimal separator
      * @return Max<numeric-string, int>
@@ -255,6 +256,23 @@ final class StringRule extends Rule
     {
         $numericRule = new ParseNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'');
         return $numericRule->maxDigit($digits)->maxDecimal($decimals);
+    }
+
+    /**
+     * @param positive-int $digits maximum digits before decimal separator, without minus sign
+     * @param int<0, max> $decimals maximum digits after decimal separator
+     * @return Rule<numeric-string, numeric-string>
+     */
+    public function decimal(int $digits, int $decimals): Rule
+    {
+        return (new ParseNumeric(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName.': \''.$this->nullable(true).'\''
+        ))
+            ->maxDigit($digits)->maxDecimal($decimals)
+        ;
     }
 
     /**
@@ -348,6 +366,7 @@ final class StringRule extends Rule
     }
 
     /**
+     * @deprecated use static::ipv4
      * @param bool $private if false private and reserved ip address will fail
      */
     public function parseIpv4(bool $private = false): ParseIp
@@ -356,9 +375,28 @@ final class StringRule extends Rule
     }
 
     /**
+     * @deprecated use static::ipv6
      * @param bool $private if false private and reserved ip address will fail
      */
     public function parseIpv6(bool $private = false): ParseIp
+    {
+        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', false, $private);
+    }
+
+    /**
+     * @param bool $private if false private and reserved ip address will fail
+     * @return Rule<string, non-empty-string>
+     */
+    public function ipv4(bool $private = false): Rule
+    {
+        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', true, $private);
+    }
+
+    /**
+     * @param bool $private if false private and reserved ip address will fail
+     * @return Rule<string, non-empty-string>
+     */
+    public function ipv6(bool $private = false): Rule
     {
         return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', false, $private);
     }
@@ -404,6 +442,7 @@ final class StringRule extends Rule
     }
 
     /**
+     * @deprecated use static::inCaseInsensitive
      * @template Tstring of string
      * @param non-empty-array<Tstring> $values
      * @return InRule<string, Tstring>
@@ -420,6 +459,38 @@ final class StringRule extends Rule
     }
 
     /**
+     * @template Tstring of string
+     * @param non-empty-array<Tstring> $values
+     * @return Rule<string, Tstring>
+     */
+    public function inCaseInsensitive(array $values): Rule
+    {
+        return new CaseInsensitiveInRule(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            $values
+        );
+    }
+
+    /**
+     * @template TEnum of \BackedEnum of string
+     * @param class-string<TEnum> $enumClass
+     * @return Rule<string, value-of<TEnum>>
+     */
+    public function inEnum(string $enumClass): Rule
+    {
+        if (((string) (new \ReflectionEnum($enumClass))->getBackingType()) !== 'string') {
+            throw new \LogicException('BackedEnum: '.$enumClass.' must be of type string');
+        }
+
+        /** @phpstan-ignore-next-line */
+        return $this->in(array_map(static fn (\BackedEnum $enum): string => (string) $enum->value, $enumClass::cases()));
+    }
+
+    /**
+     * @deprecated use static::inEnum or static::parseEnum
      * @template TEnum of \BackedEnum of string
      * @param class-string<TEnum> $enumClass
      * @return Enum<TEnum>
@@ -431,6 +502,27 @@ final class StringRule extends Rule
         }
 
         return new Enum($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $enumClass);
+    }
+
+    /**
+     * @template TEnum of \BackedEnum of string
+     * @param class-string<TEnum> $enumClass
+     * @return Rule<string, TEnum>
+     */
+    public function parseEnum(string $enumClass): Rule
+    {
+        if (((string) (new \ReflectionEnum($enumClass))->getBackingType()) !== 'string') {
+            throw new \LogicException('BackedEnum: '.$enumClass.' must be of type string');
+        }
+
+        /** @phpstan-ignore-next-line */
+        return new Enum(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            $enumClass
+        );
     }
 
     /**
