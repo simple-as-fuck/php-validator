@@ -184,18 +184,6 @@ final class StringRule extends Rule
     }
 
     /**
-     * @deprecated use static::decimal
-     * @param positive-int $digits maximum digits before decimal separator, without minus sign
-     * @param int<0, max> $decimals maximum digits after decimal separator
-     * @return Max<numeric-string, int>
-     */
-    public function parseDecimal(int $digits, int $decimals): Max
-    {
-        $numericRule = new ParseNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'');
-        return $numericRule->maxDigit($digits)->maxDecimal($decimals);
-    }
-
-    /**
      * @param positive-int $digits maximum digits before decimal separator, without minus sign
      * @param int<0, max> $decimals maximum digits after decimal separator
      * @return Rule<numeric-string, numeric-string>
@@ -303,24 +291,6 @@ final class StringRule extends Rule
     }
 
     /**
-     * @deprecated use static::ipv4
-     * @param bool $private if false private and reserved ip address will fail
-     */
-    public function parseIpv4(bool $private = false): ParseIp
-    {
-        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', true, $private);
-    }
-
-    /**
-     * @deprecated use static::ipv6
-     * @param bool $private if false private and reserved ip address will fail
-     */
-    public function parseIpv6(bool $private = false): ParseIp
-    {
-        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', false, $private);
-    }
-
-    /**
      * @param bool $private if false private and reserved ip address will fail
      * @return Rule<string, non-empty-string>
      */
@@ -379,23 +349,6 @@ final class StringRule extends Rule
     }
 
     /**
-     * @deprecated use static::inCaseInsensitive
-     * @template Tstring of string
-     * @param non-empty-array<Tstring> $values
-     * @return InRule<string, Tstring>
-     */
-    public function caseInsensitiveIn(array $values): InRule
-    {
-        return new CaseInsensitiveInRule(
-            $this->exceptionFactory,
-            $this->ruleChain(),
-            $this->validated,
-            $this->valueName,
-            $values
-        );
-    }
-
-    /**
      * @template Tstring of string
      * @param non-empty-array<Tstring> $values
      * @return Rule<string, Tstring>
@@ -424,21 +377,6 @@ final class StringRule extends Rule
 
         /** @phpstan-ignore-next-line */
         return $this->in(array_map(static fn (\BackedEnum $enum): string => (string) $enum->value, $enumClass::cases()));
-    }
-
-    /**
-     * @deprecated use static::inEnum or static::parseEnum
-     * @template TEnum of \BackedEnum of string
-     * @param class-string<TEnum> $enumClass
-     * @return Enum<TEnum>
-     */
-    public function enum(string $enumClass): Enum
-    {
-        if (((string) (new \ReflectionEnum($enumClass))->getBackingType()) !== 'string') {
-            throw new \LogicException('BackedEnum: '.$enumClass.' must be of type string');
-        }
-
-        return new Enum($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $enumClass);
     }
 
     /**
