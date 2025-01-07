@@ -70,6 +70,21 @@ abstract class IntRule extends Rule
     /**
      * @template TEnum of \BackedEnum of int
      * @param class-string<TEnum> $enumClass
+     * @return Rule<int, value-of<TEnum>>
+     */
+    public function inEnum(string $enumClass): Rule
+    {
+        if (((string) (new \ReflectionEnum($enumClass))->getBackingType()) !== 'int') {
+            throw new \LogicException('BackedEnum: '.$enumClass.' must be of type integer');
+        }
+
+        /** @phpstan-ignore-next-line */
+        return $this->in(array_map(static fn (\BackedEnum $enum): int => (int) $enum->value, $enumClass::cases()));
+    }
+
+    /**
+     * @template TEnum of \BackedEnum of int
+     * @param class-string<TEnum> $enumClass
      * @return Enum<TEnum>
      */
     public function enum(string $enumClass): Enum

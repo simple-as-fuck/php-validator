@@ -56,28 +56,32 @@ abstract class Rule
      */
     final public function notNull()
     {
-        $value = $this->nullable();
-        if ($value === null) {
-            if ($this->exceptionFactory === null) {
-                throw new ValueMust('be not null');
-            }
-            throw $this->exceptionFactory->create($this->valueName.' must be not null');
-        }
-
-        return $value;
+        return $this->nullable(notNull: true);
     }
 
     /**
-     * @return TOut|null
+     * @param ($notNull is true ? false : bool) $failAsNull
+     * @return ($notNull is true ? TOut : TOut|null)
      */
-    final public function nullable(bool $failAsNull = false)
+    final public function nullable(bool $failAsNull = false, bool $notNull = false)
     {
         $value = $this->validated->value;
 
         foreach ($this->ruleChain->rules as $rule) {
             $value = $this->validateRule($rule, $value, $failAsNull);
         }
-        return $this->validateRule($this, $value, $failAsNull);
+        $value = $this->validateRule($this, $value, $failAsNull);
+
+        if ($notNull) {
+            if ($value === null) {
+                if ($this->exceptionFactory === null) {
+                    throw new ValueMust('be not null');
+                }
+                throw $this->exceptionFactory->create($this->valueName.' must be not null');
+            }
+        }
+
+        return $value;
     }
 
     /**
