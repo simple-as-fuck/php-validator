@@ -52,36 +52,39 @@ abstract class Rule
     }
 
     /**
-     * @return TOut
+     * @return ($if is true ? TOut : TOut|null)
      */
-    final public function notNull()
+    final public function notNull(bool $if = true): mixed
     {
-        return $this->nullable(notNull: true);
-    }
-
-    /**
-     * @param ($notNull is true ? false : bool) $failAsNull
-     * @return ($notNull is true ? TOut : TOut|null)
-     */
-    final public function nullable(bool $failAsNull = false, bool $notNull = false)
-    {
-        $value = $this->validated->value;
-
-        foreach ($this->ruleChain->rules as $rule) {
-            $value = $this->validateRule($rule, $value, $failAsNull);
-        }
-        $value = $this->validateRule($this, $value, $failAsNull);
-
-        if ($notNull) {
-            if ($value === null) {
-                if ($this->exceptionFactory === null) {
-                    throw new ValueMust('be not null');
-                }
-                throw $this->exceptionFactory->create($this->valueName.' must be not null');
+        $value = $this->nullable();
+        if ($value === null && $if) {
+            if ($this->exceptionFactory === null) {
+                throw new ValueMust('be not null');
             }
+            throw $this->exceptionFactory->create($this->valueName.' must be not null');
         }
 
         return $value;
+    }
+
+    /**
+     * @return TOut|null
+     */
+    final public function nullable(bool $failAsNull = false): mixed
+    {
+        $value = $this->validated->value;
+
+        try {
+            foreach ($this->ruleChain->rules as $rule) {
+                $value = $this->validateRule($rule, $value);
+            }
+            return $this->validateRule($this, $value);
+        } catch (\Throwable $exception) {
+            if ($failAsNull) {
+                return null;
+            }
+            throw $exception;
+        }
     }
 
     /**
@@ -104,7 +107,7 @@ abstract class Rule
      * @param Rule<mixed, TRuleOut> $rule
      * @return TRuleOut|null
      */
-    private function validateRule(Rule $rule, mixed &$value, bool $failAsNull): mixed
+    private function validateRule(Rule $rule, mixed &$value): mixed
     {
         if ($value === null) {
             return null;
@@ -113,20 +116,10 @@ abstract class Rule
         try {
             return $rule->validate($value);
         } catch (ValueMust $exception) {
-            if ($failAsNull) {
-                return null;
-            }
-
             if ($this->exceptionFactory === null) {
                 throw $exception;
             }
             throw $this->exceptionFactory->create($rule->valueName.' must '.$exception->getMessage());
-        } catch (\Throwable $exception) {
-            if ($failAsNull) {
-                return null;
-            }
-
-            throw $exception;
         }
     }
 }
