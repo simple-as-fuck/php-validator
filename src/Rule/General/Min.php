@@ -26,7 +26,7 @@ class Min extends Comparison
      * @param non-empty-string $comparedName
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

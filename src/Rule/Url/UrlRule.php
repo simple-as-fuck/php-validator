@@ -31,7 +31,7 @@ final class UrlRule extends Rule
      * @param array<non-empty-string> $requiredSchemes
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
@@ -43,7 +43,7 @@ final class UrlRule extends Rule
 
         /** @var RuleChain<string> $ruleChain */
         $ruleChain = new RuleChain();
-        $this->parseUrl = new ParseUrl(null, $ruleChain, $this->validated, $this->valueName, $requiredComponents, $forbiddenComponents);
+        $this->parseUrl = new ParseUrl($exceptionFactory, $ruleChain, $this->validated, $this->valueName, $requiredComponents, $forbiddenComponents);
     }
 
     /**

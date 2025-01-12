@@ -21,7 +21,7 @@ final class RegexMatch extends ForwardRule
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $key)
+    public function __construct(Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName, string $key)
     {
         /** @phpstan-ignore-next-line */
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, new Key($exceptionFactory, $ruleChain, $validated, $valueName, $key));

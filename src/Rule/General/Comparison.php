@@ -24,7 +24,7 @@ abstract class Comparison extends Rule
      * @param TCompared $comparedTo
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

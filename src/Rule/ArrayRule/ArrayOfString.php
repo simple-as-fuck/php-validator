@@ -21,7 +21,7 @@ final class ArrayOfString extends Rule
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
-    public function __construct(?Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName)
+    public function __construct(Exception $exceptionFactory, RuleChain $ruleChain, Validated $validated, string $valueName)
     {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 

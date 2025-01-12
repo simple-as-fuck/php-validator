@@ -22,7 +22,7 @@ final class CallableRule extends Rule
      * @param callable(ObjectRule): TClass $callable
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

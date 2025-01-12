@@ -21,7 +21,7 @@ final class Rules
      * @param Validated<mixed> $validated
      */
     public function __construct(
-        private readonly ?Exception $exceptionFactory,
+        private readonly Exception $exceptionFactory,
         private readonly string $valueName,
         private readonly Validated $validated
     ) {

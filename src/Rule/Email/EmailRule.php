@@ -28,7 +28,7 @@ final class EmailRule extends Rule
      * @param non-empty-array<EmailValidation> $validations
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

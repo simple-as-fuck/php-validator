@@ -22,7 +22,7 @@ abstract class ForwardRule extends Rule
      * @param Rule<TIn, TOut> $forwardedRule
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

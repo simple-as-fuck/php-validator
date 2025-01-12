@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
-use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\Numeric\ParseNumeric;
 
 /**
@@ -20,10 +20,10 @@ final class ParseNumericTest extends TestCase
     {
         /** @var RuleChain<string> $ruleChain */
         $ruleChain = new RuleChain();
-        $rule = new ParseNumeric(null, $ruleChain, new Validated($input), 'input');
+        $rule = new ParseNumeric(new UnexpectedValueException(), $ruleChain, new Validated($input), 'input');
 
         if ($expectedErrorMessage !== null) {
-            $this->expectException(ValueMust::class);
+            $this->expectException(\UnexpectedValueException::class);
             $this->expectExceptionMessage($expectedErrorMessage);
         }
         self::assertSame($expectedOutput, $rule->notNull());

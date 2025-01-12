@@ -22,7 +22,7 @@ final class StringTypedKey extends Rule
      * @param Key<mixed> $keyRule
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

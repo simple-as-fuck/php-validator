@@ -24,7 +24,7 @@ abstract class Rule
      * @param non-empty-string $valueName
      */
     public function __construct(
-        protected readonly ?Exception $exceptionFactory,
+        protected readonly Exception $exceptionFactory,
         private readonly RuleChain $ruleChain,
         protected readonly Validated $validated,
         protected readonly string $valueName
@@ -58,9 +58,6 @@ abstract class Rule
     {
         $value = $this->nullable();
         if ($value === null && $if) {
-            if ($this->exceptionFactory === null) {
-                throw new ValueMust('be not null');
-            }
             throw $this->exceptionFactory->create($this->valueName.' must be not null');
         }
 
@@ -116,9 +113,6 @@ abstract class Rule
         try {
             return $rule->validate($value);
         } catch (ValueMust $exception) {
-            if ($this->exceptionFactory === null) {
-                throw $exception;
-            }
             throw $this->exceptionFactory->create($rule->valueName.' must '.$exception->getMessage());
         }
     }

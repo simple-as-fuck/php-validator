@@ -23,7 +23,7 @@ final class ParseBool extends Rule
      * @param non-empty-string $falseDefinition
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

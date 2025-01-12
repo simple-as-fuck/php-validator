@@ -23,7 +23,7 @@ final class CallableRule extends Rule
      * @param callable(TIn): TOut $callable
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

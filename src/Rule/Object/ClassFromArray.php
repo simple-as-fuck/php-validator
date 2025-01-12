@@ -22,7 +22,7 @@ final class ClassFromArray extends Rule
      * @param UserArrayRule<TArrayRule, TClass> $userArrayRule
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

@@ -25,7 +25,7 @@ final class Component extends Rule
      * @param 'scheme'|'host'|'user'|'pass'|'path'|'query'|'fragment' $componentName
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

@@ -26,7 +26,7 @@ final class Collection extends Rule
      * @param callable(TypedKey): TOut $callable
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         private readonly RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

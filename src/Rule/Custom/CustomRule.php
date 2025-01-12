@@ -23,7 +23,7 @@ final class CustomRule extends Rule
      * @param UserDefinedRule<TIn, TOut> $userDefinedRule
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

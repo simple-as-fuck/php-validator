@@ -20,7 +20,7 @@ final class ParseNumeric extends Numeric
      * @param non-empty-string $valueName
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

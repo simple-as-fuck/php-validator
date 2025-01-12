@@ -23,7 +23,7 @@ class InRule extends Rule
      * @param non-empty-array<Tout> $values
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

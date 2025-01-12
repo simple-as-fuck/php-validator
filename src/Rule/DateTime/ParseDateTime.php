@@ -46,7 +46,7 @@ final class ParseDateTime extends Rule
      * @param non-empty-string|null $timeZone
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

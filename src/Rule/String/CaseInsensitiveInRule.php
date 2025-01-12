@@ -24,7 +24,7 @@ final class CaseInsensitiveInRule extends InRule
      * @param non-empty-array<Tout> $values
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

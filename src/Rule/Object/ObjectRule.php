@@ -31,7 +31,7 @@ final class ObjectRule extends Rule
      * @param non-empty-string $valueName
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,

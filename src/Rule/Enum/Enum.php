@@ -23,7 +23,7 @@ final class Enum extends Rule
      * @param class-string<TEnum> $enumClass
      */
     public function __construct(
-        ?Exception $exceptionFactory,
+        Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
