@@ -72,7 +72,12 @@ final class ObjectRule extends Rule
      */
     public function property(string $name, bool $present = false): Property
     {
-        return new Property($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $name, $present);
+        $valueName = $this->valueName;
+        $object = $this->nullable(failAsNull: true);
+        if ($object !== null) {
+            $valueName .= '{'.\implode(',', \array_keys(\get_object_vars($object))).'}';
+        }
+        return new Property($this->exceptionFactory, $this->ruleChain(), $this->validated, $valueName, $name, $present);
     }
 
     /**

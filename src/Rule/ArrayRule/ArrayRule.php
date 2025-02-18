@@ -19,7 +19,19 @@ final class ArrayRule extends Rule
      */
     public function key($key): TypedKey
     {
-        return new TypedKey($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'['.$key.']', $key);
+        $valueName = $this->valueName;
+        $array = $this->nullable(failAsNull: true);
+        if ($array !== null) {
+            if (\count($array) > 20) {
+                $keys = \array_keys(\array_slice($array, 0, 20, true));
+                $keys[] =  '...';
+            } else {
+                $keys = \array_keys($array);
+            }
+            $valueName .= '{'.\implode(',', $keys).'}';
+        }
+        $valueName .= '['.$key.']';
+        return new TypedKey($this->exceptionFactory, $this->ruleChain(), $this->validated, $valueName, $key);
     }
 
     /**
