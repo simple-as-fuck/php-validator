@@ -37,9 +37,9 @@ final class Rules
         return new FloatRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
     }
 
-    public function string(): StringRule
+    public function string(bool $dumpValue = true): StringRule
     {
-        return new StringRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
+        return new StringRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, $dumpValue);
     }
 
     public function bool(): BoolRule

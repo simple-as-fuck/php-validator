@@ -39,9 +39,9 @@ final class Property extends Rule
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
-    public function string(): StringRule
+    public function string(bool $dumpValue = true): StringRule
     {
-        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName);
+        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.'->'.$this->propertyName, $dumpValue);
     }
 
     public function int(): IntRule

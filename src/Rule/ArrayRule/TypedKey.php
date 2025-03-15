@@ -15,9 +15,9 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
  */
 final class TypedKey extends Key
 {
-    public function string(): StringRule
+    public function string(bool $dumpValue = true): StringRule
     {
-        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
+        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $dumpValue);
     }
 
     public function int(): IntRule

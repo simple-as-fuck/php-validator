@@ -7,6 +7,7 @@ namespace SimpleAsFuck\Validator\Rule\String;
 use Egulias\EmailValidator\Validation\DNSCheckValidation;
 use Egulias\EmailValidator\Validation\EmailValidation;
 use Egulias\EmailValidator\Validation\RFCValidation;
+use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
@@ -32,9 +33,31 @@ final class StringRule extends Rule
     /**
      * @param non-empty-string $valueName
      */
-    public static function make(mixed $value, string $valueName = 'variable'): StringRule
+    public static function make(mixed $value, string $valueName = 'variable', bool $dumpValue = true): StringRule
     {
-        return new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), $valueName);
+        return new StringRule(
+            new UnexpectedValueException(),
+            new RuleChain(),
+            new Validated($value),
+            $valueName,
+            $dumpValue,
+        );
+    }
+
+    /**
+     * @param RuleChain<covariant mixed> $ruleChain
+     * @param Validated<covariant mixed> $validated
+     * @param non-empty-string $valueName
+     * @param bool $dumpValue into error message
+     */
+    public function __construct(
+        Exception $exceptionFactory,
+        RuleChain $ruleChain,
+        Validated $validated,
+        string $valueName,
+        private readonly bool $dumpValue = true,
+    ) {
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
     /**
@@ -154,7 +177,7 @@ final class StringRule extends Rule
 
     public function parseInt(): ParseInt
     {
-        return new ParseInt($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'');
+        return new ParseInt($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue());
     }
 
     /**
@@ -167,7 +190,7 @@ final class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName . ': \'' . $this->nullable(true) . '\'',
+            $this->valueNameWithValue(),
             $trueDefinition,
             $falseDefinition
         );
@@ -175,12 +198,12 @@ final class StringRule extends Rule
 
     public function parseFloat(): ParseFloat
     {
-        return new ParseFloat($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'');
+        return new ParseFloat($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue());
     }
 
     public function numeric(bool $allowLeadingZero = false): ParseNumeric
     {
-        return new ParseNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $allowLeadingZero);
+        return new ParseNumeric($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue(), $allowLeadingZero);
     }
 
     /**
@@ -194,7 +217,7 @@ final class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName.': \''.$this->nullable(true).'\''
+            $this->valueNameWithValue()
         ))
             ->maxDigit($digits)->maxDecimal($decimals)
         ;
@@ -211,7 +234,7 @@ final class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName.': \''.$this->nullable(true).'\'',
+            $this->valueNameWithValue(),
             $format,
             $timeZone,
         );
@@ -226,7 +249,7 @@ final class StringRule extends Rule
      */
     public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class, ?string $timeZone = null): ParseDateTime
     {
-        return new ParseDateTime($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $format, $dateTimeClass, $timeZone);
+        return new ParseDateTime($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue(), $format, $dateTimeClass, $timeZone);
     }
 
     /**
@@ -246,7 +269,7 @@ final class StringRule extends Rule
      */
     public function parseUrl(array $requiredComponents = [], array $forbiddenComponents = []): ParseUrl
     {
-        return new ParseUrl($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $requiredComponents, $forbiddenComponents);
+        return new ParseUrl($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue(), $requiredComponents, $forbiddenComponents);
     }
 
     /**
@@ -261,7 +284,7 @@ final class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName.': \''.$this->nullable(true).'\'',
+            $this->valueNameWithValue(),
             $requiredComponents,
             $forbiddenComponents,
             $requiredSchemes
@@ -296,7 +319,7 @@ final class StringRule extends Rule
      */
     public function ipv4(bool $private = false): Rule
     {
-        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', true, $private);
+        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue(), true, $private);
     }
 
     /**
@@ -305,7 +328,7 @@ final class StringRule extends Rule
      */
     public function ipv6(bool $private = false): Rule
     {
-        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', false, $private);
+        return new ParseIp($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue(), false, $private);
     }
 
     public function notEmpty(bool $emptyAsNull = false): NotEmpty
@@ -320,7 +343,7 @@ final class StringRule extends Rule
      */
     public function regex(string $pattern, int $flags = 0): Regex
     {
-        return new Regex($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $pattern, $flags);
+        return new Regex($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue(), $pattern, $flags);
     }
 
     /**
@@ -329,7 +352,7 @@ final class StringRule extends Rule
      */
     public function parseRegex(string $pattern, int $flags = 0): ParseRegex
     {
-        return new ParseRegex($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $pattern, $flags);
+        return new ParseRegex($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue(), $pattern, $flags);
     }
 
     /**
@@ -343,7 +366,7 @@ final class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName,
+            $this->valueNameWithValue(),
             $values
         );
     }
@@ -359,7 +382,7 @@ final class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName,
+            $this->valueNameWithValue(),
             $values
         );
     }
@@ -395,7 +418,7 @@ final class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName,
+            $this->valueNameWithValue(),
             $enumClass
         );
     }
@@ -405,7 +428,7 @@ final class StringRule extends Rule
      */
     public function email(array $validations = [new RFCValidation(), new DNSCheckValidation()]): EmailRule
     {
-        return new EmailRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.': \''.$this->nullable(true).'\'', $validations);
+        return new EmailRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueNameWithValue(), $validations);
     }
 
     /**
@@ -418,5 +441,17 @@ final class StringRule extends Rule
         }
 
         return $value;
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    private function valueNameWithValue(): string
+    {
+        if ($this->dumpValue) {
+            return $this->valueName.': \''.$this->nullable(true).'\'';
+        }
+
+        return $this->valueName;
     }
 }
