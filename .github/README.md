@@ -24,6 +24,9 @@ $value = $config->get('some_value_name');
 
 $rules = \SimpleAsFuck\Validator\Factory\Validator::make($value, 'Config "some_value_name" value');
 $validValue = $rules->string()->notEmpty()->notNull();
+// string value is not dump into validation message similarly to:
+// https://www.php.net/manual/en/class.sensitiveparameter.php
+$validSensitiveValue = $rules->string(sensitiveValue: true)->notEmpty()->notNull();
 /*
  * now you have in $validValue really not empty string and even phpstan know the type without any annoying annotation
  * if validation failed \UnexpectedValueException('Config "some_value_name" value must ...') is thrown from rule chain

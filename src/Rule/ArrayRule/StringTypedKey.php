@@ -31,9 +31,9 @@ final class StringTypedKey extends Rule
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
-    public function string(bool $dumpValue = true): StringRule
+    public function string(bool $sensitiveValue = false): StringRule
     {
-        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $dumpValue);
+        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $sensitiveValue);
     }
 
     public function array(): ArrayOfString

@@ -33,14 +33,14 @@ final class StringRule extends Rule
     /**
      * @param non-empty-string $valueName
      */
-    public static function make(mixed $value, string $valueName = 'variable', bool $dumpValue = true): StringRule
+    public static function make(mixed $value, string $valueName = 'variable', bool $sensitiveValue = false): StringRule
     {
         return new StringRule(
             new UnexpectedValueException(),
             new RuleChain(),
             new Validated($value),
             $valueName,
-            $dumpValue,
+            $sensitiveValue,
         );
     }
 
@@ -48,14 +48,14 @@ final class StringRule extends Rule
      * @param RuleChain<covariant mixed> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
-     * @param bool $dumpValue into error message
+     * @param bool $sensitiveValue if true string value is not dump into error message like: https://www.php.net/manual/en/class.sensitiveparameter.php
      */
     public function __construct(
         Exception $exceptionFactory,
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private readonly bool $dumpValue = true,
+        private readonly bool $sensitiveValue = false,
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
@@ -448,10 +448,10 @@ final class StringRule extends Rule
      */
     private function valueNameWithValue(): string
     {
-        if ($this->dumpValue) {
-            return $this->valueName.': \''.$this->nullable(true).'\'';
+        if ($this->sensitiveValue) {
+            return $this->valueName;
         }
 
-        return $this->valueName;
+        return $this->valueName.': \''.$this->nullable(true).'\'';
     }
 }
