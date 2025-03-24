@@ -18,7 +18,7 @@ final class RuleChain
      * @param array<Rule<mixed, mixed>> $rules
      * @param Rule<mixed,TLastRuleOut>|null $lastRule
      */
-    public function __construct(array $rules = [], Rule $lastRule = null)
+    public function __construct(array $rules = [], ?Rule $lastRule = null)
     {
         if ($lastRule !== null) {
             $rules[] = $lastRule;
