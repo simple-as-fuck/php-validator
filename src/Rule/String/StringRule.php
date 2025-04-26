@@ -62,19 +62,22 @@ final class StringRule extends Rule
 
     /**
      * @param positive-int $number of bytes that string length can have
+     * @param non-empty-string|null $measuredEncoding
+     * @param non-empty-string|null $sourceEncoding
      * @return Rule<string, non-empty-string>
      */
-    public function exactByte(int $number): Rule
+    public function exactByte(int $number, ?string $measuredEncoding = null, ?string $sourceEncoding = null): Rule
     {
+        $stringLength = new StringLength($measuredEncoding, $sourceEncoding);
         /** @phpstan-ignore-next-line */
         return new Same(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            new StringLength(),
+            $stringLength,
             $number,
-            'string length in bytes'
+            $stringLength->convertedName()
         );
     }
 
@@ -99,21 +102,24 @@ final class StringRule extends Rule
 
     /**
      * @param positive-int $min
+     * @param non-empty-string|null $measuredEncoding
+     * @param non-empty-string|null $sourceEncoding
      * @return MinLength<non-empty-string>
      */
-    public function minByte(int $min): MinLength
+    public function minByte(int $min, ?string $measuredEncoding = null, ?string $sourceEncoding = null): MinLength
     {
+        $stringLength = new StringLength($measuredEncoding, $sourceEncoding);
         /** @var MinLength<non-empty-string> */
         return new MinLength(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            new StringLength(),
+            $stringLength,
             /** @phpstan-ignore-next-line */
             new CastString(),
             $min,
-            'string length in bytes'
+            $stringLength->convertedName()
         );
     }
 
@@ -140,19 +146,22 @@ final class StringRule extends Rule
 
     /**
      * @param positive-int $max
+     * @param non-empty-string|null $measuredEncoding
+     * @param non-empty-string|null $sourceEncoding
      * @return Rule<string, string>
      */
-    public function maxByte(int $max): Rule
+    public function maxByte(int $max, ?string $measuredEncoding = null, ?string $sourceEncoding = null): Rule
     {
+        $stringLength = new StringLength($measuredEncoding, $sourceEncoding);
         return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            new StringLength(),
+            $stringLength,
             new CastString(),
             $max,
-            'string length in bytes'
+            $stringLength->convertedName()
         );
     }
 

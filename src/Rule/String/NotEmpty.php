@@ -34,20 +34,23 @@ final class NotEmpty extends Rule
 
     /**
      * @param positive-int $max
+     * @param non-empty-string|null $measuredEncoding
+     * @param non-empty-string|null $sourceEncoding
      * @return Rule<non-empty-string, non-empty-string>
      */
-    public function maxByte(int $max): Rule
+    public function maxByte(int $max, ?string $measuredEncoding = null, ?string $sourceEncoding = null): Rule
     {
+        $stringLength = new StringLength($measuredEncoding, $sourceEncoding);
         /** @var Max<non-empty-string, positive-int> */
         return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            new StringLength(),
+            $stringLength,
             new CastString(),
             $max,
-            'string length in bytes'
+            $stringLength->convertedName()
         );
     }
 

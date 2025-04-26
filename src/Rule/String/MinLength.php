@@ -17,24 +17,27 @@ final class MinLength extends Min
 {
     /**
      * @param positive-int $max
+     * @param non-empty-string|null $measuredEncoding
+     * @param non-empty-string|null $sourceEncoding
      * @return Rule<Tstring, Tstring>
      */
-    public function maxByte(int $max): Rule
+    public function maxByte(int $max, ?string $measuredEncoding = null, ?string $sourceEncoding = null): Rule
     {
         if ($this->comparedTo >= $max) {
             throw new \LogicException('Max value rule parameter must be greater than min value');
         }
 
+        $stringLength = new StringLength($measuredEncoding, $sourceEncoding);
         /** @var Max<Tstring, positive-int> */
         return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
-            new StringLength(),
+            $stringLength,
             new CastString(),
             $max,
-            'string length in bytes'
+            $stringLength->convertedName()
         );
     }
 
