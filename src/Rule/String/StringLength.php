@@ -29,6 +29,9 @@ final class StringLength extends Conversion
     {
         if ($this->measuredEncoding !== null) {
             $value = \mb_convert_encoding($value, $this->measuredEncoding, $this->sourceEncoding);
+            if ($value === false) {
+                throw new \RuntimeException('Conversion of encoding: "'.$this->sourceEncoding.'" to: "'.$this->measuredEncoding.'" failed');
+            }
         }
 
         return strlen($value);
