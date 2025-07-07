@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class CustomRule extends Rule
 {
     /**
-     * @param RuleChain<TIn> $ruleChain
+     * @param RuleChain<covariant TIn> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param UserDefinedRule<TIn, TOut> $userDefinedRule

@@ -16,7 +16,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class ParseIp extends Rule
 {
     /**
-     * @param RuleChain<string> $ruleChain
+     * @param RuleChain<covariant string> $ruleChain
      * @param Validated<covariant mixed> $validated
      */
     public function __construct(

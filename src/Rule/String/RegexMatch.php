@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Rule\General\ForwardRule;
 final class RegexMatch extends ForwardRule
 {
     /**
-     * @param RuleChain<array<string>> $ruleChain
+     * @param RuleChain<covariant array<string>> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */

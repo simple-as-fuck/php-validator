@@ -16,7 +16,7 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
 final class StringTypedKey extends Rule
 {
     /**
-     * @param RuleChain<array<mixed>> $ruleChain
+     * @param RuleChain<covariant array<mixed>> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param Key<mixed> $keyRule

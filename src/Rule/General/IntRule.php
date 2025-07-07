@@ -20,7 +20,6 @@ abstract class IntRule extends Rule
         /** @var MinWithMax<int, int> $minRule */
         $minRule = new MinWithMax(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,

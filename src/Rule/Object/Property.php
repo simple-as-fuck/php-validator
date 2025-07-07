@@ -24,7 +24,7 @@ use SimpleAsFuck\Validator\Rule\String\StringRule;
 final class Property extends Rule
 {
     /**
-     * @param RuleChain<object> $ruleChain
+     * @param RuleChain<covariant object> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */

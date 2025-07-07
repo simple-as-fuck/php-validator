@@ -38,7 +38,7 @@ final class ParseDateTime extends Rule
     }
 
     /**
-     * @param RuleChain<string> $ruleChain
+     * @param RuleChain<covariant string> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-string $format
@@ -68,7 +68,6 @@ final class ParseDateTime extends Rule
         /** @var MinWithMax<TDateTime, TDateTime> $minRule */
         $minRule = new MinWithMax(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,
@@ -88,7 +87,6 @@ final class ParseDateTime extends Rule
         /** @var MinWithMax<TDateTime, TDateTime> $minRule */
         $minRule = new MinWithMax(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,

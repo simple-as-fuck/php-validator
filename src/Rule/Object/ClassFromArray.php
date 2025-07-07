@@ -18,6 +18,9 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class ClassFromArray extends Rule
 {
     /**
+     * @param RuleChain<covariant array<mixed>> $ruleChain
+     * @param Validated<covariant mixed> $validated
+     * @param non-empty-string $valueName
      * @param TArrayRule $arrayRule
      * @param UserArrayRule<TArrayRule, TClass> $userArrayRule
      */

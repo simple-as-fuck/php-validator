@@ -16,7 +16,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class ParseBool extends Rule
 {
     /**
-     * @param RuleChain<string> $ruleChain
+     * @param RuleChain<covariant string> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-string $trueDefinition

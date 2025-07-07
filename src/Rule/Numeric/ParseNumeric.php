@@ -15,7 +15,7 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 final class ParseNumeric extends Numeric
 {
     /**
-     * @param RuleChain<string> $ruleChain
+     * @param RuleChain<covariant string> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */

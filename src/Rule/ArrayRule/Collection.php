@@ -20,7 +20,7 @@ use SimpleAsFuck\Validator\Rule\General\Same;
 final class Collection extends Rule
 {
     /**
-     * @param RuleChain<array<mixed>> $ruleChain
+     * @param RuleChain<covariant array<mixed>> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param callable(TypedKey): TOut $callable

@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 class Min extends Comparison
 {
     /**
-     * @param RuleChain<TValue> $ruleChain
+     * @param RuleChain<covariant TValue> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param Conversion<TValue, covariant TCompared> $conversion

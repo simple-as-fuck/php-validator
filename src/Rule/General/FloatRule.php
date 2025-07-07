@@ -18,7 +18,6 @@ abstract class FloatRule extends Rule
         /** @var MinWithMax<float, float> $minRule */
         $minRule = new MinWithMax(
             $this->exceptionFactory,
-            /** @phpstan-ignore-next-line */
             $this->ruleChain(),
             $this->validated,
             $this->valueName,

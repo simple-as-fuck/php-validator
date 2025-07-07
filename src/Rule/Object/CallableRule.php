@@ -16,7 +16,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class CallableRule extends Rule
 {
     /**
-     * @param RuleChain<object> $ruleChain
+     * @param RuleChain<covariant object> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param callable(ObjectRule): TClass $callable

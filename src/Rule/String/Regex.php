@@ -17,7 +17,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class Regex extends Rule
 {
     /**
-     * @param RuleChain<Tstring> $ruleChain
+     * @param RuleChain<covariant Tstring> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-string $pattern

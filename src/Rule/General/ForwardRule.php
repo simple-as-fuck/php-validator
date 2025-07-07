@@ -17,7 +17,7 @@ abstract class ForwardRule extends Rule
 {
     /**
      * @param RuleChain<covariant TIn> $ruleChain
-     * @param Validated<mixed> $validated
+     * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param Rule<TIn, TOut> $forwardedRule
      */

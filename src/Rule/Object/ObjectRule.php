@@ -26,7 +26,7 @@ final class ObjectRule extends Rule
     }
 
     /**
-     * @param RuleChain<mixed> $ruleChain
+     * @param RuleChain<covariant mixed> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
