@@ -18,8 +18,10 @@ final class DigitCount extends Conversion
     public function convert($value): int
     {
         $value = ltrim($value, '-');
+        /** @phpstan-ignore-next-line */
         $decimalSeparatorPos = strpos($value, '.');
         if ($decimalSeparatorPos === false) {
+            /** @phpstan-ignore-next-line */
             return strlen($value);
         }
 

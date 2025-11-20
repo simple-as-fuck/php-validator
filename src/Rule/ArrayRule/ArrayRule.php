@@ -22,8 +22,8 @@ final class ArrayRule extends Rule
         $valueName = $this->valueName;
         $array = $this->nullable(failAsNull: true);
         if ($array !== null) {
-            if (\count($array) > 20) {
-                $keys = \array_keys(\array_slice($array, 0, 20, true));
+            if (\count($array) > 10) {
+                $keys = \array_keys(\array_slice($array, 0, 10, true));
                 $keys[] =  '...';
             } else {
                 $keys = \array_keys($array);
@@ -82,18 +82,17 @@ final class ArrayRule extends Rule
     /**
      * @return Collection<string>
      */
-    public function ofString(): Collection
+    public function ofString(bool $sensitiveValues = false): Collection
     {
-        return $this->of(static fn (TypedKey $key): string => $key->string()->notNull());
+        return $this->of(static fn (TypedKey $key): string => $key->string($sensitiveValues)->notNull());
     }
 
     /**
      * @return Collection<non-empty-string>
      */
-    public function ofNonEmptyString(): Collection
+    public function ofNonEmptyString(bool $sensitiveValues = false): Collection
     {
-        /** @var Collection<non-empty-string> */
-        return $this->of(static fn (TypedKey $key): string => $key->string()->notEmpty()->notNull());
+        return $this->of(static fn (TypedKey $key): string => $key->string($sensitiveValues)->notEmpty()->notNull());
     }
 
     /**
