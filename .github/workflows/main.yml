@@ -21,7 +21,7 @@ jobs:
           run: composer update --no-interaction --prefer-lowest
 
         - name: Run static analysis
-          run: vendor/bin/phpstan analyse --no-progress
+          run: vendor/bin/phpstan analyse --no-progress --memory-limit=-1
 
         - name: Run tests
           run: tools/phpunit test/ --bootstrap vendor/autoload.php
@@ -44,7 +44,7 @@ jobs:
           run: tools/php-cs-fixer fix --dry-run --no-interaction --show-progress=none
 
         - name: Run static analysis
-          run: vendor/bin/phpstan analyse --no-progress
+          run: vendor/bin/phpstan analyse --no-progress --memory-limit=-1
 
         - name: Run tests
           run: tools/phpunit test/ --bootstrap vendor/autoload.php
@@ -64,7 +64,7 @@ jobs:
           run: composer update --no-interaction --prefer-lowest
 
         - name: Run static analysis
-          run: vendor/bin/phpstan analyse --no-progress
+          run: vendor/bin/phpstan analyse --no-progress --memory-limit=-1
 
         - name: Run tests
           run: tools/phpunit test/ --bootstrap vendor/autoload.php
