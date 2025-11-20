@@ -22,8 +22,7 @@ final class DecimalCount extends Conversion
             return 0;
         }
 
-        /** @var int<0, max> $digitCount */
-        $digitCount = strlen($value) - $decimalSeparatorPos - 1;
-        return $digitCount;
+        /** @var int<0, max> */
+        return strlen($value) - $decimalSeparatorPos - 1;
     }
 }

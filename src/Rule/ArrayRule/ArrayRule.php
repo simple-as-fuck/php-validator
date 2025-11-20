@@ -14,10 +14,7 @@ use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
  */
 final class ArrayRule extends Rule
 {
-    /**
-     * @param string|int $key
-     */
-    public function key($key): TypedKey
+    public function key(int|string $key): TypedKey
     {
         $valueName = $this->valueName;
         $array = $this->nullable(failAsNull: true);
@@ -67,7 +64,6 @@ final class ArrayRule extends Rule
      */
     public function ofPositiveInt(): Collection
     {
-        /** @var Collection<positive-int> */
         return $this->of(static fn (TypedKey $key): int => $key->int()->positive()->notNull());
     }
 

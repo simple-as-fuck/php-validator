@@ -14,7 +14,7 @@ final class NoConversion extends Conversion
      * @param TValue $value
      * @return TValue
      */
-    public function convert($value)
+    public function convert($value): mixed
     {
         return $value;
     }

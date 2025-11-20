@@ -14,16 +14,16 @@ use SimpleAsFuck\Validator\Rule\Numeric\IntRule;
 use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
 use SimpleAsFuck\Validator\Rule\String\StringRule;
 
-final class Rules
+final readonly class Rules
 {
     /**
      * @param non-empty-string $valueName
      * @param Validated<mixed> $validated
      */
     public function __construct(
-        private readonly Exception $exceptionFactory,
-        private readonly string $valueName,
-        private readonly Validated $validated
+        private Exception $exceptionFactory,
+        private string $valueName,
+        private Validated $validated
     ) {
     }
 

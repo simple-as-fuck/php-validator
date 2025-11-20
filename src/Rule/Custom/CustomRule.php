@@ -36,7 +36,7 @@ final class CustomRule extends Rule
      * @param TIn $value
      * @return TOut|null
      */
-    protected function validate($value)
+    protected function validate($value): mixed
     {
         return $this->userDefinedRule->validate($value);
     }

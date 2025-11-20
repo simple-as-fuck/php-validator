@@ -45,7 +45,7 @@ final class StringTypedKey extends Rule
      * @param array<mixed> $value
      * @return mixed|null
      */
-    protected function validate($value)
+    protected function validate($value): mixed
     {
         return $this->keyRule->validate($value);
     }

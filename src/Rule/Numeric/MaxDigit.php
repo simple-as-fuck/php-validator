@@ -18,8 +18,8 @@ final class MaxDigit extends Max
      */
     public function maxDecimal(int $max): Max
     {
-        /** @var Max<numeric-string, int> $maxRule */
-        $maxRule = new Max(
+        /** @var Max<numeric-string, int> */
+        return new Max(
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
@@ -29,6 +29,5 @@ final class MaxDigit extends Max
             $max,
             'decimal digits'
         );
-        return $maxRule;
     }
 }

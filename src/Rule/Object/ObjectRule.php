@@ -81,6 +81,16 @@ final class ObjectRule extends Rule
     }
 
     /**
+     * @template Tout
+     * @param callable(Property): Tout $callable
+     * @return Properties<Tout>
+     */
+    public function propertiesOf(callable $callable): Properties
+    {
+        return new Properties($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $callable);
+    }
+
+    /**
      * @param mixed $value
      */
     protected function validate($value): ?object

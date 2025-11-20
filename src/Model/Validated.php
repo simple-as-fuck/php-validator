@@ -7,13 +7,13 @@ namespace SimpleAsFuck\Validator\Model;
 /**
  * @template TValue
  */
-final class Validated
+final readonly class Validated
 {
     /**
      * @param TValue|null $value
      */
     public function __construct(
-        public readonly mixed $value
+        public mixed $value
     ) {
     }
 }

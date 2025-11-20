@@ -27,7 +27,7 @@ final class ClassRule extends Rule
      * @param object $value
      * @return TClass|null
      */
-    protected function validate($value)
+    protected function validate($value): ?object
     {
         return $this->classRule->validate($this->rule);
     }
