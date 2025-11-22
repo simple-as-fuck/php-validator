@@ -8,6 +8,9 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\ArrayRule\ArrayRule;
+use SimpleAsFuck\Validator\Rule\Custom\CallableRule;
+use SimpleAsFuck\Validator\Rule\Custom\CustomRule;
+use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
 use SimpleAsFuck\Validator\Rule\Numeric\BoolRule;
 use SimpleAsFuck\Validator\Rule\Numeric\FloatRule;
 use SimpleAsFuck\Validator\Rule\Numeric\IntRule;
@@ -55,5 +58,25 @@ final readonly class Rules
     public function array(): ArrayRule
     {
         return new ArrayRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
+    }
+
+    /**
+     * @template TCustomOut
+     * @param UserDefinedRule<mixed, TCustomOut> $rule
+     * @return CustomRule<mixed, TCustomOut>
+     */
+    public function custom(UserDefinedRule $rule): CustomRule
+    {
+        return new CustomRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, $rule);
+    }
+
+    /**
+     * @template TCallableOut
+     * @param callable(mixed): TCallableOut $callable
+     * @return CallableRule<mixed, TCallableOut>
+     */
+    public function callable(callable $callable): CallableRule
+    {
+        return new CallableRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, $callable);
     }
 }
