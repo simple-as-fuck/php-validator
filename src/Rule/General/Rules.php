@@ -8,75 +8,64 @@ use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\ArrayRule\ArrayRule;
-use SimpleAsFuck\Validator\Rule\Custom\CallableRule;
-use SimpleAsFuck\Validator\Rule\Custom\CustomRule;
-use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
 use SimpleAsFuck\Validator\Rule\Numeric\BoolRule;
 use SimpleAsFuck\Validator\Rule\Numeric\FloatRule;
 use SimpleAsFuck\Validator\Rule\Numeric\IntRule;
 use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
 use SimpleAsFuck\Validator\Rule\String\StringRule;
 
-final readonly class Rules
+/**
+ * @extends Rule<mixed, mixed>
+ */
+final class Rules extends Rule
 {
     /**
      * @param non-empty-string $valueName
      * @param Validated<mixed> $validated
      */
     public function __construct(
-        private Exception $exceptionFactory,
-        private string $valueName,
-        private Validated $validated
+        Exception $exceptionFactory,
+        string $valueName,
+        Validated $validated,
     ) {
+        parent::__construct($exceptionFactory, new RuleChain(), $validated, $valueName);
     }
 
     public function int(): IntRule
     {
-        return new IntRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
+        return new IntRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function float(): FloatRule
     {
-        return new FloatRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
+        return new FloatRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function string(bool $sensitiveValue = false): StringRule
     {
-        return new StringRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, $sensitiveValue);
+        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $sensitiveValue);
     }
 
     public function bool(): BoolRule
     {
-        return new BoolRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
+        return new BoolRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function object(): ObjectRule
     {
-        return new ObjectRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
+        return new ObjectRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     public function array(): ArrayRule
     {
-        return new ArrayRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName);
+        return new ArrayRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
     }
 
     /**
-     * @template TCustomOut
-     * @param UserDefinedRule<mixed, TCustomOut> $rule
-     * @return CustomRule<mixed, TCustomOut>
+     * @param mixed $value
      */
-    public function custom(UserDefinedRule $rule): CustomRule
+    protected function validate($value): mixed
     {
-        return new CustomRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, $rule);
-    }
-
-    /**
-     * @template TCallableOut
-     * @param callable(mixed): TCallableOut $callable
-     * @return CallableRule<mixed, TCallableOut>
-     */
-    public function callable(callable $callable): CallableRule
-    {
-        return new CallableRule($this->exceptionFactory, new RuleChain(), $this->validated, $this->valueName, $callable);
+        return $value;
     }
 }
