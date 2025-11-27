@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
+use SimpleAsFuck\Validator\Rule\Object\Property;
 
 /**
  * @covers \SimpleAsFuck\Validator\Rule\Object\Property
@@ -21,7 +23,7 @@ final class PropertyTest extends TestCase
 
         /** @var RuleChain<object> $ruleChain */
         $ruleChain = new RuleChain();
-        $rule = new \SimpleAsFuck\Validator\Rule\Object\Property(
+        $rule = new Property(
             new UnexpectedValueException(),
             $ruleChain,
             new Validated($object),
@@ -40,5 +42,33 @@ final class PropertyTest extends TestCase
             })
             ->notNull()
         ;
+    }
+
+    #[DataProvider('data')]
+    public function test(string $propertyName, object $testObject): void
+    {
+        /** @var RuleChain<object> $ruleChain */
+        $ruleChain = new RuleChain();
+        $property = new Property(
+            new UnexpectedValueException(),
+            $ruleChain,
+            new Validated($testObject),
+            'object',
+            $propertyName,
+        );
+
+        self::assertSame('value', $property->nullable());
+    }
+
+    /**
+     * @return array<array<mixed>>
+     */
+    public static function data(): array
+    {
+        return [
+            ['test', (object) ['test' => 'value']],
+            ['1', (object) ['1' => 'value']],
+            ['1', (object) [1 => 'value']],
+        ];
     }
 }
