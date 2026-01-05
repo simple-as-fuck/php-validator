@@ -227,6 +227,7 @@ abstract class StringRule extends Rule
             $this->valueName(),
             $format,
             $timeZone,
+            $strictTimeZone,
         );
     }
 
