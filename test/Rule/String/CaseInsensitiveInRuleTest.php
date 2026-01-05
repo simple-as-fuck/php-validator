@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
@@ -11,10 +12,9 @@ use SimpleAsFuck\Validator\Rule\String\CaseInsensitiveInRule;
 final class CaseInsensitiveInRuleTest extends TestCase
 {
     /**
-     * @dataProvider data
-     *
      * @param non-empty-array<string> $values
      */
+    #[DataProvider('data')]
     public function test(?string $expectedValue, ?string $expectedExceptionMessage, string $value, array $values): void
     {
         if ($expectedExceptionMessage !== null) {

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
@@ -9,9 +10,7 @@ use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\ArrayRule\ArrayOfString;
 use SimpleAsFuck\Validator\Rule\ArrayRule\StringTypedKey;
 
-/**
- * @covers \SimpleAsFuck\Validator\Rule\ArrayRule\ArrayOfString
- */
+#[CoversClass(ArrayOfString::class)]
 final class ArrayOfStringTest extends TestCase
 {
     public function testKey(): void

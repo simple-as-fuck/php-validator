@@ -2,27 +2,25 @@
 
 declare(strict_types=1);
 
-
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
 
-/**
- * @covers \SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime
- */
+#[CoversClass(ParseDateTime::class)]
 final class ParseDateTimeTest extends TestCase
 {
     /**
-     * @dataProvider dataProvider
-     *
      * @param non-empty-string $expectedDateTime
      * @param non-empty-string $expectedFormat
      * @param non-empty-string $format
      * @param class-string<\DateTimeInterface> $dateTimeClass
      * @param non-empty-string|null $timezone
      */
+    #[DataProvider('dataProvider')]
     public function test(string $expectedDateTime, string $expectedFormat, string $input, string $format, string $dateTimeClass, ?string $timezone): void
     {
         /** @var RuleChain<string> $ruleChain */

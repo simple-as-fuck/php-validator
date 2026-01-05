@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
@@ -11,9 +12,7 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
 use SimpleAsFuck\Validator\Rule\Object\Property;
 
-/**
- * @covers \SimpleAsFuck\Validator\Rule\Object\Property
- */
+#[CoversClass(Property::class)]
 final class PropertyTest extends TestCase
 {
     public function testCustomException(): void

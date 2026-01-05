@@ -2,23 +2,22 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\String\StringRule;
 
-/**
- * @covers \SimpleAsFuck\Validator\Rule\String\StringRule
- */
+#[CoversClass(StringRule::class)]
 final class StringRuleTest extends TestCase
 {
     /**
-     * @dataProvider dataProviderHttpsUrl
-     *
      * @param non-empty-string|null $expectedValue
      * @param non-empty-string|null $expectedExceptionMessage
      */
+    #[DataProvider('dataProviderHttpsUrl')]
     public function testHttpsUrl(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value');
@@ -59,11 +58,10 @@ final class StringRuleTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderHttpUrl
-     *
      * @param non-empty-string|null $expectedValue
      * @param non-empty-string|null $expectedExceptionMessage
      */
+    #[DataProvider('dataProviderHttpUrl')]
     public function testHttpUrl(?string $expectedValue, ?string $expectedExceptionMessage, mixed $value, bool $failAsNull): void
     {
         $rule = new StringRule(new UnexpectedValueException(), new RuleChain(), new Validated($value), 'value');

@@ -2,20 +2,18 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\Numeric\ParseNumeric;
 
-/**
- * @covers \SimpleAsFuck\Validator\Rule\Numeric\ParseNumeric
- */
+#[CoversClass(ParseNumeric::class)]
 final class ParseNumericTest extends TestCase
 {
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function test(string $expectedOutput, ?string $expectedErrorMessage, string $input): void
     {
         /** @var RuleChain<string> $ruleChain */

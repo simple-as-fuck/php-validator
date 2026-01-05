@@ -27,7 +27,7 @@ final class Enum extends Rule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        readonly private string $enumClass,
+        private readonly string $enumClass,
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }

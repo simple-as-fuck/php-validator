@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 
-/**
- * @covers \SimpleAsFuck\Validator\Rule\Url\ParseUrl
- */
+#[CoversClass(ParseUrl::class)]
 final class ParseUrlTest extends TestCase
 {
-    /**
-     * @dataProvider dataProviderPort
-     */
+    #[DataProvider('dataProviderPort')]
     public function testPort(?int $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
         $rule = ParseUrl::make($value);
@@ -42,9 +40,7 @@ final class ParseUrlTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderHost
-     */
+    #[DataProvider('dataProviderHost')]
     public function testHost(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
         $rule = ParseUrl::make($value);
@@ -74,9 +70,7 @@ final class ParseUrlTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderPass
-     */
+    #[DataProvider('dataProviderPass')]
     public function testPass(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
         $rule = ParseUrl::make($value);
@@ -106,9 +100,7 @@ final class ParseUrlTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderFragment
-     */
+    #[DataProvider('dataProviderFragment')]
     public function testFragment(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
         $rule = ParseUrl::make($value);
@@ -138,9 +130,7 @@ final class ParseUrlTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderUser
-     */
+    #[DataProvider('dataProviderUser')]
     public function testUser(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
         $rule = ParseUrl::make($value);
@@ -170,9 +160,7 @@ final class ParseUrlTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderQuery
-     */
+    #[DataProvider('dataProviderQuery')]
     public function testQuery(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
         $rule = ParseUrl::make($value);
@@ -204,9 +192,7 @@ final class ParseUrlTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderScheme
-     */
+    #[DataProvider('dataProviderScheme')]
     public function testScheme(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
         $rule = ParseUrl::make($value);
@@ -236,9 +222,7 @@ final class ParseUrlTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderPath
-     */
+    #[DataProvider('dataProviderPath')]
     public function testPath(?string $expectedValue, ?string $expectedExceptionMessage, string $value, bool $failAsNull): void
     {
         $rule = ParseUrl::make($value);

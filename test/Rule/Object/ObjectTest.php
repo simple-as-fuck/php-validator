@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
 
 final class ObjectTest extends TestCase
 {
-    /**
-     * @dataProvider dataEmptyAsNull
-     */
+    #[DataProvider('dataEmptyAsNull')]
     public function testEmptyAsNull(mixed $expectedValue, mixed $object): void
     {
         $rule = ObjectRule::make($object, emptyAsNull: true);
