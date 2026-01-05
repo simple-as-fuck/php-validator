@@ -9,6 +9,7 @@ use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 
 /**
+ * @deprecated will be removed
  * @template TIn
  * @template TOut
  * @extends Rule<TIn, TOut>
