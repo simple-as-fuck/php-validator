@@ -31,6 +31,7 @@ final class DateTime extends Rule
         string $valueName,
         private readonly string $format,
         ?string $timeZone = null,
+        private readonly bool $strictTimeZone = false,
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
@@ -49,6 +50,12 @@ final class DateTime extends Rule
         }
 
         if ($this->timeZone !== null) {
+            if ($this->strictTimeZone) {
+                if ($this->timeZone->getName() !== $dateTime->getTimezone()->getName()) {
+                    throw new ValueMust('be date time in format: \''.$this->format.'\' with time zone name: \''.$this->timeZone->getName(). '\' example: \''.(new \DateTimeImmutable('now', $this->timeZone))->format($this->format).'\'');
+                }
+            }
+
             $dateTime->setTimezone($this->timeZone);
         }
 

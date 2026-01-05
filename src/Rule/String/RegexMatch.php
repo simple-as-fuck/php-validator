@@ -48,11 +48,25 @@ final class RegexMatch extends ForwardRule
      * @param non-empty-string $format
      * @param class-string<TDateTime> $dateTimeClass
      * @param non-empty-string|null $timeZone
+     * @param bool $strictTimeZone true will force timezone name, to prevent timezone conversion
      * @return ParseDateTime<TDateTime>
      */
-    public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class, ?string $timeZone = null): ParseDateTime
-    {
-        return new ParseDateTime($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $format, $dateTimeClass, $timeZone);
+    public function parseDateTime(
+        string $format,
+        string $dateTimeClass = \DateTimeImmutable::class,
+        ?string $timeZone = null,
+        bool $strictTimeZone = false,
+    ): ParseDateTime {
+        return new ParseDateTime(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            $format,
+            $dateTimeClass,
+            $timeZone,
+            $strictTimeZone,
+        );
     }
 
     public function notEmpty(bool $emptyAsNull = false): NotEmpty

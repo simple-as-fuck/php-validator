@@ -28,13 +28,29 @@ final class ParseDateTime extends Rule
      * @param class-string<MakeTDateTime> $dateTimeClass
      * @param non-empty-string $valueName
      * @param non-empty-string|null $timeZone
+     * @param bool $strictTimeZone true will force timezone name, to prevent timezone conversion
      * @return ParseDateTime<MakeTDateTime>
      */
-    public static function make(?string $value, string $format, string $dateTimeClass, string $valueName = 'variable', ?string $timeZone = null): ParseDateTime
-    {
+    public static function make(
+        ?string $value,
+        string $format,
+        string $dateTimeClass,
+        string $valueName = 'variable',
+        ?string $timeZone = null,
+        bool $strictTimeZone = false,
+    ): ParseDateTime {
         /** @var RuleChain<string> $ruleChain */
         $ruleChain = new RuleChain();
-        return new ParseDateTime(new UnexpectedValueException(), $ruleChain, new Validated($value), $valueName, $format, $dateTimeClass, $timeZone);
+        return new ParseDateTime(
+            new UnexpectedValueException(),
+            $ruleChain,
+            new Validated($value),
+            $valueName,
+            $format,
+            $dateTimeClass,
+            $timeZone,
+            $strictTimeZone,
+        );
     }
 
     /**
@@ -52,7 +68,8 @@ final class ParseDateTime extends Rule
         string $valueName,
         private readonly string $format,
         private readonly string $dateTimeClass,
-        ?string $timeZone = null
+        ?string $timeZone = null,
+        private readonly bool $strictTimeZone = false,
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
 
@@ -149,6 +166,12 @@ final class ParseDateTime extends Rule
         }
 
         if ($this->timeZone !== null) {
+            if ($this->strictTimeZone) {
+                if ($this->timeZone->getName() !== $dateTime->getTimezone()->getName()) {
+                    throw new ValueMust('be date time in format: \''.$this->format.'\' with time zone name: \''.$this->timeZone->getName(). '\' example: \''.(new \DateTimeImmutable('now', $this->timeZone))->format($this->format).'\'');
+                }
+            }
+
             $dateTime->setTimezone($this->timeZone);
         }
 

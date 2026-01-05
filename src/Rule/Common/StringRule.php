@@ -212,10 +212,14 @@ abstract class StringRule extends Rule
     /**
      * @param non-empty-string $format
      * @param non-empty-string|null $timeZone
+     * @param bool $strictTimeZone true will force timezone name, to prevent timezone conversion
      * @return Rule<string, non-empty-string>
      */
-    public function dateTime(string $format, ?string $timeZone = null): Rule
-    {
+    public function dateTime(
+        string $format,
+        ?string $timeZone = null,
+        bool $strictTimeZone = false,
+    ): Rule {
         return new DateTime(
             $this->exceptionFactory,
             $this->ruleChain(),
@@ -231,11 +235,25 @@ abstract class StringRule extends Rule
      * @param non-empty-string $format
      * @param class-string<TDateTime> $dateTimeClass
      * @param non-empty-string|null $timeZone
+     * @param bool $strictTimeZone true will force timezone name, to prevent timezone conversion
      * @return ParseDateTime<TDateTime>
      */
-    public function parseDateTime(string $format, string $dateTimeClass = \DateTimeImmutable::class, ?string $timeZone = null): ParseDateTime
-    {
-        return new ParseDateTime($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName(), $format, $dateTimeClass, $timeZone);
+    public function parseDateTime(
+        string $format,
+        string $dateTimeClass = \DateTimeImmutable::class,
+        ?string $timeZone = null,
+        bool $strictTimeZone = false,
+    ): ParseDateTime {
+        return new ParseDateTime(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName(),
+            $format,
+            $dateTimeClass,
+            $timeZone,
+            $strictTimeZone,
+        );
     }
 
     /**
