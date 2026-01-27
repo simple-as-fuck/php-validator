@@ -9,6 +9,9 @@ use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
+use SimpleAsFuck\Validator\Rule\Custom\CallableRule;
+use SimpleAsFuck\Validator\Rule\Custom\CustomRule;
+use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
 
 /**
  * @extends \SimpleAsFuck\Validator\Rule\Common\StringRule<mixed>
@@ -27,6 +30,28 @@ final class StringRule extends \SimpleAsFuck\Validator\Rule\Common\StringRule
             $valueName,
             $sensitiveValue,
         );
+    }
+
+    /**
+     * @todo 0.8 move to abstract StringRule
+     * @template TCustomOut
+     * @param UserDefinedRule<string, TCustomOut> $rule
+     * @return CustomRule<string, TCustomOut>
+     */
+    public function custom(UserDefinedRule $rule): CustomRule
+    {
+        return new CustomRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName(), $rule);
+    }
+
+    /**
+     * @todo 0.8 move to abstract StringRule
+     * @template TCallableOut
+     * @param callable(string): TCallableOut $callable
+     * @return CallableRule<string, TCallableOut>
+     */
+    public function callable(callable $callable): CallableRule
+    {
+        return new CallableRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName(), $callable);
     }
 
     /**
