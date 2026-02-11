@@ -40,7 +40,6 @@ final class Properties extends Rule
         $value = \get_object_vars($value);
         $result = [];
         foreach ($value as $propertyName => $property) {
-            /** @phpstan-ignore-next-line cast.useless */
             $propertyName = (string) $propertyName;
             $result[$propertyName] = ($this->callable)(new Property(
                 $this->exceptionFactory,
