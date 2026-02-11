@@ -51,7 +51,7 @@ abstract class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName,
+            $this->valueName(),
             $stringLength,
             $number,
             $stringLength->convertedName()
@@ -70,7 +70,7 @@ abstract class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName,
+            $this->valueName(),
             new CharacterCount($encoding),
             $number,
             'number of ' . $encoding . ' encoded chars'
@@ -91,7 +91,7 @@ abstract class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName,
+            $this->valueName(),
             $stringLength,
             /** @phpstan-ignore-next-line */
             new CastString(),
@@ -112,7 +112,7 @@ abstract class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName,
+            $this->valueName(),
             new CharacterCount($encoding),
             /** @phpstan-ignore-next-line */
             new CastString(),
@@ -134,7 +134,7 @@ abstract class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName,
+            $this->valueName(),
             $stringLength,
             new CastString(),
             $max,
@@ -153,7 +153,7 @@ abstract class StringRule extends Rule
             $this->exceptionFactory,
             $this->ruleChain(),
             $this->validated,
-            $this->valueName,
+            $this->valueName(),
             new CharacterCount($encoding),
             new CastString(),
             $max,
