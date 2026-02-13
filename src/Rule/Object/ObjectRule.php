@@ -81,6 +81,21 @@ final class ObjectRule extends Rule
     }
 
     /**
+     * @param non-empty-array<non-empty-string> $names
+     */
+    public function nestedProperty(array $names): Property
+    {
+        $propertyRule = null;
+        $objectRule = $this;
+        foreach ($names as $name) {
+            $propertyRule = $objectRule->property($name);
+            $objectRule = $propertyRule->object();
+        }
+
+        return $propertyRule;
+    }
+
+    /**
      * @template Tout
      * @param callable(Property): Tout $callable
      * @return Properties<Tout>

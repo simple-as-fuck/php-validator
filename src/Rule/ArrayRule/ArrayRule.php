@@ -32,6 +32,21 @@ final class ArrayRule extends Rule
     }
 
     /**
+     * @param non-empty-array<array-key> $keys
+     */
+    public function nestedKey(array $keys): TypedKey
+    {
+        $keyRule = null;
+        $arrayRule = $this;
+        foreach ($keys as $key) {
+            $keyRule = $arrayRule->key($key);
+            $arrayRule = $keyRule->array();
+        }
+
+        return $keyRule;
+    }
+
+    /**
      * @template TMapped
      * @param callable(TypedKey): TMapped $callable
      * @return Collection<TMapped>

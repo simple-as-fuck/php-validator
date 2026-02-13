@@ -28,10 +28,25 @@ final class ArrayOfString extends Rule
         $this->arrayRule = new ArrayRule($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
-    public function key(string $key): StringTypedKey
+    public function key(int|string $key): StringTypedKey
     {
         $typedKey = $this->arrayRule->key($key);
         return new StringTypedKey($this->exceptionFactory, $this->ruleChain(), $this->validated, $typedKey->valueName, $typedKey);
+    }
+
+    /**
+     * @param non-empty-array<array-key> $keys
+     */
+    public function nestedKey(array $keys): StringTypedKey
+    {
+        $keyRule = null;
+        $arrayRule = $this;
+        foreach ($keys as $key) {
+            $keyRule = $arrayRule->key($key);
+            $arrayRule = $keyRule->array();
+        }
+
+        return $keyRule;
     }
 
     /**
