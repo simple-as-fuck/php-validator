@@ -1,5 +1,6 @@
 {
     "name": "simple-as-fuck/php-validator",
+    "license": "Unlicense",
     "require": {
         "php": "^8.2",
         "ext-mbstring": "*",
