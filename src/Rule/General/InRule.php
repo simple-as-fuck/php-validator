@@ -11,6 +11,7 @@ use SimpleAsFuck\Validator\Model\ValueMust;
 
 /**
  * @template Tin
+ * @todo 0.8 Tout use only stringable values
  * @template Tout
  * @extends Rule<Tin, Tout>
  */
@@ -39,7 +40,8 @@ class InRule extends Rule
     protected function validate($value)
     {
         if (!in_array($value, $this->values, true)) {
-            throw new ValueMust('be in values list: '.implode(', ', $this->values));
+            /** @todo 0.8 Tout will use only stringable values */
+            throw new ValueMust('be in values list: '.implode(', ', array_filter($this->values, static fn ($v) => is_scalar($v))));
         }
 
         return $value;
