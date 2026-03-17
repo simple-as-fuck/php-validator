@@ -32,6 +32,7 @@ use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 use SimpleAsFuck\Validator\Rule\Url\UrlRule;
 
 /**
+ * @todo 0.8 add notIn
  * @template Tin
  * @extends Rule<Tin, string>
  */
