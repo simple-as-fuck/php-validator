@@ -6,6 +6,26 @@ on:
       - "**"
 
 jobs:
+    php85:
+      name: "php 8.5"
+      runs-on: ubuntu-latest
+      container: "nofutur3/php-tests:8.5"
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+
+        - name: Install tools
+          run: phive install --trust-gpg-keys E82B2FB314E9906E,4AA394086372C20A
+
+        - name: Install dependencies
+          run: composer update --no-interaction --prefer-lowest
+
+        - name: Run static analysis
+          run: vendor/bin/phpstan analyse --no-progress --memory-limit=-1
+
+        - name: Run tests
+          run: tools/phpunit test/ --bootstrap vendor/autoload.php
+
     php84:
       name: "php 8.4"
       runs-on: ubuntu-latest
