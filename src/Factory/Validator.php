@@ -74,7 +74,7 @@ final class Validator
             public function key(): ?int
             {
                 if ($this->valid()) {
-                    return $this->lineNumber ?? null;
+                    return $this->lineNumber;
                 }
 
                 return null;
