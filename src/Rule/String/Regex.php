@@ -21,7 +21,7 @@ final class Regex extends Rule
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-string $pattern
-     * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags
+     * @param int-mask-of<PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL> $flags
      */
     public function __construct(
         Exception $exceptionFactory,

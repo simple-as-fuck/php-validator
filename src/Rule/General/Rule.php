@@ -18,16 +18,21 @@ use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
  */
 abstract class Rule
 {
+    /** @var Validated<mixed>|null */
+    private ?Validated $cache = null;
+
     /**
+     * @todo 0.8 remove $useCache and add cache() method
      * @param RuleChain<covariant TIn> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      */
     public function __construct(
         protected readonly Exception $exceptionFactory,
-        private readonly RuleChain $ruleChain,
-        protected readonly Validated $validated,
-        protected readonly string $valueName
+        private RuleChain $ruleChain,
+        protected Validated $validated,
+        protected readonly string $valueName,
+        private readonly bool $useCache = false,
     ) {
     }
 
@@ -73,9 +78,9 @@ abstract class Rule
 
         try {
             foreach ($this->ruleChain->rules as $rule) {
-                $value = $this->validateRule($rule, $value);
+                $value = self::validateRule($rule, $value, $this->exceptionFactory);
             }
-            return $this->validateRule($this, $value);
+            return self::validateRule($this, $value, $this->exceptionFactory);
         } catch (\Throwable $exception) {
             if ($failAsNull) {
                 return null;
@@ -104,16 +109,27 @@ abstract class Rule
      * @param Rule<mixed, TRuleOut> $rule
      * @return TRuleOut|null
      */
-    private function validateRule(Rule $rule, mixed &$value): mixed
+    private static function validateRule(Rule $rule, mixed &$value, Exception $exceptionFactory): mixed
     {
         if ($value === null) {
             return null;
         }
 
+        if ($rule->cache !== null) {
+            return $rule->cache->value;
+        }
+
         try {
+            if ($rule->useCache) {
+                $rule->cache = new Validated($rule->validate($value));
+                $rule->validated = $rule->cache;
+                $rule->ruleChain = new RuleChain();
+                return $rule->cache->value;
+            }
+
             return $rule->validate($value);
         } catch (ValueMust $exception) {
-            throw $this->exceptionFactory->create($rule->valueName.' must '.$exception->getMessage());
+            throw $exceptionFactory->create($rule->valueName.' must '.$exception->getMessage());
         }
     }
 }

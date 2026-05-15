@@ -19,6 +19,7 @@ final class Validator
     }
 
     /**
+     * @todo 0.8 return ParseJson instead of Rules
      * @param non-empty-string $stringName
      * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
      */

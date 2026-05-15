@@ -19,14 +19,19 @@ final class ParseRegex extends Rule
     /**
      * @param non-empty-string $pattern cool example: '/(?P<matchKey>.*)/'
      * @param string $value
-     * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags
+     * @param int-mask-of<PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL> $flags
      * @param non-empty-string $valueName
      */
-    public static function make(string $pattern, string $value, int $flags = 0, string $valueName = 'variable'): ParseRegex
-    {
+    public static function make(
+        string $pattern,
+        string $value,
+        int $flags = 0,
+        string $valueName = 'variable',
+        bool $useCache = false,
+    ): ParseRegex {
         /** @var RuleChain<string> $ruleChain */
         $ruleChain = new RuleChain();
-        return new ParseRegex(new UnexpectedValueException(), $ruleChain, new Validated($value), $valueName, $pattern, $flags);
+        return new ParseRegex(new UnexpectedValueException(), $ruleChain, new Validated($value), $valueName, $pattern, $flags, $useCache);
     }
 
     /**
@@ -34,7 +39,7 @@ final class ParseRegex extends Rule
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param non-empty-string $pattern
-     * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags
+     * @param int-mask-of<PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL> $flags
      */
     public function __construct(
         Exception $exceptionFactory,
@@ -42,9 +47,10 @@ final class ParseRegex extends Rule
         Validated $validated,
         string $valueName,
         private readonly string $pattern,
-        private readonly int $flags
+        private readonly int $flags,
+        bool $useCache = false,
     ) {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $useCache);
     }
 
     /**

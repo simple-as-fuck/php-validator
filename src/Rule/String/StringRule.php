@@ -55,6 +55,23 @@ final class StringRule extends \SimpleAsFuck\Validator\Rule\Common\StringRule
     }
 
     /**
+     * @todo 0.8 move to abstract StringRule
+     */
+    public function json(): Json
+    {
+        return new Json($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
+    }
+
+    /**
+     * @todo 0.8 move to abstract StringRule
+     * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
+     */
+    public function parseJson(bool $allowInvalidJson = false, int $jsonDecodeFlags = 0, bool $useCache = false): ParseJson
+    {
+        return new ParseJson($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $allowInvalidJson, $jsonDecodeFlags, $useCache);
+    }
+
+    /**
      * @param RuleChain<covariant mixed> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName

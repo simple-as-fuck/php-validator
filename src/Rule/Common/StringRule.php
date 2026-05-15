@@ -344,7 +344,7 @@ abstract class StringRule extends Rule
 
     /**
      * @param non-empty-string $pattern cool example: '/.+/'
-     * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags
+     * @param int-mask-of<PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL> $flags
      * @return Regex<string>
      */
     public function regex(string $pattern, int $flags = 0): Regex
@@ -353,8 +353,9 @@ abstract class StringRule extends Rule
     }
 
     /**
+     * @todo 0.8 add $useCache parameter
      * @param non-empty-string $pattern cool example: '/(?P<matchKey>.*)/'
-     * @param PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL|768|0 $flags
+     * @param int-mask-of<PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL> $flags
      */
     public function parseRegex(string $pattern, int $flags = 0): ParseRegex
     {
