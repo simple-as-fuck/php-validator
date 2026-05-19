@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleAsFuck\Validator\Rule\String;
 
 use SimpleAsFuck\Validator\Factory\Exception;
+use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
@@ -21,6 +22,30 @@ use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
 final class ParseJson extends Rule
 {
     /**
+     * @param non-empty-string $valueName
+     * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
+     */
+    public static function make(
+        string $value,
+        string $valueName = 'string',
+        Exception $exceptionFactory = new UnexpectedValueException(),
+        bool $allowInvalidJson = false,
+        bool $emptyStringAsNull = false,
+        int $jsonDecodeFlags = 0,
+    ): ParseJson {
+        return new ParseJson(
+            $exceptionFactory,
+            /** @phpstan-ignore-next-line  */
+            new RuleChain(),
+            new Validated($value),
+            $valueName,
+            allowInvalidJson: $allowInvalidJson,
+            jsonDecodeFlags: $jsonDecodeFlags,
+            emptyStringAsNull: $emptyStringAsNull,
+        );
+    }
+
+    /**
      * @param RuleChain<covariant string> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
@@ -34,6 +59,7 @@ final class ParseJson extends Rule
         private readonly bool $allowInvalidJson = false,
         private readonly int $jsonDecodeFlags = 0,
         bool $useCache = false,
+        private readonly bool $emptyStringAsNull = false,
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $useCache);
     }
@@ -73,6 +99,10 @@ final class ParseJson extends Rule
      */
     protected function validate($value): mixed
     {
+        if ($this->emptyStringAsNull && $value === '') {
+            return null;
+        }
+
         $content = \json_decode($value, flags: $this->jsonDecodeFlags);
         if (\json_last_error() !== JSON_ERROR_NONE) {
             if ($this->allowInvalidJson) {

@@ -64,11 +64,16 @@ final class StringRule extends \SimpleAsFuck\Validator\Rule\Common\StringRule
 
     /**
      * @todo 0.8 move to abstract StringRule
+     * @todo 0.8 $emptyStringAsNull move to second parameter
      * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
      */
-    public function parseJson(bool $allowInvalidJson = false, int $jsonDecodeFlags = 0, bool $useCache = false): ParseJson
-    {
-        return new ParseJson($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $allowInvalidJson, $jsonDecodeFlags, $useCache);
+    public function parseJson(
+        bool $allowInvalidJson = false,
+        int $jsonDecodeFlags = 0,
+        bool $useCache = false,
+        bool $emptyStringAsNull = false,
+    ): ParseJson {
+        return new ParseJson($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $allowInvalidJson, $jsonDecodeFlags, $useCache, $emptyStringAsNull);
     }
 
     /**
