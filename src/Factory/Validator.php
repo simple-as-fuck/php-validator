@@ -38,7 +38,7 @@ final class Validator
      * https://jsonlines.org/
      * @param non-empty-string $streamName
      * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
-     * @return \Iterator<int, Rules>
+     * @return \Iterator<int, ParseJson>
      */
     public static function jsonl(
         StreamInterface $stream,
