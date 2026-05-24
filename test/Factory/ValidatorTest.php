@@ -14,9 +14,10 @@ final class ValidatorTest extends TestCase
     #[DataProvider('dataJsonError')]
     public function testJsonError(string $expectedErrorMessage, string $invalidContent): void
     {
+        $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage($expectedErrorMessage);
 
-        Validator::json($invalidContent, 'Test string');
+        Validator::json($invalidContent, 'Test string')->nullable();
     }
 
     /**

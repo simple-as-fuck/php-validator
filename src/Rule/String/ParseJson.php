@@ -40,8 +40,8 @@ final class ParseJson extends Rule
             new Validated($value),
             $valueName,
             allowInvalidJson: $allowInvalidJson,
-            jsonDecodeFlags: $jsonDecodeFlags,
             emptyStringAsNull: $emptyStringAsNull,
+            jsonDecodeFlags: $jsonDecodeFlags,
         );
     }
 
@@ -57,11 +57,10 @@ final class ParseJson extends Rule
         Validated $validated,
         $valueName,
         private readonly bool $allowInvalidJson = false,
-        private readonly int $jsonDecodeFlags = 0,
-        bool $useCache = false,
         private readonly bool $emptyStringAsNull = false,
+        private readonly int $jsonDecodeFlags = 0,
     ) {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $useCache);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
     public function int(): IntRule

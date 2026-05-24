@@ -7,6 +7,9 @@ namespace SimpleAsFuck\Validator\Rule\Common;
 use Egulias\EmailValidator\Validation\DNSCheckValidation;
 use Egulias\EmailValidator\Validation\EmailValidation;
 use Egulias\EmailValidator\Validation\RFCValidation;
+use SimpleAsFuck\Validator\Rule\Custom\CallableRule;
+use SimpleAsFuck\Validator\Rule\Custom\CustomRule;
+use SimpleAsFuck\Validator\Rule\Custom\UserDefinedRule;
 use SimpleAsFuck\Validator\Rule\DateTime\DateTime;
 use SimpleAsFuck\Validator\Rule\DateTime\ParseDateTime;
 use SimpleAsFuck\Validator\Rule\Email\EmailRule;
@@ -19,12 +22,14 @@ use SimpleAsFuck\Validator\Rule\General\Same;
 use SimpleAsFuck\Validator\Rule\Numeric\ParseNumeric;
 use SimpleAsFuck\Validator\Rule\String\CaseInsensitiveInRule;
 use SimpleAsFuck\Validator\Rule\String\CharacterCount;
+use SimpleAsFuck\Validator\Rule\String\Json;
 use SimpleAsFuck\Validator\Rule\String\MinLength;
 use SimpleAsFuck\Validator\Rule\String\NotEmpty;
 use SimpleAsFuck\Validator\Rule\String\ParseBool;
 use SimpleAsFuck\Validator\Rule\String\ParseFloat;
 use SimpleAsFuck\Validator\Rule\String\ParseInt;
 use SimpleAsFuck\Validator\Rule\String\ParseIp;
+use SimpleAsFuck\Validator\Rule\String\ParseJson;
 use SimpleAsFuck\Validator\Rule\String\ParseRegex;
 use SimpleAsFuck\Validator\Rule\String\Regex;
 use SimpleAsFuck\Validator\Rule\String\StringLength;
@@ -32,12 +37,31 @@ use SimpleAsFuck\Validator\Rule\Url\ParseUrl;
 use SimpleAsFuck\Validator\Rule\Url\UrlRule;
 
 /**
- * @todo 0.8 add notIn
  * @template Tin
  * @extends Rule<Tin, string>
  */
 abstract class StringRule extends Rule
 {
+    /**
+     * @template TCustomOut
+     * @param UserDefinedRule<string, TCustomOut> $rule
+     * @return CustomRule<string, TCustomOut>
+     */
+    public function custom(UserDefinedRule $rule): CustomRule
+    {
+        return new CustomRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName(), $rule);
+    }
+
+    /**
+     * @template TCallableOut
+     * @param callable(string): TCallableOut $callable
+     * @return CallableRule<string, TCallableOut>
+     */
+    public function callable(callable $callable): CallableRule
+    {
+        return new CallableRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName(), $callable);
+    }
+
     /**
      * @param positive-int $number of bytes that string length can have
      * @param non-empty-string|null $measuredEncoding
@@ -353,7 +377,6 @@ abstract class StringRule extends Rule
     }
 
     /**
-     * @todo 0.8 add $useCache parameter
      * @param non-empty-string $pattern cool example: '/(?P<matchKey>.*)/'
      * @param int-mask-of<PREG_OFFSET_CAPTURE|PREG_UNMATCHED_AS_NULL> $flags
      */
@@ -391,6 +414,21 @@ abstract class StringRule extends Rule
             $this->validated,
             $this->valueName(),
             $values
+        );
+    }
+
+    /**
+     * @param array<string> $values
+     * @return Rule<string, string>
+     */
+    final public function notIn(array $values): Rule
+    {
+        return new NotIn(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName(),
+            $values,
         );
     }
 
@@ -436,6 +474,22 @@ abstract class StringRule extends Rule
     public function email(array $validations = [new RFCValidation(), new DNSCheckValidation()]): EmailRule
     {
         return new EmailRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName(), $validations);
+    }
+
+    public function json(): Json
+    {
+        return new Json($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName);
+    }
+
+    /**
+     * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
+     */
+    public function parseJson(
+        bool $allowInvalidJson = false,
+        bool $emptyStringAsNull = false,
+        int $jsonDecodeFlags = 0,
+    ): ParseJson {
+        return new ParseJson($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName, $allowInvalidJson, $emptyStringAsNull, $jsonDecodeFlags);
     }
 
     /**

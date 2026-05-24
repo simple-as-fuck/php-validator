@@ -27,11 +27,10 @@ final class ParseRegex extends Rule
         string $value,
         int $flags = 0,
         string $valueName = 'variable',
-        bool $useCache = false,
     ): ParseRegex {
         /** @var RuleChain<string> $ruleChain */
         $ruleChain = new RuleChain();
-        return new ParseRegex(new UnexpectedValueException(), $ruleChain, new Validated($value), $valueName, $pattern, $flags, $useCache);
+        return new ParseRegex(new UnexpectedValueException(), $ruleChain, new Validated($value), $valueName, $pattern, $flags);
     }
 
     /**
@@ -48,9 +47,8 @@ final class ParseRegex extends Rule
         string $valueName,
         private readonly string $pattern,
         private readonly int $flags,
-        bool $useCache = false,
     ) {
-        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName, $useCache);
+        parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
     /**

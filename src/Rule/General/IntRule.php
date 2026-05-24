@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleAsFuck\Validator\Rule\General;
 
+use SimpleAsFuck\Validator\Rule\Common\NotIn;
 use SimpleAsFuck\Validator\Rule\Enum\Enum;
 
 /**
@@ -67,6 +68,21 @@ abstract class IntRule extends Rule
     }
 
     /**
+     * @param array<int> $values
+     * @return Rule<int, int>
+     */
+    final public function notIn(array $values): Rule
+    {
+        return new NotIn(
+            $this->exceptionFactory,
+            $this->ruleChain(),
+            $this->validated,
+            $this->valueName,
+            $values,
+        );
+    }
+
+    /**
      * @template TEnum of \BackedEnum of int
      * @param class-string<TEnum> $enumClass
      * @return Rule<int, value-of<TEnum>>
@@ -100,7 +116,16 @@ abstract class IntRule extends Rule
      */
     final public function positive(): MinWithMax
     {
-        /** @phpstan-ignore-next-line */
+        /** @phpstan-ignore-next-line return.type */
         return $this->min(1);
+    }
+
+    /**
+     * @return Rule<int, non-zero-int>
+     */
+    final public function notZero(): Rule
+    {
+        /** @phpstan-ignore-next-line return.type */
+        return $this->notIn([0]);
     }
 }

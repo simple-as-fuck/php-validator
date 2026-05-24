@@ -7,6 +7,7 @@ namespace SimpleAsFuck\Validator\Factory;
 use Psr\Http\Message\StreamInterface;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Rule\General\Rules;
+use SimpleAsFuck\Validator\Rule\String\ParseJson;
 
 final class Validator
 {
@@ -19,7 +20,6 @@ final class Validator
     }
 
     /**
-     * @todo 0.8 return ParseJson instead of Rules
      * @param non-empty-string $stringName
      * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
      */
@@ -28,20 +28,10 @@ final class Validator
         string $stringName = 'string',
         Exception $exceptionFactory = new UnexpectedValueException(),
         bool $allowInvalidJson = false,
+        bool $emptyStringAsNull = false,
         int $jsonDecodeFlags = 0,
-    ): Rules {
-        $content = \json_decode($string, flags: $jsonDecodeFlags);
-        if (\json_last_error() !== JSON_ERROR_NONE) {
-            if ($allowInvalidJson) {
-                $content = null;
-            } else {
-                $truncated = strlen($string) > 200;
-                $logString = $truncated ? substr($string, 0, 200) : $string;
-                throw $exceptionFactory->create($stringName.' must be valid json (' . \json_last_error_msg() . '), invalid content: \''.$logString.'\''.($truncated ? ' (truncated)' : ''));
-            }
-        }
-
-        return new Rules($exceptionFactory, $stringName.' json', new Validated($content));
+    ): ParseJson {
+        return ParseJson::make($string, $stringName, $exceptionFactory, $allowInvalidJson, $emptyStringAsNull, $jsonDecodeFlags)->cache();
     }
 
     /**
@@ -55,18 +45,20 @@ final class Validator
         string $streamName = 'stream content',
         Exception $exceptionFactory = new UnexpectedValueException(),
         bool $allowInvalidJson = false,
+        bool $emptyStringAsNull = false,
         int $jsonDecodeFlags = 0,
     ): \Iterator {
-        return new class ($stream, $streamName, $exceptionFactory, $allowInvalidJson, $jsonDecodeFlags) implements \Iterator {
+        return new class ($stream, $streamName, $exceptionFactory, $allowInvalidJson, $emptyStringAsNull, $jsonDecodeFlags) implements \Iterator {
             private int $lineNumber = 0;
             private string $buffer = '';
-            private ?Rules $current = null;
+            private ?ParseJson $current = null;
 
             public function __construct(
                 private readonly StreamInterface $stream,
                 private readonly string $streamName,
                 private readonly Exception $exceptionFactory,
                 private readonly bool $allowInvalidJson,
+                private readonly bool $emptyStringAsNull,
                 private readonly int $jsonDecodeFlags,
             ) {
                 $this->fetch();
@@ -81,7 +73,7 @@ final class Validator
                 return null;
             }
 
-            public function current(): Rules
+            public function current(): ParseJson
             {
                 if ($this->valid()) {
                     return $this->current ?? throw $this->exceptionFactory->create($this->streamName . ' value ' . $this->lineNumber . ' is not valid stream');
@@ -147,6 +139,7 @@ final class Validator
                     $this->streamName . ' value ' . $this->lineNumber,
                     $this->exceptionFactory,
                     $this->allowInvalidJson,
+                    $this->emptyStringAsNull,
                     $this->jsonDecodeFlags,
                 );
             }

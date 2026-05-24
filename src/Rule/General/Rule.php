@@ -22,7 +22,6 @@ abstract class Rule
     private ?Validated $cache = null;
 
     /**
-     * @todo 0.8 remove $useCache and add cache() method
      * @param RuleChain<covariant TIn> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
@@ -32,7 +31,6 @@ abstract class Rule
         private RuleChain $ruleChain,
         protected Validated $validated,
         protected readonly string $valueName,
-        private readonly bool $useCache = false,
     ) {
     }
 
@@ -57,6 +55,18 @@ abstract class Rule
     }
 
     /**
+     * @return $this
+     */
+    final public function cache(): static
+    {
+        if ($this->cache !== null) {
+            throw new \LogicException('Rule is already cached');
+        }
+        $this->validateChain(failAsNull: true, useCache: true);
+        return $this;
+    }
+
+    /**
      * @return ($if is true ? TOut : TOut|null)
      */
     final public function notNull(bool $if = true): mixed
@@ -74,19 +84,7 @@ abstract class Rule
      */
     final public function nullable(bool $failAsNull = false): mixed
     {
-        $value = $this->validated->value;
-
-        try {
-            foreach ($this->ruleChain->rules as $rule) {
-                $value = self::validateRule($rule, $value, $this->exceptionFactory);
-            }
-            return self::validateRule($this, $value, $this->exceptionFactory);
-        } catch (\Throwable $exception) {
-            if ($failAsNull) {
-                return null;
-            }
-            throw $exception;
-        }
+        return $this->validateChain($failAsNull, false);
     }
 
     /**
@@ -105,11 +103,31 @@ abstract class Rule
     }
 
     /**
+     * @return TOut|null
+     */
+    final protected function validateChain(bool $failAsNull, bool $useCache): mixed
+    {
+        $value = $this->validated->value;
+
+        try {
+            foreach ($this->ruleChain->rules as $rule) {
+                $value = self::validateRule($rule, $value, $this->exceptionFactory, false);
+            }
+            return self::validateRule($this, $value, $this->exceptionFactory, $useCache);
+        } catch (\Throwable $exception) {
+            if ($failAsNull) {
+                return null;
+            }
+            throw $exception;
+        }
+    }
+
+    /**
      * @template TRuleOut
      * @param Rule<mixed, TRuleOut> $rule
      * @return TRuleOut|null
      */
-    private static function validateRule(Rule $rule, mixed &$value, Exception $exceptionFactory): mixed
+    private static function validateRule(Rule $rule, mixed &$value, Exception $exceptionFactory, bool $useCache): mixed
     {
         if ($value === null) {
             return null;
@@ -120,7 +138,7 @@ abstract class Rule
         }
 
         try {
-            if ($rule->useCache) {
+            if ($useCache) {
                 $rule->cache = new Validated($rule->validate($value));
                 $rule->validated = $rule->cache;
                 $rule->ruleChain = new RuleChain();
