@@ -87,6 +87,28 @@ $validValue = $rules->int()->notNull();
 
 ```
 
+## Validation rule caching
+
+You can cache result of validation rules by `cache` method.
+
+It can fix performance if validator work with complex data structure or call some parsing functions.
+
+```php
+$result = \SimpleAsFuck\Validator\Factory\Validator::make('some parsed string')
+    ->string()
+    ->parseRegex('/^(?P<some>.+) (?P<parsed>.+) .*/$')
+    // with cache regex parsing and previous rules are called only once
+    // even if validation continue in multiple new rule branches
+    ->cache()
+;
+
+// every match load data from parsed cache inside ParseRegex rule
+$result->match('some')->notNull();
+$result->match('parsed')->notNull();
+```
+
+Cache is turned off by default to reduce memory consumption.
+
 ## Customization
 
 ### User defined rule
