@@ -9,6 +9,7 @@ use SimpleAsFuck\Validator\Factory\UnexpectedValueException;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
 use SimpleAsFuck\Validator\Model\ValueMust;
+use SimpleAsFuck\Validator\Rule\ArrayRule\ArrayAssocRule;
 use SimpleAsFuck\Validator\Rule\ArrayRule\ArrayRule;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 use SimpleAsFuck\Validator\Rule\Numeric\BoolRule;
@@ -91,6 +92,11 @@ final class ParseJson extends Rule
     public function array(): ArrayRule
     {
         return new ArrayRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json');
+    }
+
+    public function arrayAssoc(): \SimpleAsFuck\Validator\Rule\Common\ArrayRule
+    {
+        return new ArrayAssocRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json');
     }
 
     /**
