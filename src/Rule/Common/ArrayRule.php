@@ -15,6 +15,9 @@ use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
  */
 abstract class ArrayRule extends Rule
 {
+    /**
+     * @todo 0.9 add $present parameter
+     */
     public function key(int|string $key): TypedKey
     {
         $valueName = $this->valueName;

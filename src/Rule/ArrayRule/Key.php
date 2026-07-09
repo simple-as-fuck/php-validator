@@ -7,6 +7,7 @@ namespace SimpleAsFuck\Validator\Rule\ArrayRule;
 use SimpleAsFuck\Validator\Factory\Exception;
 use SimpleAsFuck\Validator\Model\RuleChain;
 use SimpleAsFuck\Validator\Model\Validated;
+use SimpleAsFuck\Validator\Model\ValueMust;
 use SimpleAsFuck\Validator\Rule\General\Rule;
 
 /**
@@ -25,7 +26,8 @@ class Key extends Rule
         RuleChain $ruleChain,
         Validated $validated,
         string $valueName,
-        private readonly int|string $key
+        private readonly int|string $key,
+        private readonly bool $present = false,
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
@@ -36,6 +38,10 @@ class Key extends Rule
      */
     protected function validate($value)
     {
+        if ($this->present && ! \array_key_exists($this->key, $value)) {
+            throw new ValueMust('contain key: '.$this->key);
+        }
+
         return $value[$this->key] ?? null;
     }
 }

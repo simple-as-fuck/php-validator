@@ -101,7 +101,7 @@ final class Property extends Rule
      */
     protected function validate($value): mixed
     {
-        if ($this->present && !property_exists($value, $this->propertyName)) {
+        if ($this->present && ! \property_exists($value, $this->propertyName)) {
             throw new ValueMust('contain property: '.$this->propertyName);
         }
 
