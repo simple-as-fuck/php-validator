@@ -52,7 +52,7 @@ final class ParseNumeric extends Numeric
             throw new ValueMust('be parsable as number in decimal system'.($this->allowLeadingZero ? ' (leading zero allowed)' : ''));
         }
 
-        /** @var numeric-string $value */
+        /** @phpstan-ignore-next-line varTag.nativeType */
         return $value;
     }
 }

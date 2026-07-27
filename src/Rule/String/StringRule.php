@@ -18,7 +18,7 @@ final class StringRule extends \SimpleAsFuck\Validator\Rule\Common\StringRule
     /**
      * @param non-empty-string $valueName
      */
-    public static function make(mixed $value, string $valueName = 'variable', bool $sensitiveValue = false): StringRule
+    public static function make(mixed $value, string $valueName = 'variable', bool $sensitiveValue = false, bool $emptyAsNull = false): StringRule
     {
         return new StringRule(
             new UnexpectedValueException(),
@@ -26,6 +26,7 @@ final class StringRule extends \SimpleAsFuck\Validator\Rule\Common\StringRule
             new Validated($value),
             $valueName,
             $sensitiveValue,
+            $emptyAsNull,
         );
     }
 
@@ -41,6 +42,7 @@ final class StringRule extends \SimpleAsFuck\Validator\Rule\Common\StringRule
         Validated $validated,
         string $valueName,
         private readonly bool $sensitiveValue = false,
+        private readonly bool $emptyAsNull = false,
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
@@ -48,8 +50,12 @@ final class StringRule extends \SimpleAsFuck\Validator\Rule\Common\StringRule
     /**
      * @param mixed $value
      */
-    protected function validate($value): string
+    protected function validate($value): ?string
     {
+        if ($this->emptyAsNull && $value === '') {
+            return null;
+        }
+
         if (is_string($value)) {
             return $value;
         }

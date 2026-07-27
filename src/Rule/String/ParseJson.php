@@ -74,9 +74,9 @@ final class ParseJson extends Rule
         return new FloatRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json');
     }
 
-    public function string(bool $sensitiveValue = false): StringRule
+    public function string(bool $sensitiveValue = false, bool $emptyAsNull = false): StringRule
     {
-        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json', $sensitiveValue);
+        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json', $sensitiveValue, $emptyAsNull);
     }
 
     public function bool(): BoolRule

@@ -18,6 +18,7 @@ use SimpleAsFuck\Validator\Rule\General\Rule;
 final class NotEmpty extends Rule
 {
     /**
+     * @todo $emptyAsNull mark as deprecated by PHP attribute in version with minimum PHP 8.4
      * @param RuleChain<covariant string> $ruleChain
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
