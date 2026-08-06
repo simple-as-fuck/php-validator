@@ -111,7 +111,13 @@ abstract class Rule
 
         try {
             foreach ($this->ruleChain->rules as $rule) {
+                if ($value === null) {
+                    return null;
+                }
                 $value = self::validateRule($rule, $value, $this->exceptionFactory, false);
+            }
+            if ($value === null) {
+                return null;
             }
             return self::validateRule($this, $value, $this->exceptionFactory, $useCache);
         } catch (\Throwable $exception) {
@@ -129,10 +135,6 @@ abstract class Rule
      */
     private static function validateRule(Rule $rule, mixed &$value, Exception $exceptionFactory, bool $useCache): mixed
     {
-        if ($value === null) {
-            return null;
-        }
-
         if ($rule->cache !== null) {
             return $rule->cache->value;
         }
