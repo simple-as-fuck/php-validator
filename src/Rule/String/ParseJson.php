@@ -23,6 +23,7 @@ use SimpleAsFuck\Validator\Rule\Object\ObjectRule;
 final class ParseJson extends Rule
 {
     /**
+     * @deprecated use SimpleAsFuck\Validator\Factory\Json::make
      * @param non-empty-string $valueName
      * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
      */
@@ -51,6 +52,7 @@ final class ParseJson extends Rule
      * @param Validated<covariant mixed> $validated
      * @param non-empty-string $valueName
      * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
+     * @param non-empty-string $parsedValueName
      */
     public function __construct(
         Exception $exceptionFactory,
@@ -60,43 +62,44 @@ final class ParseJson extends Rule
         private readonly bool $allowInvalidJson = false,
         private readonly bool $emptyStringAsNull = false,
         private readonly int $jsonDecodeFlags = 0,
+        private readonly string $parsedValueName = 'json',
     ) {
         parent::__construct($exceptionFactory, $ruleChain, $validated, $valueName);
     }
 
     public function int(): IntRule
     {
-        return new IntRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json');
+        return new IntRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' '.$this->parsedValueName);
     }
 
     public function float(): FloatRule
     {
-        return new FloatRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json');
+        return new FloatRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' '.$this->parsedValueName);
     }
 
     public function string(bool $sensitiveValue = false, bool $emptyAsNull = false): StringRule
     {
-        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json', $sensitiveValue, $emptyAsNull);
+        return new StringRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' '.$this->parsedValueName, $sensitiveValue, $emptyAsNull);
     }
 
     public function bool(): BoolRule
     {
-        return new BoolRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json');
+        return new BoolRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' '.$this->parsedValueName);
     }
 
     public function object(): ObjectRule
     {
-        return new ObjectRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json');
+        return new ObjectRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' '.$this->parsedValueName);
     }
 
     public function array(): ArrayRule
     {
-        return new ArrayRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json');
+        return new ArrayRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' '.$this->parsedValueName);
     }
 
     public function arrayAssoc(): \SimpleAsFuck\Validator\Rule\Common\ArrayRule
     {
-        return new ArrayAssocRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' json');
+        return new ArrayAssocRule($this->exceptionFactory, $this->ruleChain(), $this->validated, $this->valueName.' '.$this->parsedValueName);
     }
 
     /**

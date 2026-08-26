@@ -6,7 +6,8 @@
         "ext-mbstring": "*",
         "ext-json": "*",
         "egulias/email-validator": "^4.0",
-        "psr/http-message": "^2.0"
+        "psr/http-message": "^2.0",
+        "halaxa/json-machine": "^1.2"
     },
     "autoload": {
         "psr-4": {

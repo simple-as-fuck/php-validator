@@ -20,6 +20,7 @@ final class Validator
     }
 
     /**
+     * @deprecated use SimpleAsFuck\Validator\Factory\Json::make
      * @param non-empty-string $stringName
      * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
      */
@@ -31,11 +32,12 @@ final class Validator
         bool $emptyStringAsNull = false,
         int $jsonDecodeFlags = 0,
     ): ParseJson {
-        return ParseJson::make($string, $stringName, $exceptionFactory, $allowInvalidJson, $emptyStringAsNull, $jsonDecodeFlags)->cache();
+        return Json::make($string, $stringName, $exceptionFactory, $allowInvalidJson, $emptyStringAsNull, $jsonDecodeFlags);
     }
 
     /**
      * https://jsonlines.org/
+     * @deprecated use SimpleAsFuck\Validator\Factory\Jsonl::make
      * @param non-empty-string $streamName
      * @param int $jsonDecodeFlags bitmask https://www.php.net/manual/en/function.json-decode.php
      * @return \Iterator<int, ParseJson>
@@ -48,101 +50,6 @@ final class Validator
         bool $emptyStringAsNull = false,
         int $jsonDecodeFlags = 0,
     ): \Iterator {
-        return new class ($stream, $streamName, $exceptionFactory, $allowInvalidJson, $emptyStringAsNull, $jsonDecodeFlags) implements \Iterator {
-            private int $lineNumber = 0;
-            private string $buffer = '';
-            private ?ParseJson $current = null;
-
-            public function __construct(
-                private readonly StreamInterface $stream,
-                private readonly string $streamName,
-                private readonly Exception $exceptionFactory,
-                private readonly bool $allowInvalidJson,
-                private readonly bool $emptyStringAsNull,
-                private readonly int $jsonDecodeFlags,
-            ) {
-                $this->fetch();
-            }
-
-            public function key(): ?int
-            {
-                if ($this->valid()) {
-                    return $this->lineNumber;
-                }
-
-                return null;
-            }
-
-            public function current(): ParseJson
-            {
-                if ($this->valid()) {
-                    return $this->current ?? throw $this->exceptionFactory->create($this->streamName . ' value ' . $this->lineNumber . ' is not valid stream');
-                }
-
-                throw $this->exceptionFactory->create($this->streamName . ' value ' . $this->lineNumber . ' is not valid stream');
-            }
-
-            public function next(): void
-            {
-                $this->fetch();
-            }
-
-            public function valid(): bool
-            {
-                return $this->current !== null || ! $this->stream->eof() || $this->buffer !== '';
-            }
-
-            public function rewind(): void
-            {
-                if ($this->lineNumber <= 1) {
-                    return;
-                }
-
-                $this->stream->rewind();
-                $this->lineNumber = 0;
-                $this->buffer = '';
-                $this->fetch();
-            }
-
-            private function fetch(): void
-            {
-                if (!$this->valid()) {
-                    return;
-                }
-
-                $this->lineNumber++;
-
-                while (!$this->stream->eof()) {
-                    $this->buffer .= $this->stream->read(1024);
-                    $endLine = strpos($this->buffer, "\n");
-                    if ($endLine !== false) {
-                        break;
-                    }
-                }
-
-                if ($this->buffer === '') {
-                    $this->current = null;
-                    return;
-                }
-
-                $endLine = strpos($this->buffer, "\n");
-                if ($endLine === false) {
-                    $line = $this->buffer;
-                    $this->buffer = '';
-                } else {
-                    $line = substr($this->buffer, 0, $endLine);
-                    $this->buffer = substr($this->buffer, $endLine + 1);
-                }
-
-                $this->current = Validator::json(
-                    $line,
-                    $this->streamName . ' value ' . $this->lineNumber,
-                    $this->exceptionFactory,
-                    $this->allowInvalidJson,
-                    $this->emptyStringAsNull,
-                    $this->jsonDecodeFlags,
-                );
-            }
-        };
+        return Jsonl::make($stream, $streamName, $exceptionFactory, $allowInvalidJson, $emptyStringAsNull, $jsonDecodeFlags);
     }
 }

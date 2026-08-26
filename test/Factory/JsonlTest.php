@@ -6,37 +6,16 @@ use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use SimpleAsFuck\Validator\Factory\Validator;
+use SimpleAsFuck\Validator\Factory\Jsonl;
 
-#[CoversClass(Validator::class)]
-final class ValidatorTest extends TestCase
+#[CoversClass(Jsonl::class)]
+final class JsonlTest extends TestCase
 {
-    #[DataProvider('dataJsonError')]
-    public function testJsonError(string $expectedErrorMessage, string $invalidContent): void
-    {
-        $this->expectException(\UnexpectedValueException::class);
-        $this->expectExceptionMessage($expectedErrorMessage);
-
-        Validator::json($invalidContent, 'Test string')->nullable();
-    }
-
-    /**
-     * @return non-empty-array<non-empty-array<string>>
-     */
-    public static function dataJsonError(): array
-    {
-        return [
-            ['Test string must be valid json (Syntax error), invalid content: \'\'', ''],
-            ['Test string must be valid json (Syntax error), invalid content: \'kjdfhgroigiosdiugaeiufsabdv\'', 'kjdfhgroigiosdiugaeiufsabdv'],
-            ['Test string must be valid json (Syntax error), invalid content: \'kjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigi\' (truncated)', 'kjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdvkjdfhgroigiosdiugaeiufsabdv'],
-        ];
-    }
-
     /**
      * @param array<mixed> $expectedData
      */
-    #[DataProvider('dataJsonl')]
-    public function testJsonl(
+    #[DataProvider('dataMake')]
+    public function testMake(
         array   $expectedData,
         string  $jsonl,
         bool    $allowInvalidJson = false,
@@ -47,7 +26,7 @@ final class ValidatorTest extends TestCase
         }
 
         $data = [];
-        $stream = Validator::jsonl(Utils::streamFor($jsonl), allowInvalidJson: $allowInvalidJson);
+        $stream = Jsonl::make(Utils::streamFor($jsonl), allowInvalidJson: $allowInvalidJson);
         while ($stream->valid()) {
             $stream->current();
             $stream->next();
@@ -69,7 +48,7 @@ final class ValidatorTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public static function dataJsonl(): array
+    public static function dataMake(): array
     {
         return [
             [[], ''],
@@ -93,14 +72,14 @@ final class ValidatorTest extends TestCase
         ];
     }
 
-    #[DataProvider('dataJsonlError')]
-    public function testJsonlError(string $expectedErrorMessage, string $invalidContent): void
+    #[DataProvider('dataMakeError')]
+    public function testMakeError(string $expectedErrorMessage, string $invalidContent): void
     {
         $this->expectExceptionMessage($expectedErrorMessage);
 
 
 
-        $stream = Validator::jsonl(Utils::streamFor($invalidContent));
+        $stream = Jsonl::make(Utils::streamFor($invalidContent));
         foreach ($stream as $item) {
             $item->int()->positive()->max(500)->notNull();
         }
@@ -109,7 +88,7 @@ final class ValidatorTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public static function dataJsonlError(): array
+    public static function dataMakeError(): array
     {
         return [
             ['stream content value 1 json must be not null', "null\n"],
